@@ -1,4 +1,4 @@
-package com.blitz.backend;
+package com.blitz.backend.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
