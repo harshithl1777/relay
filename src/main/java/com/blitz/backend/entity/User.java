@@ -1,9 +1,7 @@
 package com.blitz.backend.entity;
 
-public class User {
-    String firstName;
-    String lastName;
-    String emailAddress;
+public interface User {
+
 
     public static void getFullName(){
     }
