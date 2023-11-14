@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Course {
     String courseCode;
-    String instructor;
+    Instructor instructor;
     List<String> days;
     List<String> times;
 
