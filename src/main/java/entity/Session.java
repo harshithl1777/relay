@@ -9,6 +9,7 @@ public class Session {
     Instructor instructor;
     Integer startedAt;
 
+    // Constructor
     public Session(List<String> attendance, String classID, Integer code, Instructor instructor, Integer startedAt) {
         this.attendance = attendance;
         this.classID = classID;
