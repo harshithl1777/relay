@@ -1,17 +1,19 @@
 package entity;
 
+import java.util.List;
+
 public class Session {
-    String courseCode;
-    String date;
-    String time;
+    List<String> attendance;
+    String classID;
+    Integer Code;
     Instructor instructor;
-    String section;
-    Integer sessionCode;
-    public Session(String courseCode, String date, String time, Instructor instructor, String section) {
-        this.courseCode = courseCode;
-        this.date = date;
-        this.time = time;
+    Integer startedAt;
+
+    public Session(List<String> attendance, String classID, Integer code, Instructor instructor, Integer startedAt) {
+        this.attendance = attendance;
+        this.classID = classID;
+        Code = code;
         this.instructor = instructor;
-        this.section = section;
+        this.startedAt = startedAt;
     }
 }
