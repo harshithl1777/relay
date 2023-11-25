@@ -13,6 +13,7 @@ public class AttendanceRecord {
     private Session attendanceSession;
     private List<String> studentsPresent;
 
+    // Constructor
     public AttendanceRecord(String courseCode, LocalDate date, LocalDateTime time, Instructor instructor, String section, Session attendanceSession, List<String> studentsPresent) {
 
         this.courseCode = courseCode;
