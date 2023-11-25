@@ -30,12 +30,26 @@ public class Student implements User {
         return email;
     }
 
-
-    public static void sendEmailConfirmation() {
+    public String getStudentNumber() {
+        return studentNumber;
     }
 
-    public static void updateEmailAddress() {
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
 }
 
 
