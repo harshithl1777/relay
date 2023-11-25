@@ -6,6 +6,7 @@ public class Session {
     String time;
     Instructor instructor;
     String section;
+    Integer sessionCode;
     public Session(String courseCode, String date, String time, Instructor instructor, String section) {
         this.courseCode = courseCode;
         this.date = date;
