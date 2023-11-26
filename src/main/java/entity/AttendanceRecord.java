@@ -2,7 +2,7 @@ package entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 public class AttendanceRecord {
     private String courseCode;
@@ -11,10 +11,10 @@ public class AttendanceRecord {
     private Instructor instructor;
     private String section;
     private Session attendanceSession;
-    private List<String> studentsPresent;
+    private ArrayList<String> studentsPresent;
 
     // Constructor
-    public AttendanceRecord(String courseCode, LocalDate date, LocalDateTime time, Instructor instructor, String section, Session attendanceSession, List<String> studentsPresent) {
+    public AttendanceRecord(String courseCode, LocalDate date, LocalDateTime time, Instructor instructor, String section, Session attendanceSession, ArrayList<String> studentsPresent) {
 
         this.courseCode = courseCode;
         this.date = date;
