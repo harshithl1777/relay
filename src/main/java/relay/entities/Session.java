@@ -1,19 +1,18 @@
-package entity;
+package relay.entities;
 
 import java.util.ArrayList;
 
 public class Session {
-    ArrayList<String> attendance;
+    ArrayList<AttendanceRecord> attendance;
     String classID;
-    Integer Code;
+    AttendanceCode code;
     Instructor instructor;
     Integer startedAt;
 
-    // Constructor
-    public Session(ArrayList<String> attendance, String classID, Integer code, Instructor instructor, Integer startedAt) {
+    public Session(ArrayList<AttendanceRecord> attendance, String classID, AttendanceCode code, Instructor instructor, Integer startedAt) {
         this.attendance = attendance;
         this.classID = classID;
-        Code = code;
+        this.code = code;
         this.instructor = instructor;
         this.startedAt = startedAt;
     }
