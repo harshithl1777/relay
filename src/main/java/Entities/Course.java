@@ -1,25 +1,26 @@
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Course {
     private int courseId;
     private Instructor instructor;
-    private AttendanceRecord[] history; // Array of AttendanceRecord objects (to be created)
+    private List<AttendanceRecord> history; // ArrayList of AttendanceRecord objects
 
     // Constructor for Course
     public Course(int courseId, Instructor instructor) {
         this.courseId = courseId;
         this.instructor = instructor;
-        // Initialize history array as needed
-        // this.history = new AttendanceRecord[MAX_HISTORY_SIZE];
+        this.history = new ArrayList<>();
     }
 
-
     // Getter and setter for history
-    public AttendanceRecord[] getHistory() {
+    public List<AttendanceRecord> getHistory() {
         return history;
     }
 
-    public void setHistory(AttendanceRecord[] history) {
+    public void setHistory(List<AttendanceRecord> history) {
         this.history = history;
     }
 }

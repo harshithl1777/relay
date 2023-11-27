@@ -1,38 +1,48 @@
 package Entities;
 
-public class Instructor implements User {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Instructor {
     private String firstName;
     private String lastName;
     private String email;
-    private String[] courses;
+    private List<Course> courses;
 
     // Constructor for Instructor
-    public Instructor(String firstName, String lastName, String email, String[] courses) {
+    public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.courses = courses;
+        this.courses = new ArrayList<>();
     }
 
-    // Implementing methods from User interface
-    @Override
+    // Getter for full name
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    // Getter for courses
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    // Method to add a course to the instructor's list of courses
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
+    // Implementing methods from the User interface
+
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
 
-    @Override
     public String getEmail() {
         return email;
     }
-
-    public String[] getCourses() {
-        return courses;
-    }
-
-    // ...
 }

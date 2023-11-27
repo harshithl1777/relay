@@ -1,54 +1,39 @@
 package Entities;
 
-public class Student implements User {
+public class Student {
     private String firstName;
     private String lastName;
-    private String studentNumber;
-    private String email;
+    private String studentID;
+    private String emailAddress;
 
     // Constructor for Student
-    public Student(String firstName, String lastName, String studentNumber, String email) {
+    public Student(String firstName, String lastName, String studentID, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.studentNumber = studentNumber;
-        this.email = email;
+        this.studentID = studentID;
+        this.emailAddress = emailAddress;
     }
 
     // Implementing methods from User interface
-    @Override
+
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
+
     public String getLastName() {
         return lastName;
     }
 
-    @Override
+
     public String getEmail() {
-        return email;
+        return emailAddress;
     }
 
     public String getStudentNumber() {
-        return studentNumber;
+        return studentID;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
 
 }
 

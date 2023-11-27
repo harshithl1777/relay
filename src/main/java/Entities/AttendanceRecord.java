@@ -32,20 +32,5 @@ public class AttendanceRecord {
         return startedAt;
     }
 
-    // Setter methods (if needed)
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setStartedAt(int startedAt) {
-        this.startedAt = startedAt;
-    }
 }
