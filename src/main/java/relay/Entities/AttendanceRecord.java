@@ -1,4 +1,4 @@
-package Entities;
+package relay.Entities;
 import java.util.Date;
 
 public class AttendanceRecord {

@@ -1,4 +1,4 @@
-package Entities;
+package relay.Entities;
 
 public class Student {
     private String firstName;
