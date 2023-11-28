@@ -17,10 +17,6 @@ public class Instructor {
         this.courses = new ArrayList<>();
     }
 
-    // Getter for full name
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
 
     // Getter for courses
     public List<Course> getCourses() {

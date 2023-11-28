@@ -1,18 +1,22 @@
 package relay.Entities;
+import com.google.type.DateTime;
+
 import java.util.Date;
+import java.time.LocalDateTime;
+
 
 public class AttendanceRecord {
     private String name;
     private String studentID;
     private int timestamp;
-    private int startedAt;
+    private LocalDateTime createdAt;
 
     // Constructor for AttendanceRecord
-    public AttendanceRecord(String name, String studentID, int timestamp, int startedAt) {
+    public AttendanceRecord(String name, String studentID, int timestamp, LocalDateTime createdAt) {
         this.name = name;
         this.studentID = studentID;
         this.timestamp = timestamp;
-        this.startedAt = startedAt;
+        this.createdAt = createdAt;
     }
 
     // Getter methods
@@ -28,8 +32,8 @@ public class AttendanceRecord {
         return timestamp;
     }
 
-    public int isStartedAt() {
-        return startedAt;
+    public LocalDateTime isCreatedAt() {
+        return createdAt;
     }
 
 

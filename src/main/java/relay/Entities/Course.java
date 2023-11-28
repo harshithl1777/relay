@@ -23,4 +23,9 @@ public class Course {
     public void setHistory(List<AttendanceRecord> history) {
         this.history = history;
     }
+
+    // Method to append history
+    public void appendHistory(List<AttendanceRecord> newRecords) {
+        this.history.addAll(newRecords);
+    }
 }
