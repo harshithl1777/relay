@@ -6,15 +6,12 @@ public class Student {
 	private String studentID;
 	private String emailAddress;
 
-	// Constructor for Student
 	public Student(String firstName, String lastName, String studentID, String emailAddress) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.studentID = studentID;
 		this.emailAddress = emailAddress;
 	}
-
-	// Implementing methods from User interface
 
 	public String getFirstName() {
 		return firstName;
@@ -24,12 +21,27 @@ public class Student {
 		return lastName;
 	}
 
-	public String getEmail() {
+	public String getEmailAddress() {
 		return emailAddress;
 	}
 
-	public String getStudentNumber() {
+	public String getStudentID() {
 		return studentID;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setStudentID(String studentID) {
+		this.studentID = studentID;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 }

@@ -1,39 +1,29 @@
 package relay.entity;
 
-import com.google.type.DateTime;
-
-import java.util.Date;
 import java.time.LocalDateTime;
 
 public class AttendanceRecord {
-	private String name;
-	private String studentID;
-	private int timestamp;
+	private Student student;
 	private LocalDateTime createdAt;
 
-	// Constructor for AttendanceRecord
-	public AttendanceRecord(String name, String studentID, int timestamp, LocalDateTime createdAt) {
-		this.name = name;
-		this.studentID = studentID;
-		this.timestamp = timestamp;
+	public AttendanceRecord(String studentID, LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	// Getter methods
-	public String getName() {
-		return name;
+	public Student getStudent() {
+		return student;
 	}
 
-	public String getStudentID() {
-		return studentID;
-	}
-
-	public int getTimestamp() {
-		return timestamp;
-	}
-
-	public LocalDateTime isCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }

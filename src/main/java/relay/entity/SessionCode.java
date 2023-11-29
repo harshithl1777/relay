@@ -1,19 +1,27 @@
 package relay.entity;
 
 public class SessionCode {
-	private String code;
+	private String alphanumCode;
 	private String qrCodeImage;
 
 	public SessionCode(String code) {
-		this.code = code;
+		this.alphanumCode = code;
 	}
 
 	public void generateQRCode() {
-		// API call to generate QR code
+		// TODO: Add in API call to QR Code API to generate QR code
+	}
+
+	public String getAlphanumCode() {
+		return alphanumCode;
 	}
 
 	public String getQrCodeImage() {
 		return qrCodeImage;
+	}
+
+	public void setAlphanumCode(String alphanumCode) {
+		this.alphanumCode = alphanumCode;
 	}
 
 	public void setQrCodeImage(String qrCodeImage) {

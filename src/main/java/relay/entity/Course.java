@@ -1,31 +1,43 @@
 package relay.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Course {
-	private int courseId;
+	private String courseID;
 	private Instructor instructor;
-	private List<AttendanceRecord> history; // ArrayList of AttendanceRecord objects
+	private ArrayList<AttendanceRecord> history;
 
-	// Constructor for Course
-	public Course(int courseId, Instructor instructor) {
-		this.courseId = courseId;
+	public Course(String courseID, Instructor instructor) {
+		this.courseID = courseID;
 		this.instructor = instructor;
 		this.history = new ArrayList<>();
 	}
 
-	// Getter and setter for history
-	public List<AttendanceRecord> getHistory() {
+	public String getCourseID() {
+		return courseID;
+	}
+
+	public Instructor getInstructor() {
+		return instructor;
+	}
+
+	public ArrayList<AttendanceRecord> getHistory() {
 		return history;
 	}
 
-	public void setHistory(List<AttendanceRecord> history) {
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
+	}
+
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
+	public void setHistory(ArrayList<AttendanceRecord> history) {
 		this.history = history;
 	}
 
-	// Method to append history
-	public void appendHistory(List<AttendanceRecord> newRecords) {
+	public void appendHistory(ArrayList<AttendanceRecord> newRecords) {
 		this.history.addAll(newRecords);
 	}
 }

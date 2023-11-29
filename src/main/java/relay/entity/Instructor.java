@@ -1,33 +1,23 @@
 package relay.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Instructor {
 	private String firstName;
 	private String lastName;
-	private String email;
-	private List<Course> courses;
+	private String emailAddress;
+	private ArrayList<Course> courses;
 
-	// Constructor for Instructor
-	public Instructor(String firstName, String lastName, String email) {
+	public Instructor(String firstName, String lastName, String emailAddress) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.emailAddress = emailAddress;
 		this.courses = new ArrayList<>();
 	}
 
-	// Getter for courses
-	public List<Course> getCourses() {
+	public ArrayList<Course> getCourses() {
 		return courses;
 	}
-
-	// Method to add a course to the instructor's list of courses
-	public void addCourse(Course course) {
-		courses.add(course);
-	}
-
-	// Implementing methods from the User interface
 
 	public String getFirstName() {
 		return firstName;
@@ -37,7 +27,27 @@ public class Instructor {
 		return lastName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setCourses(ArrayList<Course> courses) {
+		this.courses = courses;
+	}
+
+	public void addCourse(Course course) {
+		courses.add(course);
 	}
 }
