@@ -1,10 +1,10 @@
 package relay.entity;
 
-public class AttendanceCode {
+public class SessionCode {
 	private String code;
 	private String qrCodeImage;
 
-	public AttendanceCode(String code) {
+	public SessionCode(String code) {
 		this.code = code;
 	}
 

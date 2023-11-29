@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class Session {
 	ArrayList<AttendanceRecord> attendance;
 	String classID;
-	AttendanceCode code;
+	SessionCode code;
 	Instructor instructor;
 	LocalDateTime startedAt;
 
-	public Session(ArrayList<AttendanceRecord> attendance, String classID, AttendanceCode code, Instructor instructor,
+	public Session(ArrayList<AttendanceRecord> attendance, String classID, SessionCode code, Instructor instructor,
 			LocalDateTime startedAt) {
 		this.attendance = attendance;
 		this.classID = classID;
