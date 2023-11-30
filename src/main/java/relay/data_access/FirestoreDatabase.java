@@ -13,11 +13,8 @@ import java.io.FileInputStream;
  */
 public class FirestoreDatabase {
 
-    // Path to the Firebase credentials file
-    private String FIREBASE_CREDENTIALS_FILE = "src/main/resources/firebase.json";
-
     // Singleton instance of FirestoreDatabase
-    private static FirestoreDatabase singleton;
+    private static volatile FirestoreDatabase singleton;
 
     // Reference to the Firestore database
     private final Firestore databaseReference;
@@ -36,6 +33,7 @@ public class FirestoreDatabase {
      */
     private void configureFirebase() {
         try {
+            String FIREBASE_CREDENTIALS_FILE = "src/main/resources/firebase.json";
             FileInputStream firebaseCredentials = new FileInputStream(FIREBASE_CREDENTIALS_FILE);
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(firebaseCredentials))
