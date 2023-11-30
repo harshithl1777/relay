@@ -15,7 +15,6 @@ import com.google.firebase.FirebaseOptions;
 @SpringBootApplication
 public class RelayApplication {
 
-	private static String FIREBASE_DATABASE_URL = "https:blitz-web1.firebaseio.com/";
 	private static String FIREBASE_CREDENTIALS_FILE = "src/main/resources/firebase.json";
 
 	@RequestMapping("/health")
@@ -28,7 +27,6 @@ public class RelayApplication {
 			FileInputStream FirebaseCredentials = new FileInputStream(FIREBASE_CREDENTIALS_FILE);
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(FirebaseCredentials))
-					.setDatabaseUrl(FIREBASE_DATABASE_URL)
 					.build();
 
 			FirebaseApp.initializeApp(options);
