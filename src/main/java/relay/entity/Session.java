@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Session {
 	private ArrayList<AttendanceRecord> attendance;
 	private String classID;
-	private SessionCode sessionCode;
 	private Instructor instructor;
 	private LocalDateTime startedAt;
+	private String alphaNumericCode;
+	private String qrCodeImage;
 
-	public Session(ArrayList<AttendanceRecord> attendance, String classID, SessionCode sessionCode,
-			Instructor instructor,
-			LocalDateTime startedAt) {
+	public Session(ArrayList<AttendanceRecord> attendance, String classID, Instructor instructor,
+			LocalDateTime startedAt, String alphaNumericCode) {
 		this.attendance = attendance;
 		this.classID = classID;
-		this.sessionCode = sessionCode;
 		this.instructor = instructor;
 		this.startedAt = startedAt;
+		this.alphaNumericCode = alphaNumericCode;
 	}
 
 	public ArrayList<AttendanceRecord> getAttendance() {
@@ -28,16 +28,20 @@ public class Session {
 		return classID;
 	}
 
-	public SessionCode getSessionCode() {
-		return sessionCode;
-	}
-
 	public Instructor getInstructor() {
 		return instructor;
 	}
 
 	public LocalDateTime getStartedAt() {
 		return startedAt;
+	}
+
+	public String getAlphaNumericCode() {
+		return alphaNumericCode;
+	}
+
+	public String getQrCodeImage() {
+		return qrCodeImage;
 	}
 
 	public void setAttendance(ArrayList<AttendanceRecord> attendance) {
@@ -48,15 +52,23 @@ public class Session {
 		this.classID = classID;
 	}
 
-	public void setSessionCode(SessionCode sessionCode) {
-		this.sessionCode = sessionCode;
-	}
-
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
 
 	public void setStartedAt(LocalDateTime startedAt) {
 		this.startedAt = startedAt;
+	}
+
+	public void setAlphanumCode(String alphanumCode) {
+		this.alphaNumericCode = alphanumCode;
+	}
+
+	public void setQrCodeImage(String qrCodeImage) {
+		this.qrCodeImage = qrCodeImage;
+	}
+
+	public void generateQRCode() {
+		// TODO: Add in API call to QR Code API to generate QR code
 	}
 }
