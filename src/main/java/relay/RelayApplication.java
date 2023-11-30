@@ -1,7 +1,6 @@
 package relay;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import relay.data_access.FirebaseDataAccessObject;
+import relay.data_access.FirebaseCourseDataAccessObject;
 import relay.entity.Course;
 import relay.entity.Instructor;
 
@@ -41,7 +40,7 @@ public class RelayApplication {
 
 	public static void main(String[] args) {
 		configureFirebase();
-		FirebaseDataAccessObject dao = new FirebaseDataAccessObject();
+		FirebaseCourseDataAccessObject dao = new FirebaseCourseDataAccessObject();
 		Instructor instructor = new Instructor("Joe", "Smith", "joe@hotmail.com");
 		Course course = new Course("2", "MAT137", instructor);
 
