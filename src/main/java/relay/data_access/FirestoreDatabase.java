@@ -41,7 +41,7 @@ public class FirestoreDatabase {
 
             FirebaseApp.initializeApp(options);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
