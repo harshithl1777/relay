@@ -1,3 +1,7 @@
+/**
+ * Unit tests for the {@link FirebaseInstructorDataAccessObject} class.
+ * These tests cover the basic functionality of saving, reading, deleting, and checking the existence of instructors.
+ */
 package relay.data_access;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -7,20 +11,25 @@ import relay.entity.InstructorFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link FirebaseInstructorDataAccessObject}.
+ */
 public class FirebaseInstructorDataAccessObjectTest {
     FirebaseInstructorDataAccessObject dataAccessObject;
 
-
+    /**
+     * Set up the test environment by initializing a new instance of {@link FirebaseInstructorDataAccessObject}.
+     */
     @BeforeEach
     public void foo() {
         this.dataAccessObject = new FirebaseInstructorDataAccessObject();
-
     }
 
-
+    /**
+     * Test the saving and reading functionality of the {@link FirebaseInstructorDataAccessObject}.
+     */
     @Test
     void testSaveAndReadInstructor() {
-
         // Create a sample Instructor for testing
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
@@ -37,6 +46,9 @@ public class FirebaseInstructorDataAccessObjectTest {
         assertEquals(testInstructor.getEmailAddress(), retrievedInstructor.getEmailAddress());
     }
 
+    /**
+     * Test the deleting functionality of the {@link FirebaseInstructorDataAccessObject}.
+     */
     @Test
     void testDeleteInstructor() {
         FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
@@ -54,6 +66,9 @@ public class FirebaseInstructorDataAccessObjectTest {
         assertFalse(dao.exists(testInstructor.getInstructorID()));
     }
 
+    /**
+     * Test the existence checking functionality of the {@link FirebaseInstructorDataAccessObject}.
+     */
     @Test
     void testExists() {
         FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
@@ -68,6 +83,9 @@ public class FirebaseInstructorDataAccessObjectTest {
         assertTrue(dao.exists(testInstructor.getInstructorID()));
     }
 
+    /**
+     * Test reading a non-existent instructor from the {@link FirebaseInstructorDataAccessObject}.
+     */
     @Test
     void testReadNonExistentInstructor() {
         FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
@@ -79,6 +97,9 @@ public class FirebaseInstructorDataAccessObjectTest {
         assertNull(retrievedInstructor);
     }
 
+    /**
+     * Test deleting a non-existent instructor from the {@link FirebaseInstructorDataAccessObject}.
+     */
     @Test
     void testDeleteNonExistentInstructor() {
         FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
