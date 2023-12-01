@@ -1,18 +1,18 @@
 package relay.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Course {
 	private String courseID;
 	private String courseName;
 	private Instructor instructor;
-	private ArrayList<AttendanceRecord> history;
+	private List<AttendanceRecord> history;
 
 	public Course(String courseID, String courseName, Instructor instructor) {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.instructor = instructor;
-		this.history = new ArrayList<>();
+		this.history = new List<>();
 	}
 
 	public String getCourseID() {
@@ -25,7 +25,7 @@ public class Course {
 		return instructor;
 	}
 
-	public ArrayList<AttendanceRecord> getHistory() {
+	public List<AttendanceRecord> getHistory() {
 		return history;
 	}
 
@@ -39,11 +39,11 @@ public class Course {
 		this.instructor = instructor;
 	}
 
-	public void setHistory(ArrayList<AttendanceRecord> history) {
+	public void setHistory(List<AttendanceRecord> history) {
 		this.history = history;
 	}
 
-	public void appendHistory(ArrayList<AttendanceRecord> newRecords) {
+	public void appendHistory(List<AttendanceRecord> newRecords) {
 		this.history.addAll(newRecords);
 	}
 }
