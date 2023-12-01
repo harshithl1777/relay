@@ -7,6 +7,8 @@ public class Instructor {
     private String lastName;
     private String emailAddress;
 
+    public Instructor() {}
+
     public Instructor(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
