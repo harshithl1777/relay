@@ -1,15 +1,14 @@
 package relay;
 
-import java.io.FileInputStream;
-
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import java.io.FileInputStream;
 
 @RestController
 @SpringBootApplication
@@ -27,6 +26,7 @@ public class RelayApplication {
 			FileInputStream FirebaseCredentials = new FileInputStream(FIREBASE_CREDENTIALS_FILE);
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(FirebaseCredentials))
+					.setStorageBucket("blitz-web1.appspot.com")
 					.build();
 
 			FirebaseApp.initializeApp(options);
