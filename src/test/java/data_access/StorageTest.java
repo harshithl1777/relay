@@ -4,7 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import org.testng.annotations.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.FileInputStream;
 
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import relay.data_access.StorageSingleton;
 
 public class StorageTest {
-    @BeforeClass
+    @BeforeAll
     public static void configureStorage() {
         try {
             String FIREBASE_CREDENTIALS_FILE = "src/main/resources/firebase.json";
