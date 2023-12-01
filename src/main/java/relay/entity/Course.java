@@ -1,6 +1,7 @@
 package relay.entity;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Course {
 	private String courseID;
@@ -12,14 +13,14 @@ public class Course {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.instructor = instructor;
-		this.history = new List<>();
+		this.history = new ArrayList<>();
 	}
 
 	public String getCourseID() {
 		return courseID;
 	}
 
-	public String getCourseName(){return courseName; }
+	public String getCourseName(){ return courseName; }
 
 	public Instructor getInstructor() {
 		return instructor;
