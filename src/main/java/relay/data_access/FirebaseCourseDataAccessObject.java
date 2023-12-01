@@ -26,21 +26,14 @@ public class FirebaseCourseDataAccessObject {
      * @param course The Course object containing course details to be added to Firestore.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public void createCourse(Course course) {
-        try {
-            Map<String, Object> courseDocument = new HashMap<>();
-            courseDocument.put("courseName", course.getCourseName());
-            courseDocument.put("instructorID", course.getInstructor().getInstructorID());
+    public void createCourse(Course course) throws InterruptedException, ExecutionException {
+        Map<String, Object> courseDocument = new HashMap<>();
+        courseDocument.put("courseName", course.getCourseName());
+        courseDocument.put("instructorID", course.getInstructor().getInstructorID());
 
-            ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
-            String courseID = newCourseDocument.get().getId();
-            course.setCourseID(courseID);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-
+        ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
+        String courseID = newCourseDocument.get().getId();
+        course.setCourseID(courseID);
     }
 
     /**
@@ -50,32 +43,24 @@ public class FirebaseCourseDataAccessObject {
      * @return An ArrayList of Course objects associated with the specified instructor.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) {
+    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) throws InterruptedException, ExecutionException {
         Query query = db.collection("courses")
                 .whereEqualTo("instructorID", instructor.getInstructorID());
 
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         ArrayList<Course> courses = new ArrayList<>();
+        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
 
-        try {
-            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+            Map<String, Object> courseData = document.getData();
 
-                Map<String, Object> courseData = document.getData();
+            String courseID = document.getId();
+            String courseName = (String) courseData.get("courseName");
 
-                String courseID = document.getId();
-                String courseName = (String) courseData.get("courseName");
+            Course course = new Course(courseID, courseName, instructor);
+            courses.add(course);
 
-                Course course = new Course(courseID, courseName, instructor);
-                courses.add(course);
-
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
         }
-
         return courses;
     }
 
@@ -86,17 +71,10 @@ public class FirebaseCourseDataAccessObject {
      * @return true if the course exists, false otherwise.
      * @throws RuntimeException If an ExecutionException or InterruptedException occurs during Firestore operations.
      */
-    public boolean exists(String courseID) {
+    public boolean exists(String courseID) throws InterruptedException, ExecutionException {
         ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
-
-        try {
-            DocumentSnapshot courseDocument = retrievedcourseDocument.get();
-            return courseDocument.exists();
-
-        } catch (ExecutionException | InterruptedException e) {
-            System.out.println(e);
-            return false;
-        }
+        DocumentSnapshot courseDocument = retrievedcourseDocument.get();
+        return courseDocument.exists();
     }
 
 }
