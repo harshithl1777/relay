@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -18,6 +19,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Session {
+	private static final String QR_DATA = "google.com";
+	private static final int QR_SIZE_X = 100;
+	private static final int QR_SIZE_Y = 100;
+	private static final String apiUrl;
+
+	static {
+		try {
+			apiUrl = String.format("https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%dx%d",
+					URLEncoder.encode(QR_DATA, "UTF-8"), QR_SIZE_X, QR_SIZE_Y);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private ArrayList<AttendanceRecord> attendance;
 	private String classID;
 	private Instructor instructor;
@@ -81,14 +96,7 @@ public class Session {
 
 
 	public void generateQRCode() {
-		String data = "google.com";
-		int sizeX = 100;
-		int sizeY = 100;
-
 		try {
-			String apiUrl = "https://api.qrserver.com/v1/create-qr-code/?data=" + URLEncoder.encode(data, "UTF-8")
-					+ "&size=" + sizeX + "x" + sizeY;
-
 			URL url = new URL(apiUrl);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
@@ -103,11 +111,11 @@ public class Session {
 			} else {
 				throw new RuntimeException("Failed to fetch QR code image from the API");
 			}
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		} catch (IOException | RuntimeException e) {
+			System.out.println(e);
 		}
-	}
+    }
+
 
 	private void uploadImageToFirebaseStorage(File file) {
 		try {
