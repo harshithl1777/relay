@@ -1,6 +1,8 @@
 package relay;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,14 +40,16 @@ public class RelayApplication {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ExecutionException, InterruptedException {
 		configureFirebase();
 		FirebaseCourseDataAccessObject dao = new FirebaseCourseDataAccessObject();
 		Instructor instructor = new Instructor("Joe", "Smith", "joe@hotmail.com");
-		Course course = new Course("2", "MAT137", instructor);
+		instructor.setInstructorID("fwkf3");
+		ArrayList<Course> courses = dao.getCoursesByInstructor(instructor);
 
-		dao.create(course);
-		SpringApplication.run(RelayApplication.class, args);
+		System.out.println(courses.get(1).getCourseName());
+
+//		SpringApplication.run(RelayApplication.class, args);
 
 	}
 }

@@ -3,6 +3,7 @@ package relay.entity;
 import java.util.ArrayList;
 
 public class Instructor {
+	private String instructorID;
 	private String firstName;
 	private String lastName;
 	private String emailAddress;
@@ -49,5 +50,13 @@ public class Instructor {
 
 	public void addCourse(Course course) {
 		courses.add(course);
+	}
+
+	public String getInstructorID() {
+		return instructorID;
+	}
+
+	public void setInstructorID(String instructorID) {
+		this.instructorID = instructorID;
 	}
 }
