@@ -44,7 +44,7 @@ public class FirebaseCourseDataAccessObject {
      * @throws ExecutionException   If the execution of the query fails.
      * @throws InterruptedException If the query execution is interrupted.
      */
-    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) throws ExecutionException, InterruptedException {
+    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) {
         Firestore db = FirestoreSingleton.get();
         Query query = db.collection("courses")
                 .whereEqualTo("instructorID", instructor.getInstructorID());
@@ -53,16 +53,22 @@ public class FirebaseCourseDataAccessObject {
 
         ArrayList<Course> courses = new ArrayList<>();
 
-        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
 
-            Map<String, Object> courseData = document.getData();
+                Map<String, Object> courseData = document.getData();
 
-            String courseID = (String) courseData.get("courseID");
-            String courseName = (String) courseData.get("courseName");
+                String courseID = (String) courseData.get("courseID");
+                String courseName = (String) courseData.get("courseName");
 
-            Course course = new Course(courseID, courseName, instructor);
-            courses.add(course);
+                Course course = new Course(courseID, courseName, instructor);
+                courses.add(course);
 
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
         }
 
         return courses;
