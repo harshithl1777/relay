@@ -1,5 +1,19 @@
 package relay.entity;
 
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import relay.data_access.StorageSingleton;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,7 +23,7 @@ public class Session {
     private Instructor instructor;
     private LocalDateTime startedAt;
     private String alphaNumericCode;
-    private String qrCodeImage;
+    private Image qrCodeImage;
 
     public Session(List<AttendanceRecord> attendance, String classID, Instructor instructor,
                    LocalDateTime startedAt, String alphaNumericCode) {
@@ -40,7 +54,7 @@ public class Session {
         return alphaNumericCode;
     }
 
-    public String getQrCodeImage() {
+    public Image getQrCodeImage() {
         return qrCodeImage;
     }
 
@@ -64,11 +78,46 @@ public class Session {
         this.alphaNumericCode = alphanumCode;
     }
 
-    public void setQrCodeImage(String qrCodeImage) {
+    public void setQrCodeImage(Image qrCodeImage) {
         this.qrCodeImage = qrCodeImage;
     }
 
     public void generateQRCode() {
-        // TODO: Add in API call to QR Code API to generate QR code
+        String data = "google.com";
+        int sizeX = 100;
+        int sizeY = 100;
+
+        try {
+            String apiUrl = "https://api.qrserver.com/v1/create-qr-code/?data=" + URLEncoder.encode(data, "UTF-8")
+                    + "&size=" + sizeX + "x" + sizeY;
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Image qrCodeImage = ImageIO.read(connection.getInputStream());
+
+                File outputfile = new File("QRCodeNew.png");
+                ImageIO.write((RenderedImage) qrCodeImage, "png", outputfile);
+
+                uploadImageToFirebaseStorage(outputfile);
+            } else {
+                throw new RuntimeException("Failed to fetch QR code image from the API");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void uploadImageToFirebaseStorage(File file) {
+        try {
+            Bucket bucket = StorageSingleton.get();
+            String fileName = "QRCodeNew.png";
+            Blob blob = bucket.create(fileName, Files.readAllBytes(file.toPath()));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
