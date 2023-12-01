@@ -26,7 +26,7 @@ jobs:
         fileName: "google-java-format-1.18.1-all-deps.jar"
 
     - name: Autoformat with Google Java Format
-      run: "java -jar ./google-java-format-1.18.1-all-deps.jar"
+      run: "java -jar ./google-java-format-1.18.1-all-deps.jar --replace $(git ls-files *.java)"
 
     - name: Commit Autoformatted Changes
       uses: stefanzweifel/git-auto-commit-action@v5
