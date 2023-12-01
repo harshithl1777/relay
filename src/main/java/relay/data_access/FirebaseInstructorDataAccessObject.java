@@ -76,4 +76,26 @@ public class FirebaseInstructorDataAccessObject {
             return false;
         }
     }
+
+    /**
+     * Deletes an Instructor object from the Firestore database based on the provided instructorID.
+     *
+     * @param instructorID The unique identifier of the Instructor to be deleted.
+     * @return True if the delete operation is successful, false otherwise.
+     */
+    public boolean delete(String instructorID) {
+        if (!exists(instructorID)) {
+            return false;
+        }
+
+        ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("instructors").document(instructorID).delete();
+        try {
+            deleteResult.get();
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
