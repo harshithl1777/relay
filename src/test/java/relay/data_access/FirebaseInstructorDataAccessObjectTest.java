@@ -4,6 +4,7 @@
  */
 package relay.data_access;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relay.entity.Instructor;
@@ -17,11 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FirebaseInstructorDataAccessObjectTest {
     FirebaseInstructorDataAccessObject dataAccessObject;
 
+    @BeforeAll
+    public static void initializeFirebase() {
+        FirebaseInitializationSingleton.initialize();
+    }
+
     /**
      * Set up the test environment by initializing a new instance of {@link FirebaseInstructorDataAccessObject}.
      */
     @BeforeEach
-    public void foo() {
+    public void createInstructorDataAccessObject() {
         this.dataAccessObject = new FirebaseInstructorDataAccessObject();
     }
 
@@ -44,6 +50,10 @@ public class FirebaseInstructorDataAccessObjectTest {
         assertEquals(testInstructor.getInstructorID(), retrievedInstructor.getInstructorID());
         assertEquals(testInstructor.getFirstName() + testInstructor.getLastName(), retrievedInstructor.getFirstName() + retrievedInstructor.getLastName());
         assertEquals(testInstructor.getEmailAddress(), retrievedInstructor.getEmailAddress());
+
+        // delete the saved instructor for cleanup
+        dataAccessObject.delete(testInstructor.getInstructorID());
+
     }
 
     /**
@@ -51,19 +61,17 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testDeleteInstructor() {
-        FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
-
         // Create a sample Instructor for testing
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
         // Save the Instructor
-        assertTrue(dao.save(testInstructor));
+        assertTrue(dataAccessObject.save(testInstructor));
 
         // Delete the saved Instructor
-        assertTrue(dao.delete(testInstructor.getInstructorID()));
+        assertTrue(dataAccessObject.delete(testInstructor.getInstructorID()));
 
         // Verify that the Instructor no longer exists in the database
-        assertFalse(dao.exists(testInstructor.getInstructorID()));
+        assertFalse(dataAccessObject.exists(testInstructor.getInstructorID()));
     }
 
     /**
@@ -71,16 +79,17 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testExists() {
-        FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
-
         // Create a sample Instructor for testing
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
         // Save the Instructor
-        assertTrue(dao.save(testInstructor));
+        assertTrue(dataAccessObject.save(testInstructor));
 
         // Verify that the Instructor exists in the database
-        assertTrue(dao.exists(testInstructor.getInstructorID()));
+        assertTrue(dataAccessObject.exists(testInstructor.getInstructorID()));
+
+        // Delete the instructor for cleanup
+        dataAccessObject.delete(testInstructor.getInstructorID());
     }
 
     /**
@@ -88,10 +97,11 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testReadNonExistentInstructor() {
-        FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
+        // Make sure ID is non-existent
+        dataAccessObject.delete("nonexistentID");
 
         // Attempt to read an Instructor with a non-existent ID
-        Instructor retrievedInstructor = dao.read("nonexistentID");
+        Instructor retrievedInstructor = dataAccessObject.read("nonexistentID");
 
         // Verify that the retrieved Instructor is null
         assertNull(retrievedInstructor);
@@ -102,9 +112,8 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testDeleteNonExistentInstructor() {
-        FirebaseInstructorDataAccessObject dao = new FirebaseInstructorDataAccessObject();
-
+        dataAccessObject.delete("nonexistentID");
         // Attempt to delete an Instructor with a non-existent ID
-        assertFalse(dao.delete("nonexistentID"));
+        assertFalse(dataAccessObject.delete("nonexistentID"));
     }
 }
