@@ -1,44 +1,50 @@
 package relay.entity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Course {
-    private String courseID;
-    private Instructor instructor;
-    private List<AttendanceRecord> history;
+	private String courseID;
+	private String courseName;
+	private Instructor instructor;
+	private List<AttendanceRecord> history;
 
-    public Course(String courseID, Instructor instructor) {
-        this.courseID = courseID;
-        this.instructor = instructor;
-        this.history = new ArrayList<>();
-    }
+	public Course(String courseID, String courseName, Instructor instructor) {
+		this.courseID = courseID;
+		this.courseName = courseName;
+		this.instructor = instructor;
+		this.history = new ArrayList<>();
+	}
 
-    public String getCourseID() {
-        return courseID;
-    }
+	public String getCourseID() {
+		return courseID;
+	}
 
-    public Instructor getInstructor() {
-        return instructor;
-    }
+	public String getCourseName(){ return courseName; }
 
-    public List<AttendanceRecord> getHistory() {
-        return history;
-    }
+	public Instructor getInstructor() {
+		return instructor;
+	}
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
-    }
+	public List<AttendanceRecord> getHistory() {
+		return history;
+	}
 
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
+	}
 
-    public void setHistory(List<AttendanceRecord> history) {
-        this.history = history;
-    }
+	public void setCourseName(String courseName){this.courseName = courseName;}
 
-    public void appendHistory(List<AttendanceRecord> newRecords) {
-        this.history.addAll(newRecords);
-    }
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
+	public void setHistory(List<AttendanceRecord> history) {
+		this.history = history;
+	}
+
+	public void appendHistory(List<AttendanceRecord> newRecords) {
+		this.history.addAll(newRecords);
+	}
 }
