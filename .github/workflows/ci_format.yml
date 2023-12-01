@@ -6,14 +6,22 @@ on:
 
 jobs:
   format:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-          with:
-            ref: ${{ github.event.pull_request.head.ref }}
-        - name: Set up JDK 20
-          uses: actions/setup-java@v3
-          with:
-            java-version: '20'
-            distribution: 'corretto'
-        - uses: axel-op/googlejavaformat-action@v3
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Set up JDK 20
+      uses: actions/setup-java@v3
+      with:
+        java-version: '20'
+        distribution: 'corretto'
+
+    - name: Prettier Java Format
+      uses: tsar-boomba/prettier-java-format-action@main
+      with:
+        prettier-args: '--tab-width 4  --write'
+        files: '**/*.java'
+        commit: 'true'
+        github-username: 'github-actions'
+        commit-message: 'style: auto-format java code using prettier'
