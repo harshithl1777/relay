@@ -44,8 +44,6 @@ public class ExportCSVInteractor implements ExportCSVInputBoundary {
         // Replace this with your actual logic to fetch attendance records
         // For example, you might query a database or call a service
         // to get the attendance records based on the provided input data.
-        Course course = new Course();
-         course.getHistory();
         return /* your logic to get attendance records */;
     }
 
