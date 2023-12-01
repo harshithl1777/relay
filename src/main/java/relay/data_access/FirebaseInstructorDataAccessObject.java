@@ -26,7 +26,7 @@ public class FirebaseInstructorDataAccessObject {
             instructor.setInstructorID(docRef.get().getId());
             return true;
         } catch (InterruptedException | ExecutionException e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }
