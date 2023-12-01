@@ -1,17 +1,14 @@
 package relay.entity;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.*;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
 import com.google.firebase.cloud.StorageClient;
-import com.google.firebase.database.core.Path;
+import relay.data_access.StorageSingleton;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -81,6 +78,8 @@ public class Session {
 		this.alphaNumericCode = alphaNumericCode;
 	}
 
+
+
 	public void generateQRCode() {
 		String data = "google.com";
 		int sizeX = 100;
@@ -112,7 +111,7 @@ public class Session {
 
 	private void uploadImageToFirebaseStorage(File file) {
 		try {
-			Bucket bucket = StorageClient.getInstance().bucket();
+			Bucket bucket = StorageSingleton.get();
 			String fileName = "QRCodeNew.png";
 			Blob blob = bucket.create(fileName, Files.readAllBytes(file.toPath()));
 		} catch (Exception e) {
