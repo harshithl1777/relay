@@ -54,18 +54,15 @@ public class FirebaseCourseDataAccessObject {
         ArrayList<Course> courses = new ArrayList<>();
 
         for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
-            try {
-                Map<String, Object> courseData = document.getData();
 
-                String courseID = (String) courseData.get("courseID");
-                String courseName = (String) courseData.get("courseName");
+            Map<String, Object> courseData = document.getData();
 
-                Course course = new Course(courseID, courseName, instructor);
-                courses.add(course);
-            } catch (ClassCastException e) {
-                System.err.println("Error occurred while processing document: " + document.getId());
-                e.printStackTrace();
-            }
+            String courseID = (String) courseData.get("courseID");
+            String courseName = (String) courseData.get("courseName");
+
+            Course course = new Course(courseID, courseName, instructor);
+            courses.add(course);
+
         }
 
         return courses;
@@ -78,17 +75,17 @@ public class FirebaseCourseDataAccessObject {
      * @return true if the course exists, false otherwise.
      */
     public boolean exists(String courseID) {
-        ApiFuture<DocumentSnapshot> future = FirestoreSingleton.get().collection("courses").document(courseID).get();
+        ApiFuture<DocumentSnapshot> retrievedcourseDocument = FirestoreSingleton.get().collection("courses").document(courseID).get();
 
         try {
-            DocumentSnapshot courseDocument = future.get();
+            DocumentSnapshot courseDocument = retrievedcourseDocument.get();
             return courseDocument.exists();
 
         } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e);
             return false;
         }
     }
-    
+
 }
 
