@@ -89,26 +89,6 @@ public class FirebaseCourseDataAccessObject {
             return false;
         }
     }
-
-    /**
-     * Deletes a course document from Firestore based on the provided courseID.
-     *
-     * @param courseID The ID of the course document to be deleted.
-     * @return true if the course is successfully deleted, false if the course doesn't exist or an error occurs during deletion.
-     */
-    public Boolean deleteCourse(String courseID){
-        if (!exists(courseID)) {
-            return false;
-        }
-
-        ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("courses").document(courseID).delete();
-        try {
-            deleteResult.get();
-            return true;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    
 }
 
