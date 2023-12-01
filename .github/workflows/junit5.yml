@@ -10,8 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +22,7 @@ jobs:
         distribution: 'corretto'
         cache: maven
     - name: Decrypt Firebase Secret
-      run: ./decrypt_secret.sh
+      run: ./decrypt.sh
       env:
         FIREBASE_DECRYPTION_KEY: ${{ secrets.FIREBASE_DECRYPTION_KEY }}
     - name: Test with Maven
