@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relay.entity.Instructor;
 import relay.entity.InstructorFactory;
+import relay.exceptions.ResourceNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,7 +41,7 @@ public class FirebaseInstructorDataAccessObjectTest {
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
         // Save the Instructor
-        assertTrue(dataAccessObject.save(testInstructor));
+        dataAccessObject.save(testInstructor);
 
         // Read the saved Instructor
         Instructor retrievedInstructor = dataAccessObject.read(testInstructor.getInstructorID());
@@ -65,10 +66,10 @@ public class FirebaseInstructorDataAccessObjectTest {
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
         // Save the Instructor
-        assertTrue(dataAccessObject.save(testInstructor));
+        dataAccessObject.save(testInstructor);
 
         // Delete the saved Instructor
-        assertTrue(dataAccessObject.delete(testInstructor.getInstructorID()));
+        dataAccessObject.delete(testInstructor.getInstructorID());
 
         // Verify that the Instructor no longer exists in the database
         assertFalse(dataAccessObject.exists(testInstructor.getInstructorID()));
@@ -83,7 +84,7 @@ public class FirebaseInstructorDataAccessObjectTest {
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
         // Save the Instructor
-        assertTrue(dataAccessObject.save(testInstructor));
+        dataAccessObject.save(testInstructor);
 
         // Verify that the Instructor exists in the database
         assertTrue(dataAccessObject.exists(testInstructor.getInstructorID()));
@@ -97,9 +98,6 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testReadNonExistentInstructor() {
-        // Make sure ID is non-existent
-        dataAccessObject.delete("nonexistentID");
-
         // Attempt to read an Instructor with a non-existent ID
         Instructor retrievedInstructor = dataAccessObject.read("nonexistentID");
 
@@ -112,8 +110,7 @@ public class FirebaseInstructorDataAccessObjectTest {
      */
     @Test
     void testDeleteNonExistentInstructor() {
-        dataAccessObject.delete("nonexistentID");
         // Attempt to delete an Instructor with a non-existent ID
-        assertFalse(dataAccessObject.delete("nonexistentID"));
+        assertThrows(ResourceNotFoundException.class, () -> dataAccessObject.delete("nonexistentID"));
     }
 }
