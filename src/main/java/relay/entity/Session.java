@@ -18,8 +18,8 @@ import javax.imageio.ImageIO;
 public class Session {
 	private List<AttendanceRecord> attendance;
 	private String sessionID;
-	private Course course;
-	private Instructor instructor;
+	private String courseID;
+	private String instructorID;
 	private Timestamp startedAt;
 	private String alphaNumericCode;
 	private Image qrCodeImage;
@@ -29,11 +29,11 @@ public class Session {
 	private static final int QR_SIZE_X = 100;
 	private static final int QR_SIZE_Y = 100;
 
-	public Session(List<AttendanceRecord> attendance, Course course, Instructor instructor,
+	public Session(List<AttendanceRecord> attendance, String courseID, String instructorID,
 			Timestamp startedAt) {
 		this.attendance = attendance;
-		this.course = course;
-		this.instructor = instructor;
+		this.courseID = courseID;
+		this.instructorID = instructorID;
 		this.startedAt = startedAt;
 	}
 
@@ -45,12 +45,12 @@ public class Session {
 		return sessionID;
 	}
 
-	public Course getCourse() {
-		return course;
+	public String getCourseID() {
+		return courseID;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
+	public String getInstructorID() {
+		return instructorID;
 	}
 
 	public Timestamp getStartedAt() {
@@ -73,12 +73,12 @@ public class Session {
 		this.sessionID = sessionID;
 	}
 
-	public void setCourse(Course course) {
-		this.course = course;
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
 	}
 
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+	public void setInstructorID(String instructorID) {
+		this.instructorID = instructorID;
 	}
 
 	public void setStartedAt(Timestamp startedAt) {
@@ -114,8 +114,6 @@ public class Session {
 
 	public Map<String, Object> convertToMap() {
 		Map<String, Object> sessionMap = new HashMap<>();
-		String instructorID = instructor.getInstructorID();
-		String courseID = course.getCourseID();
 
 		List<Map<String, Object>> attendanceRecordMaps = new ArrayList<>();
 		for (AttendanceRecord record : attendance) {
