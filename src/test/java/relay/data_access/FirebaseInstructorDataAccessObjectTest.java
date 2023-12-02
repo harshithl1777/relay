@@ -58,6 +58,25 @@ public class FirebaseInstructorDataAccessObjectTest {
     }
 
     /**
+     * Test that save called on an already saved instructor does not modify Instructor::instructorID.
+     */
+    @Test
+    void testSavingTwiceDoesNotModifyInstructorID() {
+        // Create a sample Instructor for testing
+        Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
+
+        dataAccessObject.save(testInstructor);
+        String previousID = testInstructor.getInstructorID();
+        dataAccessObject.save(testInstructor);
+        assert testInstructor.getInstructorID().equals(previousID);
+
+        // delete the saved instructor for cleanup
+        dataAccessObject.delete(testInstructor.getInstructorID());
+
+    }
+
+
+    /**
      * Test the deleting functionality of the {@link FirebaseInstructorDataAccessObject}.
      */
     @Test
@@ -76,10 +95,10 @@ public class FirebaseInstructorDataAccessObjectTest {
     }
 
     /**
-     * Test the existence checking functionality of the {@link FirebaseInstructorDataAccessObject}.
+     * Test whether exists method of {@link FirebaseInstructorDataAccessObject} correctly returns true.
      */
     @Test
-    void testExists() {
+    void testExistsReturnsTrue() {
         // Create a sample Instructor for testing
         Instructor testInstructor = InstructorFactory.createInstructor("first", "last", "first.last@gmail.com");
 
@@ -92,6 +111,34 @@ public class FirebaseInstructorDataAccessObjectTest {
         // Delete the instructor for cleanup
         dataAccessObject.delete(testInstructor.getInstructorID());
     }
+
+    /**
+     * Test whether exists method of {@link FirebaseInstructorDataAccessObject} correctly
+     * returns false with null instructorID.
+     */
+    @Test
+    void testExistsReturnsFalseWithNullInstructorID() {
+        assertFalse(dataAccessObject.exists(null));
+    }
+
+    /**
+     * Test whether exists method of {@link FirebaseInstructorDataAccessObject} correctly
+     * returns false with empty instructorID.
+     */
+    @Test
+    void testExistsReturnsFalseWithEmptyInstructorID() {
+        assertFalse(dataAccessObject.exists(""));
+    }
+
+    /**
+     * Test whether exists method of {@link FirebaseInstructorDataAccessObject} correctly
+     * returns false with blank instructorID.
+     */
+    @Test
+    void testExistsReturnsFalseWithBlankInstructorID() {
+        assertFalse(dataAccessObject.exists("      "));
+    }
+
 
     /**
      * Test reading a non-existent instructor from the {@link FirebaseInstructorDataAccessObject}.
