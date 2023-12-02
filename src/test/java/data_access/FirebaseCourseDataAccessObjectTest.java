@@ -1,5 +1,6 @@
 package data_access;
 
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,11 +82,11 @@ public class FirebaseCourseDataAccessObjectTest {
     }
 
     /**
-     * Tests the deletion of a non-existent course, expecting a RuntimeException to be thrown.
+     * Tests the deletion of a non-existent course, expecting a ResourceNotFoundException to be thrown.
      */
     @Test
     void testDeleteNonExistentCourse(){
-        assertThrows(RuntimeException.class, () -> dataAccessObject.delete("dummyCourseId"));
+        assertThrows(ResourceNotFoundException.class, () -> dataAccessObject.delete("dummyCourseId"));
     }
 
 }
