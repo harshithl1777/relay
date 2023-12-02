@@ -27,7 +27,7 @@ public class FirebaseCourseDataAccessObject {
      * @param course The Course object containing course details to be added to Firestore.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public void saveCourse(Course course) {
+    public void save(Course course) {
         Map<String, Object> courseDocument = new HashMap<>();
         courseDocument.put("courseName", course.getCourseName());
         courseDocument.put("instructorID", course.getInstructor().getInstructorID());
@@ -43,10 +43,11 @@ public class FirebaseCourseDataAccessObject {
     }
 
     /**
-     * Retrieves a list of courses associated with a specific instructor from the Firestore database.
+     * Retrieves a list of courses associated with a specific instructor ID.
      *
-     * @param instructorID@return An ArrayList of Course objects associated with the specified instructor.
-     * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
+     * @param instructorID The ID of the instructor whose courses are to be retrieved.
+     * @return An ArrayList of Course objects associated with the specified instructor ID.
+     * @throws NullPointerException if instructorID is null.
      */
     public ArrayList<Course> getCoursesByInstructor(String instructorID) {
         if (instructorID == null){

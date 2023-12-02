@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relay.data_access.FirebaseCourseDataAccessObject;
 import relay.data_access.FirebaseInitializationSingleton;
+import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.entity.Course;
 import relay.entity.Instructor;
 
@@ -14,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FirebaseCourseDataAccessObjectTest {
-    FirebaseCourseDataAccessObject dataAccessObject;
+    FirebaseCourseDataAccessObject courseDataAccessObject;
+    FirebaseInstructorDataAccessObject instructorDataAccessObject;
 
     @BeforeAll
     public static void initializeFirebase() {
@@ -22,7 +24,8 @@ public class FirebaseCourseDataAccessObjectTest {
     }
     @BeforeEach
     void initializeDataAccessObject(){
-        this.dataAccessObject = new FirebaseCourseDataAccessObject();
+        this.courseDataAccessObject = new FirebaseCourseDataAccessObject();
+        this.instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
     }
 
     /**
@@ -31,16 +34,18 @@ public class FirebaseCourseDataAccessObjectTest {
     @Test
     void createAndReadCourse(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
+        instructorDataAccessObject.save(instructor);
         Course course = new Course("STA157", instructor);
-        dataAccessObject.saveCourse(course);
-        Course retrievedCourse = dataAccessObject.getCoursesByInstructor(instructor.getInstructorID()).get(0);
+        courseDataAccessObject.save(course);
+        Course retrievedCourse = courseDataAccessObject.getCoursesByInstructor(instructor.getInstructorID()).get(0);
 
         assertNotNull(retrievedCourse);
         assertEquals(retrievedCourse.getCourseID(), course.getCourseID());
         assertEquals(retrievedCourse.getCourseName(), course.getCourseName());
         assertEquals(retrievedCourse.getInstructor().getInstructorID(), course.getInstructor().getInstructorID());
 
-        dataAccessObject.delete(course.getCourseID());
+        courseDataAccessObject.delete(course.getCourseID());
+        instructorDataAccessObject.delete(instructor.getInstructorID());
 
     }
 
@@ -51,11 +56,11 @@ public class FirebaseCourseDataAccessObjectTest {
     void testExistentCourseExists(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("STA157", instructor);
-        dataAccessObject.saveCourse(course);
+        courseDataAccessObject.save(course);
 
-        assertTrue(dataAccessObject.exists(course.getCourseID()));
+        assertTrue(courseDataAccessObject.exists(course.getCourseID()));
 
-        dataAccessObject.delete(course.getCourseID());
+        courseDataAccessObject.delete(course.getCourseID());
     }
 
     /**
@@ -63,7 +68,7 @@ public class FirebaseCourseDataAccessObjectTest {
      */
     @Test
     void testNonExistentCourseExists(){
-        assertFalse(dataAccessObject.exists("dummyCourseId"));
+        assertFalse(courseDataAccessObject.exists("dummyCourseId"));
     }
 
     /**
@@ -73,11 +78,11 @@ public class FirebaseCourseDataAccessObjectTest {
     void testDeleteExistentCourse(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("STA157", instructor);
-        dataAccessObject.saveCourse(course);
+        courseDataAccessObject.save(course);
 
-        dataAccessObject.delete(course.getCourseID());
+        courseDataAccessObject.delete(course.getCourseID());
 
-        assertFalse(dataAccessObject.exists(course.getCourseID()));
+        assertFalse(courseDataAccessObject.exists(course.getCourseID()));
 
     }
 
@@ -86,7 +91,7 @@ public class FirebaseCourseDataAccessObjectTest {
      */
     @Test
     void testDeleteNonExistentCourse(){
-        assertThrows(ResourceNotFoundException.class, () -> dataAccessObject.delete("dummyCourseId"));
+        assertThrows(ResourceNotFoundException.class, () -> courseDataAccessObject.delete("dummyCourseId"));
     }
 
 }
