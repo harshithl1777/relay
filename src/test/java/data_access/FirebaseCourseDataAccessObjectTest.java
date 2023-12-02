@@ -40,6 +40,7 @@ public class FirebaseCourseDataAccessObjectTest {
         assertEquals(retrievedCourse.getInstructor().getInstructorID(), course.getInstructor().getInstructorID());
 
         dataAccessObject.delete(course.getCourseID());
+
     }
 
     /**
