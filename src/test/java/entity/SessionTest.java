@@ -12,7 +12,8 @@ public class SessionTest {
 	@Test
 	public void testGetSetAttendance() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+		AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+		AttendanceRecord record = attendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
 				"John@gmail.com");
 		List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 		attendanceRecords.add(record);
@@ -26,7 +27,8 @@ public class SessionTest {
 	@Test
 	public void testGetSetCourseID() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+		AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+		AttendanceRecord record = attendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
 				"John@gmail.com");
 		List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 		attendanceRecords.add(record);
@@ -39,7 +41,8 @@ public class SessionTest {
 	@Test
 	public void testGetSetInstructorID() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+		AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+		AttendanceRecord record = attendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
 				"John@gmail.com");
 		List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 		attendanceRecords.add(record);
@@ -53,7 +56,8 @@ public class SessionTest {
 	@Test
 	public void testGetSetStartedAt() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+		AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+		AttendanceRecord record = attendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
 				"John@gmail.com");
 		List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 		attendanceRecords.add(record);
