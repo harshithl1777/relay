@@ -21,7 +21,7 @@ public class FirebaseCourseDataAccessObjectTest {
         FirebaseInitializationSingleton.initialize();
     }
     @BeforeEach
-    void foo(){
+    void initializeDataAccessObject(){
         this.dataAccessObject = new FirebaseCourseDataAccessObject();
     }
 
