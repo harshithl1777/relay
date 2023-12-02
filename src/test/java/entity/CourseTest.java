@@ -3,6 +3,7 @@ package entity;
 import org.junit.jupiter.api.Test;
 import relay.entity.AttendanceRecord;
 import relay.entity.AttendanceRecordFactory;
+import relay.entity.AttendanceRecordFactoryInterface;
 import relay.entity.Course;
 import relay.entity.Instructor;
 
@@ -62,7 +63,8 @@ public class CourseTest {
 	public void testSetHistory() {
 		Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
 
-		AttendanceRecord attendanceRecord = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "S12345",
+		AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+		AttendanceRecord attendanceRecord = attendanceRecordFactory.createAttendanceRecord("John", "Doe", "S12345",
 				"john.doe@example.com");
 		List<AttendanceRecord> attendanceRecords = new ArrayList<>();
 		attendanceRecords.add(attendanceRecord);
