@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import relay.data_access.FirebaseInitializationSingleton;
 
-
 @RestController
 @SpringBootApplication
 public class RelayApplication {
@@ -18,7 +17,6 @@ public class RelayApplication {
 
 	public static void main(String[] args) {
 		FirebaseInitializationSingleton.initialize();
-
 		SpringApplication.run(RelayApplication.class, args);
 	}
 }

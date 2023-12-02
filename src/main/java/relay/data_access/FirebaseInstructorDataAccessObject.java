@@ -98,7 +98,7 @@ public class FirebaseInstructorDataAccessObject {
      */
     public void delete(String instructorID) throws ResourceNotFoundException {
         if (!exists(instructorID)) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("No such document exists.");
         }
 
         ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("instructors").document(instructorID).delete();

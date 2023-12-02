@@ -27,10 +27,10 @@ public class FirebaseInitializationSingleton {
 			FileInputStream FirebaseCredentials = new FileInputStream(FIREBASE_CREDENTIALS_FILE);
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(FirebaseCredentials))
+					.setStorageBucket("relay-dev0.appspot.com")
 					.build();
 
 			FirebaseApp.initializeApp(options);
-			System.out.println("RAN CONFIG");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
