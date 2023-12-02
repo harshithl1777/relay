@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SessionTest {
+
+    /**
+     * Test to validate the retrieval of the course from the session.
+     */
     @Test
     public void testGetCourse() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -21,6 +25,10 @@ public class SessionTest {
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getCourse().equals(course);
     }
+
+    /**
+     * Test to validate the retrieval of the instructor from the session.
+     */
     @Test
     public void testGetInstructor() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -34,6 +42,10 @@ public class SessionTest {
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getInstructor().equals(instructor);
     }
+
+    /**
+     * Test to validate the retrieval of the start time of the session.
+     */
     @Test
     public void testGetStartedAt() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -47,6 +59,10 @@ public class SessionTest {
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getStartedAt().equals(timestamp);
     }
+
+    /**
+     * Test to validate the setting of attendance records for the session.
+     */
     @Test
     public void testSetAttendance() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -62,6 +78,10 @@ public class SessionTest {
         session.setAttendance(newAttendanceRecords);
         assert session.getAttendance().equals(newAttendanceRecords);
     }
+
+    /**
+     * Test to validate the setting of a new course for the session.
+     */
     @Test
     public void testSetCourse() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -77,6 +97,10 @@ public class SessionTest {
         session.setCourse(newCourse);
         assert session.getCourse().equals(newCourse);
     }
+
+    /**
+     * Test to validate the setting of a new instructor for the session.
+     */
     @Test
     public void testSetInstructor() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -92,6 +116,10 @@ public class SessionTest {
         session.setInstructor(newInstructor);
         assert session.getInstructor().equals(newInstructor);
     }
+
+    /**
+     * Test to validate the setting of a new start time for the session.
+     */
     @Test
     public void testSetStartedAt() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
