@@ -3,7 +3,7 @@ package relay.data_access;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-
+import org.apache.velocity.exception.ResourceNotFoundException;
 import relay.entity.Course;
 import relay.entity.Instructor;
 
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
 
 
 public class FirebaseCourseDataAccessObject {
@@ -95,15 +96,15 @@ public class FirebaseCourseDataAccessObject {
      * Deletes a course from Firestore based on the provided course ID.
      *
      * @param courseID the ID of the course to be deleted
-     * @throws RuntimeException if the course with the specified ID does not exist or if an error occurs during deletion
+     * @throws ResourceNotFoundException if the course with the specified ID does not exist or if an error occurs during deletion
      */
     public void delete(String courseID) throws RuntimeException{
-        if (!exists(courseID)) {
-            throw new RuntimeException();
-        }
-
-        ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("courses").document(courseID).delete();
         try {
+            if (!exists(courseID)) {
+                throw new ResourceNotFoundException("Course with given ID does not exist");
+            }
+
+            ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("courses").document(courseID).delete();
             deleteResult.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
