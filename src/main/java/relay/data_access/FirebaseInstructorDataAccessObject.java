@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
+import relay.exceptions.ResourceNotFoundException;
 import relay.entity.Instructor;
 
 import java.util.concurrent.ExecutionException;
@@ -18,17 +19,26 @@ public class FirebaseInstructorDataAccessObject {
      * Saves the provided Instructor object to the Firestore database.
      *
      * @param instructor The Instructor object to be saved.
-     * @return True if the save operation is successful, false otherwise.
      */
-    public boolean save(Instructor instructor) {
+    public void save(Instructor instructor) {
+        if (exists(instructor.getInstructorID())) {
+            update(instructor);
+        } else {
+            create(instructor);
+        }
+    }
+
+    private void create(Instructor instructor) {
         ApiFuture<DocumentReference> docRef = FirestoreSingleton.get().collection("instructors").add(instructor);
         try {
             instructor.setInstructorID(docRef.get().getId());
-            return true;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
         }
+    }
+
+    private void update(Instructor instructor) {
+        FirestoreSingleton.get().collection("instructors").document(instructor.getInstructorID()).set(instructor);
     }
 
     /**
@@ -65,6 +75,9 @@ public class FirebaseInstructorDataAccessObject {
      * @return True if the Instructor exists, false otherwise.
      */
     public boolean exists(String instructorID) {
+        if (instructorID == null || instructorID.isEmpty()) {
+            return false;
+        }
         ApiFuture<DocumentSnapshot> future = FirestoreSingleton.get().collection("instructors").document(instructorID).get();
 
         try {
@@ -81,20 +94,18 @@ public class FirebaseInstructorDataAccessObject {
      * Deletes an Instructor object from the Firestore database based on the provided instructorID.
      *
      * @param instructorID The unique identifier of the Instructor to be deleted.
-     * @return True if the delete operation is successful, false otherwise.
+     * @throws ResourceNotFoundException if the instructor does not exist in Firestore
      */
-    public boolean delete(String instructorID) {
+    public void delete(String instructorID) throws ResourceNotFoundException {
         if (!exists(instructorID)) {
-            return false;
+            throw new ResourceNotFoundException();
         }
 
         ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("instructors").document(instructorID).delete();
         try {
             deleteResult.get();
-            return true;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
