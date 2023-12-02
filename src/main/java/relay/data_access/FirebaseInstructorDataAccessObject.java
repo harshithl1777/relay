@@ -3,7 +3,6 @@ package relay.data_access;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import relay.exceptions.ResourceNotFoundException;
 import relay.entity.Instructor;
@@ -22,12 +21,24 @@ public class FirebaseInstructorDataAccessObject {
      * @param instructor The Instructor object to be saved.
      */
     public void save(Instructor instructor) {
+        if (exists(instructor.getInstructorID())) {
+            update(instructor);
+        } else {
+            create(instructor);
+        }
+    }
+
+    private void create(Instructor instructor) {
         ApiFuture<DocumentReference> docRef = FirestoreSingleton.get().collection("instructors").add(instructor);
         try {
             instructor.setInstructorID(docRef.get().getId());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    private void update(Instructor instructor) {
+        FirestoreSingleton.get().collection("instructors").document(instructor.getInstructorID()).set(instructor);
     }
 
     /**
