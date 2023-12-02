@@ -20,6 +20,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 
 import relay.entity.Session;
+import relay.entity.SessionFactory;
 import relay.exceptions.ResourceNotFoundException;
 
 public class FirebaseSessionDataAccessObject {
@@ -55,6 +56,7 @@ public class FirebaseSessionDataAccessObject {
 						"sessionCode",
 						alphaNumericCode).get();
 				session.setAlphaNumericCode(alphaNumericCode);
+				System.out.println(session.getAlphaNumericCode());
 			}
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -62,11 +64,33 @@ public class FirebaseSessionDataAccessObject {
 		}
 	}
 
-	public boolean exists(String sessionID) {
-		try {
-			if (sessionID == null || sessionID == "")
-				return false;
+	public Session read(String sessionID) {
+		if (sessionID == null)
+			throw new NullPointerException();
+		if (!exists(sessionID))
+			throw new ResourceNotFoundException("No such document exists.");
 
+		try {
+			ApiFuture<DocumentSnapshot> retrievedSessionDocument = db.collection("sessions")
+					.document(sessionID).get();
+			DocumentSnapshot sessionDocumentSnapshot = retrievedSessionDocument.get();
+			Map<String, Object> sessionDocumentData = sessionDocumentSnapshot.getData();
+
+			if (sessionDocumentData == null)
+				throw new NullPointerException();
+
+			return SessionFactory.createSessionFromMap(sessionDocumentData);
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public boolean exists(String sessionID) {
+		if (sessionID == null)
+			return false;
+
+		try {
 			ApiFuture<DocumentSnapshot> retrievedSessionDocument = db.collection("sessions")
 					.document(sessionID).get();
 			DocumentSnapshot sessionDocumentSnapshot = retrievedSessionDocument.get();
@@ -79,12 +103,11 @@ public class FirebaseSessionDataAccessObject {
 	}
 
 	public void delete(String sessionID) {
+		if (sessionID == null)
+			throw new NullPointerException();
+		if (!exists(sessionID))
+			throw new ResourceNotFoundException("No such document exists.");
 		try {
-			if (sessionID == null)
-				throw new NullPointerException();
-			if (!exists(sessionID))
-				throw new ResourceNotFoundException("No such document exists.");
-
 			ApiFuture<WriteResult> deleteResult = db.collection("sessions").document(sessionID).delete();
 			deleteResult.get();
 
@@ -114,9 +137,8 @@ public class FirebaseSessionDataAccessObject {
 		Page<Blob> blobs = bucket.list();
 
 		for (Blob blob : blobs.iterateAll()) {
-			if (blob.getName().equals(fileName)) {
+			if (blob.getName().equals(fileName))
 				return true;
-			}
 		}
 		return false;
 	}

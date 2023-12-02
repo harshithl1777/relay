@@ -1,34 +1,27 @@
 package entity;
 
 import org.junit.jupiter.api.Test;
-import relay.entity.*;
+import relay.entity.AttendanceRecord;
+import relay.entity.AttendanceRecordFactory;
+import relay.entity.Course;
+import relay.entity.Instructor;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseTest {
-    /**
-     * Test to verify the retrieval of the course ID.
-     */
     @Test
     public void testGetCourseID() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getCourseID().equals("CSC 110");
     }
 
-    /**
-     * Test to verify the retrieval of the course name.
-     */
     @Test
     public void testGetCourseName() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getCourseName().equals("Software Engineering");
     }
 
-    /**
-     * Test to verify the retrieval of the instructor associated with the course.
-     */
     @Test
     public void testGetInstructor() {
         Instructor instructor = new Instructor("John", "Doe", "john@gmail.com");
@@ -36,18 +29,12 @@ public class CourseTest {
         assert course.getInstructor().equals(instructor);
     }
 
-    /**
-     * Test to verify that the course history is initially empty.
-     */
     @Test
     public void testGetHistory() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getHistory().isEmpty();
     }
 
-    /**
-     * Test to verify the setting of the course ID.
-     */
     @Test
     public void testSetCourseID() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
@@ -55,9 +42,6 @@ public class CourseTest {
         assert course.getCourseID().equals("CSC 207");
     }
 
-    /**
-     * Test to verify the setting of the course name.
-     */
     @Test
     public void testSetCourseName() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
@@ -65,9 +49,6 @@ public class CourseTest {
         assert course.getCourseName().equals("Clean Architecture");
     }
 
-    /**
-     * Test to verify the setting of a new instructor for the course.
-     */
     @Test
     public void testSetInstructor() {
         Instructor instructor = new Instructor("John", "Doe", "john@gmail.com");
@@ -77,17 +58,12 @@ public class CourseTest {
         assert course.getInstructor().equals(newInstructor);
     }
 
-    /**
-     * Test to verify the setting of the course history with attendance records.
-     */
     @Test
     public void testSetHistory() {
         Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
-        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-        Student student = new Student("John", "Doe", "S12345", "john.doe@example.com");
-
-        AttendanceRecord attendanceRecord = new AttendanceRecord(student, createdAt);
+        AttendanceRecord attendanceRecord = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "S12345",
+                "john.doe@example.com");
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(attendanceRecord);
 

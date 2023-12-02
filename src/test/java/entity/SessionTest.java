@@ -9,128 +9,56 @@ import java.util.List;
 
 public class SessionTest {
 
-    /**
-     * Test to validate the retrieval of the course from the session.
-     */
     @Test
-    public void testGetCourse() {
+    public void testGetSetAttendance() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
+        AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+                "John@gmail.com");
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
 
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        assert session.getCourse().equals(course);
-    }
-
-    /**
-     * Test to validate the retrieval of the instructor from the session.
-     */
-    @Test
-    public void testGetInstructor() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
-        List<AttendanceRecord> attendanceRecords = new ArrayList<>();
-        attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
-
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        assert session.getInstructor().equals(instructor);
-    }
-
-    /**
-     * Test to validate the retrieval of the start time of the session.
-     */
-    @Test
-    public void testGetStartedAt() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
-        List<AttendanceRecord> attendanceRecords = new ArrayList<>();
-        attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
-
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        assert session.getStartedAt().equals(timestamp);
-    }
-
-    /**
-     * Test to validate the setting of attendance records for the session.
-     */
-    @Test
-    public void testSetAttendance() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
-        List<AttendanceRecord> attendanceRecords = new ArrayList<>();
-        attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
-
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
+        Session session = new Session(attendanceRecords, "SAMPLE_COURSE_ID", "SAMPLE_INSTRUCTOR_ID", timestamp);
         List<AttendanceRecord> newAttendanceRecords = new ArrayList<>();
         session.setAttendance(newAttendanceRecords);
         assert session.getAttendance().equals(newAttendanceRecords);
     }
 
-    /**
-     * Test to validate the setting of a new course for the session.
-     */
     @Test
-    public void testSetCourse() {
+    public void testGetSetCourseID() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
+        AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+                "John@gmail.com");
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
 
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        Course newCourse = new Course("CSC 207", "Software Engineering", instructor);
-        session.setCourse(newCourse);
-        assert session.getCourse().equals(newCourse);
+        Session session = new Session(attendanceRecords, "SAMPLE_COURSE_ID", "SAMPLE_INSTRUCTOR_ID", timestamp);
+        session.setCourseID("NEW_COURSE_ID");
+        assert session.getCourseID().equals("NEW_COURSE_ID");
     }
 
-    /**
-     * Test to validate the setting of a new instructor for the session.
-     */
     @Test
-    public void testSetInstructor() {
+    public void testGetSetInstructorID() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
+        AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+                "John@gmail.com");
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
 
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        Instructor newInstructor = new Instructor("John", "Doe", "john@gmail.com");
-        session.setInstructor(newInstructor);
-        assert session.getInstructor().equals(newInstructor);
+        Session session = new Session(attendanceRecords, "SAMPLE_COURSE_ID", "SAMPLE_INSTRUCTOR_ID", timestamp);
+        session.setCourseID("NEW_COURSE_ID");
+        session.setInstructorID("NEW_INSTRUCTOR_ID");
+        assert session.getInstructorID().equals("NEW_INSTRUCTOR_ID");
     }
 
-    /**
-     * Test to validate the setting of a new start time for the session.
-     */
     @Test
-    public void testSetStartedAt() {
+    public void testGetSetStartedAt() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        Student student = new Student("John", "Doe", "12345", "John@gmail.com");
-        AttendanceRecord record = new AttendanceRecord(student, timestamp);
+        AttendanceRecord record = AttendanceRecordFactory.createAttendanceRecord("John", "Doe", "12345",
+                "John@gmail.com");
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
-        Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
 
-        Session session = new Session(attendanceRecords, course, instructor, timestamp);
+        Session session = new Session(attendanceRecords, "SAMPLE_COURSE_ID", "SAMPLE_INSTRUCTOR_ID", timestamp);
         Timestamp newTimestamp = new Timestamp(System.nanoTime());
         session.setStartedAt(newTimestamp);
         assert session.getStartedAt().equals(newTimestamp);
