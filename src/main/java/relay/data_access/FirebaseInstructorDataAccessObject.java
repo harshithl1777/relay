@@ -11,16 +11,11 @@ import relay.entity.Instructor;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
-
 /**
  * Provides data access methods for interacting with the Firebase Firestore
  * database
  * to perform CRUD operations on Instructor entities.
  */
-@Validated
-@Component
 public class FirebaseInstructorDataAccessObject {
 
 	Firestore db;
