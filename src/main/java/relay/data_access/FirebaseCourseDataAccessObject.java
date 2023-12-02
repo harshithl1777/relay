@@ -3,8 +3,8 @@ package relay.data_access;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import org.apache.velocity.exception.ResourceNotFoundException;
 import relay.entity.Course;
+import relay.exceptions.ResourceNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

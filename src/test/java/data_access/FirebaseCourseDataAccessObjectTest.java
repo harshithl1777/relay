@@ -1,6 +1,5 @@
 package data_access;
 
-import org.apache.velocity.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +8,7 @@ import relay.data_access.FirebaseInitializationSingleton;
 import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.entity.Course;
 import relay.entity.Instructor;
+import relay.exceptions.ResourceNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
