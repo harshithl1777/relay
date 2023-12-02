@@ -26,14 +26,19 @@ public class FirebaseCourseDataAccessObject {
      * @param course The Course object containing course details to be added to Firestore.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public void createCourse(Course course) throws InterruptedException, ExecutionException {
+    public void createCourse(Course course) {
         Map<String, Object> courseDocument = new HashMap<>();
         courseDocument.put("courseName", course.getCourseName());
         courseDocument.put("instructorID", course.getInstructor().getInstructorID());
 
         ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
-        String courseID = newCourseDocument.get().getId();
-        course.setCourseID(courseID);
+        try {
+            String courseID = newCourseDocument.get().getId();
+            course.setCourseID(courseID);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
@@ -43,23 +48,27 @@ public class FirebaseCourseDataAccessObject {
      * @return An ArrayList of Course objects associated with the specified instructor.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) throws InterruptedException, ExecutionException {
+    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) {
         Query query = db.collection("courses")
                 .whereEqualTo("instructorID", instructor.getInstructorID());
 
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         ArrayList<Course> courses = new ArrayList<>();
-        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
 
-            Map<String, Object> courseData = document.getData();
+                Map<String, Object> courseData = document.getData();
 
-            String courseID = document.getId();
-            String courseName = (String) courseData.get("courseName");
+                String courseID = document.getId();
+                String courseName = (String) courseData.get("courseName");
 
-            Course course = new Course(courseID, courseName, instructor);
-            courses.add(course);
+                Course course = new Course(courseID, courseName, instructor);
+                courses.add(course);
 
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
         }
         return courses;
     }
@@ -71,10 +80,28 @@ public class FirebaseCourseDataAccessObject {
      * @return true if the course exists, false otherwise.
      * @throws RuntimeException If an ExecutionException or InterruptedException occurs during Firestore operations.
      */
-    public boolean exists(String courseID) throws InterruptedException, ExecutionException {
+    public boolean exists(String courseID) {
         ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
-        DocumentSnapshot courseDocument = retrievedcourseDocument.get();
+        DocumentSnapshot courseDocument = null;
+        try {
+            courseDocument = retrievedcourseDocument.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
         return courseDocument.exists();
+    }
+
+    public void delete(String courseID) throws RuntimeException{
+        if (!exists(courseID)) {
+            throw new RuntimeException();
+        }
+
+        ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("courses").document(courseID).delete();
+        try {
+            deleteResult.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }
