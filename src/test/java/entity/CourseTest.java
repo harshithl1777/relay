@@ -13,39 +13,39 @@ import java.util.List;
 public class CourseTest {
     @Test
     public void testGetCourseID() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getCourseID().equals("CSC 110");
     }
 
     @Test
     public void testGetCourseName() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getCourseName().equals("Software Engineering");
     }
 
     @Test
     public void testGetInstructor() {
         Instructor instructor = new Instructor("John", "Doe", "john@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
+        Course course = new Course("CSC 110",  instructor);
         assert course.getInstructor().equals(instructor);
     }
 
     @Test
     public void testGetHistory() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         assert course.getHistory().isEmpty();
     }
 
     @Test
     public void testSetCourseID() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         course.setCourseID("CSC 207");
         assert course.getCourseID().equals("CSC 207");
     }
 
     @Test
     public void testSetCourseName() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         course.setCourseName("Clean Architecture");
         assert course.getCourseName().equals("Clean Architecture");
     }
@@ -53,7 +53,7 @@ public class CourseTest {
     @Test
     public void testSetInstructor() {
         Instructor instructor = new Instructor("John", "Doe", "john@gmail.com");
-        Course course = new Course("CSC 110", "Software Engineering", instructor);
+        Course course = new Course("CSC 110",  instructor);
         Instructor newInstructor = new Instructor("Jane", "Doe", "jane@gmail.com");
         course.setInstructor(newInstructor);
         assert course.getInstructor().equals(newInstructor);
@@ -61,7 +61,7 @@ public class CourseTest {
 
     @Test
     public void testSetHistory() {
-        Course course = new Course("CSC 110", "Software Engineering", new Instructor("John", "Doe", "john@gmail.com"));
+        Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
         Student student = new Student("John", "Doe", "S12345", "john.doe@example.com");
