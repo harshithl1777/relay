@@ -31,7 +31,7 @@ public class FirebaseCourseDataAccessObjectTest {
     void createAndReadCourse(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("", "STA157", instructor);
-        dataAccessObject.createCourse(course);
+        dataAccessObject.saveCourse(course);
         Course retrievedCourse = dataAccessObject.getCoursesByInstructor(instructor).get(0);
 
         assertNotNull(retrievedCourse);
@@ -49,7 +49,7 @@ public class FirebaseCourseDataAccessObjectTest {
     void testExistentCourseExists(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("", "STA157", instructor);
-        dataAccessObject.createCourse(course);
+        dataAccessObject.saveCourse(course);
 
         assertTrue(dataAccessObject.exists(course.getCourseID()));
 
@@ -71,7 +71,7 @@ public class FirebaseCourseDataAccessObjectTest {
     void testDeleteExistentCourse(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("", "STA157", instructor);
-        dataAccessObject.createCourse(course);
+        dataAccessObject.saveCourse(course);
 
         dataAccessObject.delete(course.getCourseID());
 

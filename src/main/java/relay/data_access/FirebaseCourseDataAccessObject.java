@@ -26,7 +26,7 @@ public class FirebaseCourseDataAccessObject {
      * @param course The Course object containing course details to be added to Firestore.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public void createCourse(Course course) {
+    public void saveCourse(Course course) {
         Map<String, Object> courseDocument = new HashMap<>();
         courseDocument.put("courseName", course.getCourseName());
         courseDocument.put("instructorID", course.getInstructor().getInstructorID());
