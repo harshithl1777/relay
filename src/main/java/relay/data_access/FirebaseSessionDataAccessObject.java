@@ -21,6 +21,7 @@ import com.google.cloud.storage.Bucket;
 
 import relay.entity.Session;
 import relay.entity.SessionFactory;
+import relay.entity.SessionFactoryInterface;
 import relay.exceptions.ResourceNotFoundException;
 
 public class FirebaseSessionDataAccessObject {
@@ -79,7 +80,9 @@ public class FirebaseSessionDataAccessObject {
 			if (sessionDocumentData == null)
 				throw new NullPointerException();
 
-			return SessionFactory.createSessionFromMap(sessionDocumentData);
+			SessionFactoryInterface sessionFactory = new SessionFactory();
+
+			return sessionFactory.createSessionFromMap(sessionDocumentData);
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 			return null;
