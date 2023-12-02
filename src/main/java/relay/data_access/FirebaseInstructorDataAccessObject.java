@@ -3,6 +3,7 @@ package relay.data_access;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import relay.exceptions.ResourceNotFoundException;
 import relay.entity.Instructor;
@@ -63,6 +64,9 @@ public class FirebaseInstructorDataAccessObject {
      * @return True if the Instructor exists, false otherwise.
      */
     public boolean exists(String instructorID) {
+        if (instructorID == null || instructorID.isEmpty()) {
+            return false;
+        }
         ApiFuture<DocumentSnapshot> future = FirestoreSingleton.get().collection("instructors").document(instructorID).get();
 
         try {
