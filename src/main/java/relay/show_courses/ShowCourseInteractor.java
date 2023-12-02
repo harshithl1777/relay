@@ -17,7 +17,6 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
         this.outputBoundary = outputBoundary;
         this.showCourseDataAccessInterface = showCourseDataAccessInterface;
     }
-
     @Override
     public void execute(ShowCourseInputData showCourseInputData) {
         try {
