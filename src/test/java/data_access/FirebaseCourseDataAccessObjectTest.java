@@ -5,9 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relay.data_access.FirebaseCourseDataAccessObject;
 import relay.data_access.FirebaseInitializationSingleton;
-import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.entity.Course;
-import relay.entity.Instructor;
 import relay.exceptions.ResourceNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FirebaseCourseDataAccessObjectTest {
     FirebaseCourseDataAccessObject courseDataAccessObject;
-    FirebaseInstructorDataAccessObject instructorDataAccessObject;
 
     @BeforeAll
     public static void initializeFirebase() {
@@ -25,7 +22,6 @@ public class FirebaseCourseDataAccessObjectTest {
     @BeforeEach
     void initializeDataAccessObject(){
         this.courseDataAccessObject = new FirebaseCourseDataAccessObject();
-        this.instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
     }
 
     /**
@@ -33,20 +29,16 @@ public class FirebaseCourseDataAccessObjectTest {
      */
     @Test
     void createAndReadCourse(){
-        Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
-        instructorDataAccessObject.save(instructor);
-        Course course = new Course("STA157", instructor);
+        Course course = new Course("STA157", "xyz");
         courseDataAccessObject.save(course);
-        Course retrievedCourse = courseDataAccessObject.getCoursesByInstructor(instructor.getInstructorID()).get(0);
+        Course retrievedCourse = courseDataAccessObject.getCoursesByInstructor("xyz").get(0);
 
         assertNotNull(retrievedCourse);
         assertEquals(retrievedCourse.getCourseID(), course.getCourseID());
         assertEquals(retrievedCourse.getCourseName(), course.getCourseName());
-        assertEquals(retrievedCourse.getInstructor().getInstructorID(), course.getInstructor().getInstructorID());
+        assertEquals(retrievedCourse.getInstructorID(), course.getInstructorID());
 
         courseDataAccessObject.delete(course.getCourseID());
-        instructorDataAccessObject.delete(instructor.getInstructorID());
-
     }
 
     /**
@@ -54,8 +46,7 @@ public class FirebaseCourseDataAccessObjectTest {
      */
     @Test
     void testExistentCourseExists(){
-        Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
-        Course course = new Course("STA157", instructor);
+        Course course = new Course("STA157", "xyz");
         courseDataAccessObject.save(course);
 
         assertTrue(courseDataAccessObject.exists(course.getCourseID()));
@@ -76,8 +67,7 @@ public class FirebaseCourseDataAccessObjectTest {
      */
     @Test
     void testDeleteExistentCourse(){
-        Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
-        Course course = new Course("STA157", instructor);
+        Course course = new Course("STA157", "xyz");
         courseDataAccessObject.save(course);
 
         courseDataAccessObject.delete(course.getCourseID());

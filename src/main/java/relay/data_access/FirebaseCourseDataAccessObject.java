@@ -30,7 +30,7 @@ public class FirebaseCourseDataAccessObject {
     public void save(Course course) {
         Map<String, Object> courseDocument = new HashMap<>();
         courseDocument.put("courseName", course.getCourseName());
-        courseDocument.put("instructorID", course.getInstructor().getInstructorID());
+        courseDocument.put("instructorID", course.getInstructorID());
 
         ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
         try {
@@ -68,9 +68,8 @@ public class FirebaseCourseDataAccessObject {
                 String courseID = document.getId();
                 String courseName = (String) courseData.get("courseName");
 
-                FirebaseInstructorDataAccessObject instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
 
-                Course course = new Course(courseName, instructorDataAccessObject.read(instructorID));
+                Course course = new Course(courseName, instructorID);
                 course.setCourseID(courseID);
                 courses.add(course);
 
@@ -79,6 +78,28 @@ public class FirebaseCourseDataAccessObject {
             e.printStackTrace();
         }
         return courses;
+    }
+
+    public Course getCourseByID(String courseID){
+        if (!exists(courseID)){
+            throw new NullPointerException();
+        }
+
+        DocumentReference courseRef = db.collection("courses").document(courseID);
+        ApiFuture<DocumentSnapshot> retrievedcourseDocument = courseRef.get();
+        try {
+            DocumentSnapshot document = retrievedcourseDocument.get();
+            Map<String, Object> courseData = document.getData();
+
+
+            String courseName = (String) courseData.get("courseName");
+            String instructorID = (String) courseData.get("instructorID");
+            return new Course(courseName, instructorID);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

@@ -16,7 +16,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getCourse().equals(course);
@@ -29,7 +29,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getInstructor().equals(instructor);
@@ -42,7 +42,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         assert session.getStartedAt().equals(timestamp);
@@ -55,7 +55,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         List<AttendanceRecord> newAttendanceRecords = new ArrayList<>();
@@ -70,10 +70,10 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
-        Course newCourse = new Course("CSC 207",  instructor);
+        Course newCourse = new Course("CSC 207",  "zyz");
         session.setCourse(newCourse);
         assert session.getCourse().equals(newCourse);
     }
@@ -85,7 +85,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110",  instructor);
+        Course course = new Course("CSC 110",  "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         Instructor newInstructor = new Instructor("John", "Doe", "john@gmail.com");
@@ -100,7 +100,7 @@ public class SessionTest {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
         attendanceRecords.add(record);
         Instructor instructor = new Instructor("Jane", "Doe", "jane@gmail.com");
-        Course course = new Course("CSC 110", instructor);
+        Course course = new Course("CSC 110", "zyz");
 
         Session session = new Session(attendanceRecords, course, instructor, timestamp);
         Timestamp newTimestamp = new Timestamp(System.nanoTime());

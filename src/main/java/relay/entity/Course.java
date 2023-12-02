@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class Course {
 	private String courseID;
 	private String courseName;
-	private Instructor instructor;
+	private String instructorID;
 	private List<AttendanceRecord> history;
 
-	public Course(String courseName, Instructor instructor) {
+	public Course(String courseName, String instructorID) {
 		this.courseName = courseName;
-		this.instructor = instructor;
+		this.instructorID = instructorID;
 		this.history = new ArrayList<>();
 	}
 
@@ -23,8 +23,8 @@ public class Course {
 		return courseName;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
+	public String getInstructorID() {
+		return instructorID;
 	}
 
 	public List<AttendanceRecord> getHistory() {
@@ -39,8 +39,8 @@ public class Course {
 		this.courseName = courseName;
 	}
 
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+	public void setInstructorID(String instructorID) {
+		this.instructorID = instructorID;
 	}
 
 	public void setHistory(List<AttendanceRecord> history) {
