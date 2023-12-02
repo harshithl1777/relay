@@ -19,7 +19,6 @@ public class FirebaseInstructorDataAccessObject {
      * Saves the provided Instructor object to the Firestore database.
      *
      * @param instructor The Instructor object to be saved.
-     * @return True if the save operation is successful, false otherwise.
      */
     public void save(Instructor instructor) {
         ApiFuture<DocumentReference> docRef = FirestoreSingleton.get().collection("instructors").add(instructor);
@@ -80,7 +79,7 @@ public class FirebaseInstructorDataAccessObject {
      * Deletes an Instructor object from the Firestore database based on the provided instructorID.
      *
      * @param instructorID The unique identifier of the Instructor to be deleted.
-     * @throws ResourceNotFoundException if
+     * @throws ResourceNotFoundException if the instructor does not exist in Firestore
      */
     public void delete(String instructorID) throws ResourceNotFoundException {
         if (!exists(instructorID)) {
