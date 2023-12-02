@@ -3,6 +3,9 @@ package relay.data_access;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import relay.entity.AttendanceRecord;
+import relay.entity.AttendanceRecordFactory;
+import relay.entity.AttendanceRecordFactoryInterface;
 import relay.entity.Course;
 import relay.exceptions.ResourceNotFoundException;
 
@@ -65,9 +68,15 @@ public class FirebaseCourseDataAccessObject {
                 String courseID = document.getId();
                 String courseName = (String) courseData.get("courseName");
 
+                ArrayList<Map<String, Object>> attendanceMapsList = (ArrayList<Map<String, Object>>) courseData.get("attendance");
+                ArrayList<AttendanceRecord> attendance = new ArrayList<>();
+                AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+                attendanceMapsList.forEach(
+                        (recordMap) -> attendance.add(attendanceRecordFactory.createAttendanceRecordFromMap(recordMap)));
 
                 Course course = new Course(courseName, instructorID);
                 course.setCourseID(courseID);
+                course.setHistory(attendance);
                 courses.add(course);
 
             }
@@ -95,13 +104,17 @@ public class FirebaseCourseDataAccessObject {
             DocumentSnapshot document = retrievedcourseDocument.get();
             Map<String, Object> courseData = document.getData();
             ArrayList<Map<String, Object>> attendanceMapsList = (ArrayList<Map<String, Object>>) courseData.get("attendance");
-
-
-
+            ArrayList<AttendanceRecord> attendance = new ArrayList<>();
+            AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+            attendanceMapsList.forEach(
+                    (recordMap) -> attendance.add(attendanceRecordFactory.createAttendanceRecordFromMap(recordMap)));
 
             String courseName = (String) courseData.get("courseName");
             String instructorID = (String) courseData.get("instructorID");
-            return new Course(courseName, instructorID);
+            Course course = new Course(courseName, instructorID);
+            course.setHistory(attendance);
+            return course;
+
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
