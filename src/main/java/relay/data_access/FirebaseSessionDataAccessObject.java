@@ -49,7 +49,7 @@ public class FirebaseSessionDataAccessObject {
 				String sessionDocumentID = sessionDocument.get().getId();
 				session.setSessionID(sessionDocumentID);
 
-				String alphaNumericCode = sessionDocumentID.substring(0, 6).toUpperCase();
+				String alphaNumericCode = sessionDocumentID.toUpperCase();
 
 				db.collection("sessions").document(sessionDocumentID).update(
 						"sessionCode",
