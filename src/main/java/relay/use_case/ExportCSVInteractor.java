@@ -15,7 +15,6 @@ public class ExportCSVInteractor implements ExportCSVInputBoundary {
     final ExportCSVDataAccessInterface exportCSVDataAccessInterface;
 
 
-
     // Corrected constructor syntax
     public ExportCSVInteractor(ExportCSVOutputBoundary outputBoundary, ExportCSVDataAccessInterface exportCSVDataAccessInterface) {
         this.outputBoundary = outputBoundary;
