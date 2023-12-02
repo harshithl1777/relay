@@ -14,13 +14,14 @@ public class CourseTest {
     @Test
     public void testGetCourseID() {
         Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
-        assert course.getCourseID().equals("CSC 110");
+        course.setCourseID("zyx");
+        assert course.getCourseID().equals("zyx");
     }
 
     @Test
     public void testGetCourseName() {
         Course course = new Course("CSC 110",  new Instructor("John", "Doe", "john@gmail.com"));
-        assert course.getCourseName().equals("Software Engineering");
+        assert course.getCourseName().equals("CSC 110");
     }
 
     @Test
