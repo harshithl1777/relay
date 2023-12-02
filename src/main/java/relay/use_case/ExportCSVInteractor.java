@@ -1,32 +1,38 @@
 package relay.use_case;
 
 import relay.entity.AttendanceRecord;
-import relay.entity.Course;
-import relay.use_case.CsvFileGateway;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
 
 // Use case layer
 
 public class ExportCSVInteractor implements ExportCSVInputBoundary {
-    private ExportCSVOutputBoundary outputBoundary;
-    private CsvFileGateway csvFileGateway;
+    final ExportCSVOutputBoundary outputBoundary;
+    final ExportCSVDataAccessInterface exportCSVDataAccessInterface;
+
+    final CsvConverter csvConverter;
+
 
     // Corrected constructor syntax
-    public ExportCSVInteractor(ExportCSVOutputBoundary outputBoundary, CsvFileGateway csvFileGateway) {
+    public ExportCSVInteractor(ExportCSVOutputBoundary outputBoundary, ExportCSVDataAccessInterface exportCSVDataAccessInterface, CsvConverter csvConverter) {
         this.outputBoundary = outputBoundary;
-        this.csvFileGateway = csvFileGateway;
+        this.exportCSVDataAccessInterface = exportCSVDataAccessInterface;
+        this.csvConverter = csvConverter;
     }
 
     @Override
     public void execute(ExportCSVInputData inputData) {
         try {
             // Replace this with your actual logic to get attendance records
-            List<AttendanceRecord> attendanceRecords = retrieveAttendanceRecords(inputData);
+            List<AttendanceRecord> attendanceRecords = exportCSVDataAccessInterface.retreiveAttendanceRecords(inputData);
 
             // Implement the logic to export attendance records to CSV
             List<String[]> csvData = convertToCsvFormat(attendanceRecords);
-            csvFileGateway.writeCsvFile(csvData, "attendance_records.csv");
+            writeCsvFile(csvData, "attendance_records.csv");
 
             // Notify the output boundary (presenter) with the success result
             ExportCSVOutputData outputData = new ExportCSVOutputData(attendanceRecords);
@@ -39,17 +45,35 @@ public class ExportCSVInteractor implements ExportCSVInputBoundary {
         }
     }
 
+    public static List<String[]> convertToCsvFormat(List<AttendanceRecord> attendanceRecords) {
+        List<String[]> csvData = new ArrayList<>();
 
-    private List<AttendanceRecord> retrieveAttendanceRecords(ExportCSVInputData inputData) {
-        // Replace this with your actual logic to fetch attendance records
-        // For example, you might query a database or call a service
-        // to get the attendance records based on the provided input data.
-        return /* your logic to get attendance records */;
+        // Add CSV header
+        String[] header = {"StudentID", "CreatedAt"};
+        csvData.add(header);
+
+        return csvData;
     }
 
-    private List<String[]> convertToCsvFormat(List<AttendanceRecord> attendanceRecords) {
-        // Implement logic to convert attendance records to CSV format
-        // Return a list of string arrays representing CSV rows
-        return null;
+    public void writeCsvFile(List<String[]> data, String filePath) {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (String[] rowData : data) {
+                for (int i = 0; i < rowData.length; i++) {
+                    writer.append(rowData[i]);
+                    if (i < rowData.length - 1) {
+                        writer.append(",");
+                    }
+                }
+                writer.append("\n");
+            }
+        } catch (IOException e) {
+            // Handle the exception appropriately (e.g., log or throw a custom exception)
+            e.printStackTrace();
+        }
     }
+
 }
+
+
+
+
