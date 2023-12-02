@@ -1,18 +1,19 @@
 package relay.entity;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Course {
 	private String courseID;
 	private String courseName;
-	private Instructor instructor;
+	private String instructorID;
 	private List<AttendanceRecord> history;
 
-	public Course(String courseID, String courseName, Instructor instructor) {
-		this.courseID = courseID;
+	public Course(String courseName, String instructorID) {
 		this.courseName = courseName;
-		this.instructor = instructor;
+		this.instructorID = instructorID;
 		this.history = new ArrayList<>();
 	}
 
@@ -24,8 +25,8 @@ public class Course {
 		return courseName;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
+	public String getInstructorID() {
+		return instructorID;
 	}
 
 	public List<AttendanceRecord> getHistory() {
@@ -40,8 +41,8 @@ public class Course {
 		this.courseName = courseName;
 	}
 
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+	public void setInstructorID(String instructorID) {
+		this.instructorID = instructorID;
 	}
 
 	public void setHistory(List<AttendanceRecord> history) {
@@ -50,5 +51,22 @@ public class Course {
 
 	public void appendHistory(List<AttendanceRecord> newRecords) {
 		this.history.addAll(newRecords);
+	}
+
+	public Map<String, Object> convertToMap() {
+		Map<String, Object> courseMap = new HashMap<>();
+
+
+		List<Map<String, Object>> attendanceRecordMaps = new ArrayList<>();
+
+		for (AttendanceRecord record : history) {
+			attendanceRecordMaps.add(record.convertToMap());
+		}
+		courseMap.put("instructorID", this.instructorID);
+		courseMap.put("courseName", this.courseName);
+		courseMap.put("attendance", attendanceRecordMaps);
+
+
+		return courseMap;
 	}
 }
