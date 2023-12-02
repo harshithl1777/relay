@@ -63,7 +63,7 @@ public class FirebaseCourseDataAccessObject {
                 String courseID = document.getId();
                 String courseName = (String) courseData.get("courseName");
 
-                Course course = new Course(courseID, courseName, instructor);
+                Course course = new Course(courseName, instructor);
                 courses.add(course);
 
             }

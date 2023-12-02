@@ -9,8 +9,7 @@ public class Course {
 	private Instructor instructor;
 	private List<AttendanceRecord> history;
 
-	public Course(String courseID, String courseName, Instructor instructor) {
-		this.courseID = courseID;
+	public Course(String courseName, Instructor instructor) {
 		this.courseName = courseName;
 		this.instructor = instructor;
 		this.history = new ArrayList<>();
