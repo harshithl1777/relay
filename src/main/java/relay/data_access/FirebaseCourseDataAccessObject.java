@@ -5,12 +5,12 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import relay.entity.Course;
-import relay.entity.Instructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
 
 
 
@@ -45,13 +45,16 @@ public class FirebaseCourseDataAccessObject {
     /**
      * Retrieves a list of courses associated with a specific instructor from the Firestore database.
      *
-     * @param instructor The Instructor object for which courses are to be retrieved.
-     * @return An ArrayList of Course objects associated with the specified instructor.
+     * @param instructorID@return An ArrayList of Course objects associated with the specified instructor.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) {
+    public ArrayList<Course> getCoursesByInstructor(String instructorID) {
+        if (instructorID == null){
+            throw new NullPointerException();
+        }
+
         Query query = db.collection("courses")
-                .whereEqualTo("instructorID", instructor.getInstructorID());
+                .whereEqualTo("instructorID", instructorID);
 
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
@@ -64,13 +67,15 @@ public class FirebaseCourseDataAccessObject {
                 String courseID = document.getId();
                 String courseName = (String) courseData.get("courseName");
 
-                Course course = new Course(courseName, instructor);
+                FirebaseInstructorDataAccessObject instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
+
+                Course course = new Course(courseName, instructorDataAccessObject.read(instructorID));
                 course.setCourseID(courseID);
                 courses.add(course);
 
             }
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return courses;
     }

@@ -33,7 +33,7 @@ public class FirebaseCourseDataAccessObjectTest {
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("STA157", instructor);
         dataAccessObject.saveCourse(course);
-        Course retrievedCourse = dataAccessObject.getCoursesByInstructor(instructor).get(0);
+        Course retrievedCourse = dataAccessObject.getCoursesByInstructor(instructor.getInstructorID()).get(0);
 
         assertNotNull(retrievedCourse);
         assertEquals(retrievedCourse.getCourseID(), course.getCourseID());
