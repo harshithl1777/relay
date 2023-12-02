@@ -7,7 +7,6 @@ import relay.entity.Course;
 import relay.exceptions.ResourceNotFoundException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -28,9 +27,7 @@ public class FirebaseCourseDataAccessObject {
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
     public void save(Course course) {
-        Map<String, Object> courseDocument = new HashMap<>();
-        courseDocument.put("courseName", course.getCourseName());
-        courseDocument.put("instructorID", course.getInstructorID());
+        Map<String, Object> courseDocument = course.convertToMap();
 
         ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
         try {
@@ -80,6 +77,13 @@ public class FirebaseCourseDataAccessObject {
         return courses;
     }
 
+    /**
+     * Retrieves a Course object by its unique ID.
+     *
+     * @param courseID The ID of the course to retrieve.
+     * @return The Course object associated with the provided courseID, if found; otherwise, returns null.
+     * @throws NullPointerException If the provided courseID does not exist.
+     */
     public Course getCourseByID(String courseID){
         if (!exists(courseID)){
             throw new NullPointerException();
@@ -90,6 +94,9 @@ public class FirebaseCourseDataAccessObject {
         try {
             DocumentSnapshot document = retrievedcourseDocument.get();
             Map<String, Object> courseData = document.getData();
+            ArrayList<Map<String, Object>> attendanceMapsList = (ArrayList<Map<String, Object>>) courseData.get("attendance");
+
+
 
 
             String courseName = (String) courseData.get("courseName");
@@ -110,13 +117,14 @@ public class FirebaseCourseDataAccessObject {
      */
     public boolean exists(String courseID) {
         ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
-        DocumentSnapshot courseDocument = null;
         try {
-            courseDocument = retrievedcourseDocument.get();
+            DocumentSnapshot courseDocument = retrievedcourseDocument.get();
+            return courseDocument.exists();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
+            return false;
         }
-        return courseDocument.exists();
+
     }
 
     /**

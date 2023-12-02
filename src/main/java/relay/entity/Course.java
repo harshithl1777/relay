@@ -1,7 +1,9 @@
 package relay.entity;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Course {
 	private String courseID;
@@ -49,5 +51,21 @@ public class Course {
 
 	public void appendHistory(List<AttendanceRecord> newRecords) {
 		this.history.addAll(newRecords);
+	}
+	public Map<String, Object> convertToMap() {
+		Map<String, Object> courseMap = new HashMap<>();
+
+
+		List<Map<String, Object>> attendanceRecordMaps = new ArrayList<>();
+
+		for (AttendanceRecord record : history) {
+			attendanceRecordMaps.add(record.convertToMap());
+		}
+		courseMap.put("instructorID", this.instructorID);
+		courseMap.put("courseName", this.courseName);
+		courseMap.put("attendance", attendanceRecordMaps);
+
+
+		return courseMap;
 	}
 }
