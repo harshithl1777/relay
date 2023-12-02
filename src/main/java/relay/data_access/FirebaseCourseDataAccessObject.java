@@ -74,11 +74,10 @@ public class FirebaseCourseDataAccessObject {
     }
 
     /**
-     * Checks if a course with the given courseID exists in the Firestore database.
+     * Checks if a course with the given course ID exists in the Firestore database.
      *
-     * @param courseID The ID of the course to check for existence.
-     * @return true if the course exists, false otherwise.
-     * @throws RuntimeException If an ExecutionException or InterruptedException occurs during Firestore operations.
+     * @param courseID the ID of the course to check for existence
+     * @return {@code true} if the course with the specified ID exists, {@code false} otherwise
      */
     public boolean exists(String courseID) {
         ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
@@ -91,6 +90,12 @@ public class FirebaseCourseDataAccessObject {
         return courseDocument.exists();
     }
 
+    /**
+     * Deletes a course from Firestore based on the provided course ID.
+     *
+     * @param courseID the ID of the course to be deleted
+     * @throws RuntimeException if the course with the specified ID does not exist or if an error occurs during deletion
+     */
     public void delete(String courseID) throws RuntimeException{
         if (!exists(courseID)) {
             throw new RuntimeException();

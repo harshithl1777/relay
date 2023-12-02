@@ -8,8 +8,8 @@ import relay.data_access.FirebaseInitializationSingleton;
 import relay.entity.Course;
 import relay.entity.Instructor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 
 public class FirebaseCourseDataAccessObjectTest {
@@ -23,6 +23,10 @@ public class FirebaseCourseDataAccessObjectTest {
     void foo(){
         this.dataAccessObject = new FirebaseCourseDataAccessObject();
     }
+
+    /**
+     * Tests the creation and retrieval of a course.
+     */
     @Test
     void createAndReadCourse(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
@@ -36,18 +40,51 @@ public class FirebaseCourseDataAccessObjectTest {
         assertEquals(retrievedCourse.getInstructor().getInstructorID(), course.getInstructor().getInstructorID());
 
         dataAccessObject.delete(course.getCourseID());
-
     }
+
+    /**
+     * Tests the existence of an already created course.
+     */
     @Test
-    void testExists(){
+    void testExistentCourseExists(){
         Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
         Course course = new Course("", "STA157", instructor);
         dataAccessObject.createCourse(course);
 
+        assertTrue(dataAccessObject.exists(course.getCourseID()));
 
+        dataAccessObject.delete(course.getCourseID());
+    }
+
+    /**
+     * Tests the existence of a non-existent course.
+     */
+    @Test
+    void testNonExistentCourseExists(){
+        assertFalse(dataAccessObject.exists("dummyCourseId"));
+    }
+
+    /**
+     * Tests the deletion of an existent course and verifies its non-existence after deletion.
+     */
+    @Test
+    void testDeleteExistentCourse(){
+        Instructor instructor = new Instructor("first", "last","first.last@gmail.com");
+        Course course = new Course("", "STA157", instructor);
+        dataAccessObject.createCourse(course);
+
+        dataAccessObject.delete(course.getCourseID());
+
+        assertFalse(dataAccessObject.exists(course.getCourseID()));
 
     }
 
-
+    /**
+     * Tests the deletion of a non-existent course, expecting a RuntimeException to be thrown.
+     */
+    @Test
+    void testDeleteNonExistentCourse(){
+        assertThrows(RuntimeException.class, () -> dataAccessObject.delete("dummyCourseId"));
+    }
 
 }
