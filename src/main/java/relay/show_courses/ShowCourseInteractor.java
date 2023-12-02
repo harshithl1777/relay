@@ -21,8 +21,8 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
     @Override
     public void execute(ShowCourseInputData showCourseInputData) {
         try {
-
-            List<Course> courses = firebaseCourseDataObjectInterface.getCoursesByInstructor("baldski");
+            List<Course> courses;
+            courses = firebaseCourseDataObjectInterface.getCoursesByInstructor(showCourseInputData.getInstructorID());
             List<String> courseNames = new ArrayList<>();
             for (Course course: courses) {
                 String courseName = course.getCourseName();
