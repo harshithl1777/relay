@@ -19,7 +19,9 @@ public class Course {
 		return courseID;
 	}
 
-	public String getCourseName(){ return courseName; }
+	public String getCourseName() {
+		return courseName;
+	}
 
 	public Instructor getInstructor() {
 		return instructor;
@@ -33,7 +35,9 @@ public class Course {
 		this.courseID = courseID;
 	}
 
-	public void setCourseName(String courseName){this.courseName = courseName;}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;

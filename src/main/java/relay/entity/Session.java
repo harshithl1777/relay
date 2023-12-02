@@ -1,144 +1,133 @@
 package relay.entity;
 
-import com.google.api.gax.paging.Page;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import relay.data_access.StorageSingleton;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.RenderedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class Session {
-    private List<AttendanceRecord> attendance;
-    private String classID;
-    private Instructor instructor;
-    private LocalDateTime startedAt;
-    private String alphaNumericCode;
-    private Image qrCodeImage;
+	private List<AttendanceRecord> attendance;
+	private String sessionID;
+	private Course course;
+	private Instructor instructor;
+	private Timestamp startedAt;
+	private String alphaNumericCode;
+	private Image qrCodeImage;
 
-    private static final String QR_DATA = "google.com";
-    private static final int QR_SIZE_X = 100;
-    private static final int QR_SIZE_Y = 100;
+	private static final String QR_CODE_API_PATH = "https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%dx%d";
+	private static final String QR_CODE_REDIRECT_PATH = "https://relay.vercel.app/students?code=";
+	private static final int QR_SIZE_X = 100;
+	private static final int QR_SIZE_Y = 100;
 
-    public Session(List<AttendanceRecord> attendance, String classID, Instructor instructor,
-                   LocalDateTime startedAt, String alphaNumericCode) throws UnsupportedEncodingException {
-        this.attendance = attendance;
-        this.classID = classID;
-        this.instructor = instructor;
-        this.startedAt = startedAt;
-        this.alphaNumericCode = alphaNumericCode;
-    }
+	public Session(List<AttendanceRecord> attendance, Course course, Instructor instructor,
+			Timestamp startedAt) {
+		this.attendance = attendance;
+		this.course = course;
+		this.instructor = instructor;
+		this.startedAt = startedAt;
+	}
 
-    public List<AttendanceRecord> getAttendance() {
-        return attendance;
-    }
+	public List<AttendanceRecord> getAttendance() {
+		return attendance;
+	}
 
-    public String getClassID() {
-        return classID;
-    }
+	public String getSessionID() {
+		return sessionID;
+	}
 
-    public Instructor getInstructor() {
-        return instructor;
-    }
+	public Course getCourse() {
+		return course;
+	}
 
-    public LocalDateTime getStartedAt() {
-        return startedAt;
-    }
+	public Instructor getInstructor() {
+		return instructor;
+	}
 
-    public String getAlphaNumericCode() {
-        return alphaNumericCode;
-    }
+	public Timestamp getStartedAt() {
+		return startedAt;
+	}
 
-    public Image getQrCodeImage() {
-        return qrCodeImage;
-    }
+	public String getAlphaNumericCode() {
+		return alphaNumericCode;
+	}
 
-    public void setAttendance(List<AttendanceRecord> attendance) {
-        this.attendance = attendance;
-    }
+	public Image getQrCodeImage() {
+		return qrCodeImage;
+	}
 
-    public void setClassID(String classID) {
-        this.classID = classID;
-    }
+	public void setAttendance(List<AttendanceRecord> attendance) {
+		this.attendance = attendance;
+	}
 
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
+	public void setSessionID(String sessionID) {
+		this.sessionID = sessionID;
+	}
 
-    public void setStartedAt(LocalDateTime startedAt) {
-        this.startedAt = startedAt;
-    }
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
-    public void setAlphanumCode(String alphanumCode) {
-        this.alphaNumericCode = alphanumCode;
-    }
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
 
-    public void setQrCodeImage(Image qrCodeImage) {
-        this.qrCodeImage = qrCodeImage;
-    }
+	public void setStartedAt(Timestamp startedAt) {
+		this.startedAt = startedAt;
+	}
 
-    public void generateQRCode() {
-        try {
-            String apiUrl = String.format("https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%dx%d",
-                    URLEncoder.encode(QR_DATA, "UTF-8"), QR_SIZE_X, QR_SIZE_Y);
+	public void setAlphaNumericCode(String alphanumCode) {
+		this.alphaNumericCode = alphanumCode;
+	}
 
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+	public void setQrCodeImage(Image qrCodeImage) {
+		this.qrCodeImage = qrCodeImage;
+	}
 
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                Image qrCodeImage = ImageIO.read(connection.getInputStream());
+	public void generateQRCode() {
+		try {
+			if (alphaNumericCode == null)
+				throw new NullPointerException();
 
-                File outputfile = new File("QRCodeNew.png");
-                ImageIO.write((RenderedImage) qrCodeImage, "png", outputfile);
+			String QRCodeData = URLEncoder.encode(QR_CODE_REDIRECT_PATH + alphaNumericCode, "UTF-8");
+			String apiURL = String.format(QR_CODE_API_PATH, QRCodeData, QR_SIZE_X, QR_SIZE_Y);
 
-                uploadImageToFirebaseStorage(outputfile);
-            } else {
-                throw new RuntimeException("Failed to fetch QR code image from the API");
-            }
+			URL url = new URI(apiURL).toURL();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			Image qrCodeImage = ImageIO.read(connection.getInputStream());
+			setQrCodeImage(qrCodeImage);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void uploadImageToFirebaseStorage(File file) {
-        try {
-            Bucket bucket = StorageSingleton.get();
-            String fileName = "QRCodeNew.png";
-            Blob blob = bucket.create(fileName, Files.readAllBytes(file.toPath()));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    public static boolean checkIfImageExists(String fileName) throws IOException {
-        Bucket bucket = StorageSingleton.get();
-        // List files in the Firebase Storage bucket
-        Page<Blob> blobs = bucket.list();
+	public Map<String, Object> convertToMap() {
+		Map<String, Object> sessionMap = new HashMap<>();
+		String instructorID = instructor.getInstructorID();
+		String courseID = course.getCourseID();
 
-        // Iterate through the files to check if the desired file exists
-        for (Blob blob : blobs.iterateAll()) {
-            if (blob.getName().equals(fileName)) {
-                System.out.println("File exists in Firebase Storage.");
-                return true;
-            }
-        }
+		List<Map<String, Object>> attendanceRecordMaps = new ArrayList<>();
+		for (AttendanceRecord record : attendance) {
+			attendanceRecordMaps.add(record.convertToMap());
+		}
 
-        System.out.println("File not found in Firebase Storage.");
-        return false;
-    }
-    public static void deleteFile(String fileName) {
-        Bucket bucket = StorageSingleton.get();
-        bucket.get(fileName).delete();
-    }
+		sessionMap.put("instructorID", instructorID);
+		sessionMap.put("courseID", courseID);
+		sessionMap.put("startedAt", startedAt);
+		sessionMap.put("sessionCode", alphaNumericCode);
+		sessionMap.put("attendance", attendanceRecordMaps);
+
+		return sessionMap;
+	}
 }
