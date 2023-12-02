@@ -3,8 +3,8 @@ package relay.entity;
 import java.sql.Timestamp;
 import java.util.Map;
 
-public class AttendanceRecordFactory {
-	public static AttendanceRecord createAttendanceRecord(String studentFirstName, String studentLastName,
+public class AttendanceRecordFactory implements AttendanceRecordFactoryInterface {
+	public AttendanceRecord createAttendanceRecord(String studentFirstName, String studentLastName,
 			String studentID,
 			String studentEmailAddress) {
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -12,7 +12,7 @@ public class AttendanceRecordFactory {
 				currentTimestamp);
 	}
 
-	public static AttendanceRecord createAttendanceRecordFromMap(Map<String, Object> recordMap) {
+	public AttendanceRecord createAttendanceRecordFromMap(Map<String, Object> recordMap) {
 		String studentFirstName = (String) recordMap.get("studentFirstName");
 		String studentLastName = (String) recordMap.get("studentLastName");
 		String studentEmailAddress = (String) recordMap.get("studentEmailAddress");
