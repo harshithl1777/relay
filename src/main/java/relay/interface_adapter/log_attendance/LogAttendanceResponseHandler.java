@@ -1,4 +1,4 @@
-package relay.interface_adapter.LogAttendance;
+package relay.interface_adapter.log_attendance;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,9 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import relay.app.LogAttendanceUseCaseFactory;
 import relay.data_access.FirebaseSessionDataAccessObject;
-import relay.use_case.LogAttendance.LogAttendanceInputData;
+import relay.use_case.log_attendance.LogAttendanceInputData;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Map;
 import java.util.Objects;

@@ -1,16 +1,14 @@
-package relay.interface_adapter.LogAttendance;
+package relay.interface_adapter.start_session;
 
 import relay.interface_adapter.State;
 import relay.interface_adapter.ViewModel;
 
-public class LogAttendanceViewModel implements ViewModel {
+/**
+ * ViewModel class representing the view model for the login operation.
+ */
+public class StartSessionViewModel implements ViewModel {
 
-    private State state = new LogAttendanceState();
-
-    public LogAttendanceViewModel() {
-        super();
-    }
-
+    private State state = new StartSessionState();
     @Override
     public State getState() {
         return state;
@@ -19,6 +17,5 @@ public class LogAttendanceViewModel implements ViewModel {
     @Override
     public void setState(State state) {
         this.state = state;
-
     }
 }
