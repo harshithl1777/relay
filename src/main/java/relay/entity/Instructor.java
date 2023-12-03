@@ -12,6 +12,12 @@ public class Instructor {
 		this.emailAddress = emailAddress;
 	}
 
+	/**
+	 * Empty constructor required by certain data access interface
+	 * implementations. Do not remove, it will cause breaking changes.
+	 */
+	public Instructor() {}
+
 	public String getInstructorID() {
 		return instructorID;
 	}
