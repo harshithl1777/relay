@@ -9,13 +9,12 @@ import java.util.List;
 public class ShowCourseInteractor implements ShowCourseInputBoundary {
     final FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface;
     final ShowCourseOutputBoundary outputBoundary;
-    final FirebaseCourseDataObjectInterface showCourseDataAccessInterface;
 
 
-    public ShowCourseInteractor(FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface, ShowCourseOutputBoundary outputBoundary, FirebaseCourseDataObjectInterface showCourseDataAccessInterface) {
+
+    public ShowCourseInteractor(FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface, ShowCourseOutputBoundary outputBoundary) {
         this.firebaseCourseDataObjectInterface = firebaseCourseDataObjectInterface;
         this.outputBoundary = outputBoundary;
-        this.showCourseDataAccessInterface = showCourseDataAccessInterface;
     }
 
     @Override
