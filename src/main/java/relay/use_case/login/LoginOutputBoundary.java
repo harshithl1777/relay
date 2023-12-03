@@ -1,9 +1,13 @@
 package relay.use_case.login;
 
-public interface LoginOutputBoundary {
-    void prepareSuccessResponse(LoginOutputData loginOutputData);
+import org.springframework.http.ResponseEntity;
 
-    void prepareFailResponse(LoginInputData loginInputData);
+import java.util.Map;
+
+public interface LoginOutputBoundary {
+    ResponseEntity<Map<String, Object>> prepareSuccessResponse(LoginOutputData loginOutputData);
+
+    ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData loginOutputData);
 
 
 }
