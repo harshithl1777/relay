@@ -37,6 +37,5 @@ public class ShowCoursePresenter implements ShowCourseOutputBoundary {
         showCourseState.setStatusCode(HttpStatus.CONFLICT);
         return ResponseFactory.createFailureResponseEntity(viewModel);
     }
-
 }
 
