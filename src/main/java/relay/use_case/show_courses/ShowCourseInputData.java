@@ -1,4 +1,4 @@
-package relay.show_courses;
+package relay.use_case.show_courses;
 
 public class ShowCourseInputData {
     final private String instructorID;

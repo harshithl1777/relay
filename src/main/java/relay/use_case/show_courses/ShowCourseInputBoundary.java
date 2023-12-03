@@ -1,7 +1,6 @@
-package relay.show_courses;
+package relay.use_case.show_courses;
 
 import org.springframework.http.ResponseEntity;
-import relay.use_case.ExportCSVInputData;
 
 import java.util.Map;
 

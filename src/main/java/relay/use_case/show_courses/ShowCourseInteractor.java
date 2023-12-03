@@ -1,21 +1,20 @@
-package relay.show_courses;
+package relay.use_case.show_courses;
 
 import org.springframework.http.ResponseEntity;
 import relay.entity.Course;
-import relay.use_case.ExportCSVOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ShowCourseInteractor implements ShowCourseInputBoundary {
-    final FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface;
+    final ShowCourseDataAccessInterface showCourseDataAccessInterface;
     final ShowCourseOutputBoundary outputBoundary;
 
 
 
-    public ShowCourseInteractor(FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface, ShowCourseOutputBoundary outputBoundary) {
-        this.firebaseCourseDataObjectInterface = firebaseCourseDataObjectInterface;
+    public ShowCourseInteractor(ShowCourseDataAccessInterface showCourseDataAccessInterface, ShowCourseOutputBoundary outputBoundary) {
+        this.showCourseDataAccessInterface = showCourseDataAccessInterface;
         this.outputBoundary = outputBoundary;
     }
 
@@ -23,7 +22,7 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
     public ResponseEntity<Map<String, Object>> execute(ShowCourseInputData showCourseInputData) {
         try {
             List<Course> courses;
-            courses = firebaseCourseDataObjectInterface.getCoursesByInstructor(showCourseInputData.getInstructorID());
+            courses = showCourseDataAccessInterface.getCoursesByInstructor(showCourseInputData.getInstructorID());
             List<String> courseNames = new ArrayList<>();
             for (Course course: courses) {
                 String courseName = course.getCourseName();
