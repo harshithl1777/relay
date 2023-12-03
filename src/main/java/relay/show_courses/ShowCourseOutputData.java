@@ -10,4 +10,8 @@ public class ShowCourseOutputData {
     public ShowCourseOutputData(List<String> courseNames) {
         this.courseNames = courseNames;
     }
+
+    public List<String> getCourseNames() {
+        return courseNames;
+    }
 }

@@ -17,6 +17,7 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
         this.outputBoundary = outputBoundary;
         this.showCourseDataAccessInterface = showCourseDataAccessInterface;
     }
+
     @Override
     public void execute(ShowCourseInputData showCourseInputData) {
         try {
@@ -32,9 +33,8 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
             outputBoundary.prepareSuccessView(outputData);
 
         }  catch (Exception e) {
-            String errorMessage = "Error exporting attendance records: " + e.getMessage();
+            String errorMessage = "Error getting courses: " + e.getMessage();
             outputBoundary.prepareFailView(errorMessage);
-
 
         }
 
