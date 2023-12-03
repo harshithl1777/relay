@@ -9,15 +9,14 @@ import relay.entity.AttendanceRecordFactoryInterface;
 import relay.entity.Course;
 import relay.exceptions.ResourceNotFoundException;
 import relay.show_courses.FirebaseCourseDataObjectInterface;
+import relay.use_case.create_course.CreateCourseCourseDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
-
-
-public class FirebaseCourseDataAccessObject implements FirebaseCourseDataObjectInterface {
+public class FirebaseCourseDataAccessObject implements CreateCourseCourseDataAccessInterface, FirebaseCourseDataObjectInterface {
     private final Firestore db;
 
     public FirebaseCourseDataAccessObject() {
@@ -161,4 +160,3 @@ public class FirebaseCourseDataAccessObject implements FirebaseCourseDataObjectI
     }
 
 }
-

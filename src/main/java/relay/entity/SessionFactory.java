@@ -18,6 +18,8 @@ public class SessionFactory implements SessionFactoryInterface {
 		List<Map<String, Object>> attendanceMapsList = (List<Map<String, Object>>) sessionMap.get("attendance");
 		String courseID = (String) sessionMap.get("courseID");
 		String instructorID = (String) sessionMap.get("instructorID");
+		String sessionID = (String) sessionMap.get("sessionID");
+		String sessionCode = (String) sessionMap.get("sessionCode");
 		com.google.cloud.Timestamp startedAtGoogle = (com.google.cloud.Timestamp) sessionMap.get("startedAt");
 		Timestamp startedAtJavaSQL = startedAtGoogle.toSqlTimestamp();
 
@@ -26,6 +28,8 @@ public class SessionFactory implements SessionFactoryInterface {
 		attendanceMapsList.forEach(
 				(recordMap) -> attendance.add(attendanceRecordFactory.createAttendanceRecordFromMap(recordMap)));
 		Session session = new Session(attendance, courseID, instructorID, startedAtJavaSQL);
+		session.setSessionID(sessionID);
+		session.setAlphaNumericCode(sessionCode);
 		return session;
 	}
 
