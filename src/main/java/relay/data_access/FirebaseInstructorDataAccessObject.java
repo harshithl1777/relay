@@ -4,10 +4,16 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+
+import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.signup.SignupInstructorDataAccessInterface;
 import relay.entity.Instructor;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -16,7 +22,7 @@ import java.util.concurrent.ExecutionException;
  * database
  * to perform CRUD operations on Instructor entities.
  */
-public class FirebaseInstructorDataAccessObject {
+public class FirebaseInstructorDataAccessObject implements SignupInstructorDataAccessInterface {
 
 	Firestore db;
 
@@ -29,16 +35,24 @@ public class FirebaseInstructorDataAccessObject {
 	 *
 	 * @param instructor The Instructor object to be saved.
 	 */
-	public void save(Instructor instructor) {
+	@Override
+	public void save(Instructor instructor) throws ResourceAlreadyExistsException {
 		if (exists(instructor.getInstructorID()))
 			update(instructor);
 		else
 			create(instructor);
 	}
 
-	private void create(Instructor instructor) {
-		ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
+	private void create(Instructor instructor) throws ResourceAlreadyExistsException {
 		try {
+			ApiFuture<QuerySnapshot> future = db.collection("instructors")
+					.whereEqualTo("emailAddress", instructor.getEmailAddress()).get();
+			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+			if (documents.size() > 0)
+				throw new ResourceAlreadyExistsException("Document with specified email already exists.");
+
+			ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
 			instructor.setInstructorID(docRef.get().getId());
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
@@ -49,7 +63,7 @@ public class FirebaseInstructorDataAccessObject {
 		String instructorID = instructor.getInstructorID();
 		if (instructorID == null)
 			throw new NullPointerException();
-		db.collection("instructors").document().set(instructor);
+		db.collection("instructors").document(instructorID).set(instructor);
 	}
 
 	/**
@@ -64,7 +78,7 @@ public class FirebaseInstructorDataAccessObject {
 	 * @throws NullPointerException      if the converted instructor document
 	 *                                   variable is null
 	 */
-	public Instructor read(String instructorID) {
+	public Instructor read(String instructorID) throws ResourceNotFoundException {
 		if (instructorID == null)
 			throw new NullPointerException();
 		if (!exists(instructorID))
