@@ -1,0 +1,74 @@
+package use_case.login;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
+import relay.data_access.InMemoryInstructorDataAccessObject;
+import relay.entity.Instructor;
+import relay.exceptions.ResourceAlreadyExistsException;
+import relay.use_case.login.*;
+
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class LoginInteractorTest {
+    LoginInstructorDataAccessInterface instructorRepository;
+
+    @BeforeEach
+    void setupInstructorRepository() {
+        this.instructorRepository = new InMemoryInstructorDataAccessObject();
+    }
+
+    @Test
+    void successTest() throws ResourceAlreadyExistsException {
+        LoginInputData loginInputData = new LoginInputData("vihaanchugh@gmail.com");
+        // replicate signup
+        Instructor instructor = new Instructor("Vihaan", "Chugh", "vihaanchugh@gmail.com");
+        instructor.setInstructorID("100879585");
+        ((InMemoryInstructorDataAccessObject) instructorRepository).save(instructor);
+        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareSuccessResponse(LoginOutputData loginOutputData) {
+                assertEquals("vihaanchugh@gmail.com", loginOutputData.getEmailAddress());
+                assertEquals("Vihaan", loginOutputData.getFirstName());
+                assertEquals("Chugh", loginOutputData.getLastName());
+                assertEquals("Chugh", loginOutputData.getLastName());
+                assertEquals("100879585", loginOutputData.getInstructorID());
+                return null;
+            }
+
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData loginOutputData) {
+                throw new RuntimeException("Use Case Failure Not Expected");
+            }
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
+        interactor.execute(loginInputData);
+
+
+    }
+
+    @Test
+    void failureNoSuchInstructorExists() {
+        LoginInputData loginInputData = new LoginInputData("john.cena@wwe.com");
+        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareSuccessResponse(LoginOutputData loginOutputData) {
+                throw new RuntimeException("Use Case Success Not Expected");
+            }
+
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData loginOutputData) {
+                assert !loginOutputData.getErrorMessage().isBlank();  // test if error message has been set
+                return null;
+            }
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
+        interactor.execute(loginInputData);
+    }
+
+
+}
