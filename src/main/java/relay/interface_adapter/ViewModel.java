@@ -1,4 +1,8 @@
 package relay.interface_adapter;
 
-public abstract class ViewModel {
+public interface ViewModel {
+
+    public State getState();
+
+    public void setState(State state);
 }
