@@ -1,5 +1,6 @@
 package relay.interface_adapter.end_session;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import relay.use_case.end_session.EndSessionInputBoundary;
 import relay.use_case.end_session.EndSessionInputData;
@@ -13,7 +14,7 @@ public class EndSessionController {
         this.endSessionUseCaseInteractor = endSessionUseCaseInteractor;
     }
 
-    public ResponseEntity<Map<String, Object>> execute(EndSessionInputData endSessionInputData) {
+    public ResponseEntity<HttpStatus> execute(EndSessionInputData endSessionInputData) {
         return endSessionUseCaseInteractor.execute(endSessionInputData);
     }
 }
