@@ -37,7 +37,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * {@link FirebaseInstructorDataAccessObject}.
 	 */
 	@Test
-	void testSaveAndReadInstructor() {
+	void testSaveAndReadInstructor() throws ResourceNotFoundException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -64,7 +64,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * Instructor::instructorID.
 	 */
 	@Test
-	void testSavingTwiceDoesNotModifyInstructorID() {
+	void testSavingTwiceDoesNotModifyInstructorID() throws ResourceNotFoundException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -83,7 +83,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * {@link FirebaseInstructorDataAccessObject}.
 	 */
 	@Test
-	void testDeleteInstructor() {
+	void testDeleteInstructor() throws ResourceNotFoundException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -102,7 +102,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * correctly returns true.
 	 */
 	@Test
-	void testExistsReturnsTrue() {
+	void testExistsReturnsTrue() throws ResourceNotFoundException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
