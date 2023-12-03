@@ -1,10 +1,18 @@
 package relay.data_access;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
+
+import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
-import relay.entity.Instructor;
 import relay.use_case.login.LoginInstructorDataAccessInterface;
+import relay.use_case.signup.SignupInstructorDataAccessInterface;
+import relay.entity.Instructor;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +23,7 @@ import java.util.concurrent.ExecutionException;
  * database
  * to perform CRUD operations on Instructor entities.
  */
-public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAccessInterface {
+public class FirebaseInstructorDataAccessObject implements SignupInstructorDataAccessInterface, LoginInstructorDataAccessInterface {
 
     Firestore db;
 
@@ -28,16 +36,21 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
      *
      * @param instructor The Instructor object to be saved.
      */
-    public void save(Instructor instructor) {
-        if (exists(instructor.getInstructorID()))
-            update(instructor);
-        else
-            create(instructor);
+    @Override
+    public void save(Instructor instructor) throws ResourceAlreadyExistsException {
+        if (exists(instructor.getInstructorID())) update(instructor);
+        else create(instructor);
     }
 
-    private void create(Instructor instructor) {
-        ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
+    private void create(Instructor instructor) throws ResourceAlreadyExistsException {
         try {
+            ApiFuture<QuerySnapshot> future = db.collection("instructors").whereEqualTo("emailAddress", instructor.getEmailAddress()).get();
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+            if (documents.size() > 0)
+                throw new ResourceAlreadyExistsException("Document with specified email already exists.");
+
+            ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
             instructor.setInstructorID(docRef.get().getId());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -46,8 +59,7 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
 
     private void update(Instructor instructor) {
         String instructorID = instructor.getInstructorID();
-        if (instructorID == null)
-            throw new NullPointerException();
+        if (instructorID == null) throw new NullPointerException();
         db.collection("instructors").document().set(instructor);
     }
 
@@ -64,18 +76,14 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
      *                                   variable is null
      */
     public Instructor read(String instructorID) throws ResourceNotFoundException {
-        if (instructorID == null)
-            throw new NullPointerException();
-        if (!exists(instructorID))
-            throw new ResourceNotFoundException("No such document exists.");
+        if (instructorID == null) throw new NullPointerException();
+        if (!exists(instructorID)) throw new ResourceNotFoundException("No such document exists.");
         try {
-            ApiFuture<DocumentSnapshot> future = db.collection("instructors").document(instructorID)
-                    .get();
+            ApiFuture<DocumentSnapshot> future = db.collection("instructors").document(instructorID).get();
             DocumentSnapshot instructorDocument = future.get();
             Map<String, Object> instructorDocumentData = instructorDocument.getData();
 
-            if (instructorDocumentData == null)
-                throw new NullPointerException();
+            if (instructorDocumentData == null) throw new NullPointerException();
 
             String firstName = (String) instructorDocumentData.get("firstName");
             String lastName = (String) instructorDocumentData.get("lastName");
@@ -90,7 +98,6 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
             return null;
         }
     }
-
 
     /**
      * Reads an Instructor object from the Firestore database based on the provided
@@ -112,9 +119,7 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
             throw new ResourceNotFoundException("No such document exists.");
         }
 
-        ApiFuture<QuerySnapshot> instructorQuery = FirestoreSingleton.get()
-                .collection("instructors")
-                .whereEqualTo("emailAddress", emailAddress).get();
+        ApiFuture<QuerySnapshot> instructorQuery = FirestoreSingleton.get().collection("instructors").whereEqualTo("emailAddress", emailAddress).get();
 
         try {
             List<QueryDocumentSnapshot> instructorDocuments = instructorQuery.get().getDocuments();
@@ -133,6 +138,7 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
 
     }
 
+
     /**
      * Checks if an Instructor object with the provided instructorID exists in the
      * Firestore database.
@@ -141,13 +147,10 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
      * @return True if the Instructor exists, false otherwise.
      */
     public boolean exists(String instructorID) {
-        if (instructorID == null || instructorID.isEmpty())
-            return false;
+        if (instructorID == null || instructorID.isEmpty()) return false;
 
         try {
-            ApiFuture<DocumentSnapshot> future = db.collection("instructors")
-                    .document(instructorID)
-                    .get();
+            ApiFuture<DocumentSnapshot> future = db.collection("instructors").document(instructorID).get();
             DocumentSnapshot instructorDocument = future.get();
             return instructorDocument.exists();
 
@@ -167,15 +170,12 @@ public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAc
      * @throws NullPointerException      if the instructorID parameter is null
      */
     public void delete(String instructorID) throws ResourceNotFoundException {
-        if (!exists(instructorID))
-            throw new ResourceNotFoundException("No such document exists.");
+        if (!exists(instructorID)) throw new ResourceNotFoundException("No such document exists.");
 
-        if (instructorID == null)
-            throw new NullPointerException();
+        if (instructorID == null) throw new NullPointerException();
 
         try {
-            ApiFuture<WriteResult> deleteResult = db.collection("instructors").document(instructorID)
-                    .delete();
+            ApiFuture<WriteResult> deleteResult = db.collection("instructors").document(instructorID).delete();
             deleteResult.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
