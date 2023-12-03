@@ -1,6 +1,11 @@
 package relay.show_courses;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import relay.interface_adapter.ResponseFactory;
+
 import java.util.List;
+import java.util.Map;
 
 public class ShowCoursePresenter implements ShowCourseOutputBoundary {
 
@@ -12,21 +17,24 @@ public class ShowCoursePresenter implements ShowCourseOutputBoundary {
     }
 
 
-
     // Method from the ShowCourseOutputBoundary interface
     @Override
-    public void prepareSuccessView(ShowCourseOutputData outputData) {
+    public ResponseEntity<Map<String, Object>> prepareSuccessResponce(ShowCourseOutputData outputData) {
         // Extract relevant data from the output and update the ViewModel
-        List<String> courseNames = outputData.getCourseNames();
-        viewModel.setState(new ShowCourseState(courseNames));
+        ShowCourseState showCourseState = (ShowCourseState) viewModel.getState();
+        List<String> courseNames = outputData.getCourses();
+        showCourseState.setCourses(courseNames);
+        return ResponseFactory.createSuccessResponseEntity(viewModel);
     }
 
-    // Method from the ShowCourseOutputBoundary interface
+
     @Override
-    public void prepareFailView(String error) {
-        // Handle the error presentation (optional)
-        // You might want to log the error, show an error message to the user, etc.
-        System.err.println("Error: " + error);
+    public ResponseEntity<Map<String, Object>> prepareFailResponce (ShowCourseOutputData failureShowCourseOutputData) {
+        ShowCourseState showCourseState = (ShowCourseState) viewModel.getState();
+        showCourseState.setErrorMessage(failureShowCourseOutputData.getErrorMessage());
+        showCourseState.setStatusCode(HttpStatus.CONFLICT);
+        return ResponseFactory.createFailureResponseEntity(viewModel);
     }
+
 }
 
