@@ -19,7 +19,7 @@ public class ResponseFactory {
 		responsePayload.remove("errorMessage");
 		responsePayload.remove("statusCode");
 
-		return new ResponseEntity<>(responseBody, state.getStatusCode());
+		return new ResponseEntity<>(responsePayload, state.getStatusCode());
 	}
 
 	public static ResponseEntity<Map<String, Object>> createFailureResponseEntity(ViewModel viewModel) {
