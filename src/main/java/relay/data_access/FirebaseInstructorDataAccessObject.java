@@ -63,7 +63,7 @@ public class FirebaseInstructorDataAccessObject implements SignupInstructorDataA
 		String instructorID = instructor.getInstructorID();
 		if (instructorID == null)
 			throw new NullPointerException();
-		db.collection("instructors").document().set(instructor);
+		db.collection("instructors").document(instructorID).set(instructor);
 	}
 
 	/**
