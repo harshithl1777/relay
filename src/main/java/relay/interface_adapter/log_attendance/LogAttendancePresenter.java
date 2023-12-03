@@ -1,10 +1,10 @@
-package relay.interface_adapter.LogAttendance;
+package relay.interface_adapter.log_attendance;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import relay.interface_adapter.ResponseFactory;
-import relay.use_case.LogAttendance.LogAttendanceOutputBoundary;
-import relay.use_case.LogAttendance.LogAttendanceOutputData;
+import relay.use_case.log_attendance.LogAttendanceOutputBoundary;
+import relay.use_case.log_attendance.LogAttendanceOutputData;
 
 public class LogAttendancePresenter implements LogAttendanceOutputBoundary{
 
