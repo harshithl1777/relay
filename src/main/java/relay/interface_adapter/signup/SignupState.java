@@ -39,11 +39,11 @@ public class SignupState implements State {
 	public String getEmailAddress() {
 		return emailAddress;
 	}
-
+	@Override
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-
+	@Override
 	public HttpStatus getStatusCode() {
 		return statusCode;
 	}
@@ -63,11 +63,11 @@ public class SignupState implements State {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-
+	@Override
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-
+	@Override
 	public void setStatusCode(HttpStatus statusCode) {
 		this.statusCode = statusCode;
 	}
