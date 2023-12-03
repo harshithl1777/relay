@@ -6,6 +6,7 @@ import com.google.cloud.firestore.*;
 
 import relay.entity.Course;
 import relay.entity.Instructor;
+import relay.use_case.createcourse.CreateCourseDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
-public class FirebaseCourseDataAccessObject {
+public class FirebaseCourseDataAccessObject implements CreateCourseDataAccessInterface {
     private final Firestore db;
 
     public FirebaseCourseDataAccessObject() {
