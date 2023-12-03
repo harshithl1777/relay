@@ -58,7 +58,6 @@ public class FirebaseSessionDataAccessObject implements LogAttendanceSessionData
 						"sessionCode",
 						alphaNumericCode).get();
 				session.setAlphaNumericCode(alphaNumericCode);
-				System.out.println(session.getAlphaNumericCode());
 			}
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -82,6 +81,7 @@ public class FirebaseSessionDataAccessObject implements LogAttendanceSessionData
 				throw new NullPointerException();
 
 			SessionFactoryInterface sessionFactory = new SessionFactory();
+			sessionDocumentData.put("sessionID", sessionID);
 
 			return sessionFactory.createSessionFromMap(sessionDocumentData);
 		} catch (InterruptedException | ExecutionException e) {
