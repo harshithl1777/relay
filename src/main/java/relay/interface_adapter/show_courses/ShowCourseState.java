@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCourseState implements State {
-
     private String courseName;
 
     private String courseID;
