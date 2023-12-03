@@ -6,13 +6,11 @@ public class EndSessionOutputData {
 
     private String sessionID;
 
-    public EndSessionOutputData(boolean useCaseSuccess, String errorMessage, String sessionID) {
+    public EndSessionOutputData() {
         this.useCaseSuccess = true;
-        this.errorMessage = errorMessage;
-        this.sessionID = sessionID;
     }
 
-    public EndSessionOutputData(String errorMessage, String sessionID) {
+    public EndSessionOutputData(String errorMessage) {
         this.useCaseSuccess = false;
         this.errorMessage = errorMessage;
 
