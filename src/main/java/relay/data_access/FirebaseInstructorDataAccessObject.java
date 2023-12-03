@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import relay.exceptions.ResourceNotFoundException;
 import relay.entity.Instructor;
+import relay.use_case.login.LoginInstructorDataAccessInterface;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * database
  * to perform CRUD operations on Instructor entities.
  */
-public class FirebaseInstructorDataAccessObject {
+public class FirebaseInstructorDataAccessObject implements LoginInstructorDataAccessInterface {
 
     Firestore db;
 
