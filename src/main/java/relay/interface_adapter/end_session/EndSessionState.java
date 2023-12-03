@@ -3,18 +3,24 @@ package relay.interface_adapter.end_session;
 import org.springframework.http.HttpStatus;
 import relay.interface_adapter.State;
 
-public class EndSessionState implements State {
+public class EndSessionState implements State{
     private String errorMessage;
     private HttpStatus statusCode;
 
+    public EndSessionState(EndSessionState copyState) {
+        this.errorMessage = copyState.errorMessage;
+        this.statusCode = copyState.statusCode;
+    }
+
+
     @Override
     public String getErrorMessage() {
-        return null;
+        return errorMessage;
     }
 
     @Override
     public HttpStatus getStatusCode() {
-        return null;
+        return statusCode;
     }
 
     @Override
