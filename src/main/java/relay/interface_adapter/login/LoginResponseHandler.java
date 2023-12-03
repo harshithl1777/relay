@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import relay.app.LoginUseCaseFactory;
 import relay.data_access.FirebaseInstructorDataAccessObject;
@@ -30,9 +31,7 @@ public class LoginResponseHandler {
 	 * @return A ResponseEntity representing the result of the login operation.
 	 */
 	@GetMapping("/api/instructors")
-	public ResponseEntity<?> login(@RequestBody Map<String, Object> requestBody) {
-		String emailAddress = (String) requestBody.get("emailAddress");
-
+	public ResponseEntity<?> login(@RequestParam String emailAddress) {
 		if (!Stream.of(emailAddress).allMatch(Objects::nonNull)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
