@@ -1,8 +1,10 @@
-package relay.show_courses;
+package relay.interface_adapter.show_courses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import relay.interface_adapter.ResponseFactory;
+import relay.use_case.show_courses.ShowCourseOutputBoundary;
+import relay.use_case.show_courses.ShowCourseOutputData;
 
 import java.util.List;
 import java.util.Map;

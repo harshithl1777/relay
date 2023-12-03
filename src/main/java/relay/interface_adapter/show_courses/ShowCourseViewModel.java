@@ -1,10 +1,8 @@
-package relay.show_courses;
+package relay.interface_adapter.show_courses;
 
 import relay.interface_adapter.State;
 import relay.interface_adapter.ViewModel;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import relay.interface_adapter.show_courses.ShowCourseState;
 
 public class ShowCourseViewModel implements ViewModel {
 

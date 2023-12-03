@@ -1,4 +1,4 @@
-package relay.show_courses;
+package relay.interface_adapter.show_courses;
 
 import org.springframework.http.HttpStatus;
 import relay.entity.AttendanceRecord;
