@@ -1,7 +1,8 @@
 package relay.interface_adapter.start_session;
 
 import org.springframework.http.ResponseEntity;
-import relay.use_case.signup.SignupInputData;
+import relay.use_case.start_session.StartSessionInputBoundary;
+import relay.use_case.start_session.StartSessionInputData;
 
 import java.util.Map;
 
