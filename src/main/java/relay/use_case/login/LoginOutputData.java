@@ -1,5 +1,8 @@
 package relay.use_case.login;
 
+/**
+ * Data class representing the output data for the login use case.
+ */
 public class LoginOutputData {
     private String instructorID;
     private String firstName;

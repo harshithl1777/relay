@@ -12,21 +12,38 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test class for the {@link LoginInteractor} class.
+ */
 public class LoginInteractorTest {
+
+    /**
+     * Interface for accessing instructor login data during testing.
+     */
     LoginInstructorDataAccessInterface instructorRepository;
 
+    /**
+     * Set up the instructor repository before each test.
+     */
     @BeforeEach
     void setupInstructorRepository() {
         this.instructorRepository = new InMemoryInstructorDataAccessObject();
     }
 
+    /**
+     * Test for successful login scenario.
+     *
+     * @throws ResourceAlreadyExistsException if a resource already exists during the test setup.
+     */
     @Test
     void successTest() throws ResourceAlreadyExistsException {
         LoginInputData loginInputData = new LoginInputData("vihaanchugh@gmail.com");
+
         // replicate signup
         Instructor instructor = new Instructor("Vihaan", "Chugh", "vihaanchugh@gmail.com");
         instructor.setInstructorID("100879585");
         ((InMemoryInstructorDataAccessObject) instructorRepository).save(instructor);
+
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public ResponseEntity<Map<String, Object>> prepareSuccessResponse(LoginOutputData loginOutputData) {
@@ -46,10 +63,11 @@ public class LoginInteractorTest {
 
         LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
         interactor.execute(loginInputData);
-
-
     }
 
+    /**
+     * Test for failure when no such instructor exists.
+     */
     @Test
     void failureNoSuchInstructorExists() {
         LoginInputData loginInputData = new LoginInputData("john.cena@wwe.com");
@@ -69,6 +87,4 @@ public class LoginInteractorTest {
         LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
         interactor.execute(loginInputData);
     }
-
-
 }

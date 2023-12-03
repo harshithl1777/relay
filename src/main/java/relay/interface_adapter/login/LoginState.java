@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 
 import relay.interface_adapter.State;
 
+/**
+ * State class representing the state of the login view model.
+*/
 public class LoginState implements State {
     private String instructorID;
     private String firstName;
