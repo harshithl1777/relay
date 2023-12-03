@@ -1,11 +1,11 @@
 package relay.interface_adapter;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.http.ResponseEntity;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResponseFactory {
 	public static ResponseEntity<Map<String, Object>> createSuccessResponseEntity(ViewModel viewModel) {
@@ -19,7 +19,7 @@ public class ResponseFactory {
 		responsePayload.remove("errorMessage");
 		responsePayload.remove("statusCode");
 
-		return new ResponseEntity<>(responseBody, state.getStatusCode());
+		return new ResponseEntity<>(responsePayload, state.getStatusCode());
 	}
 
 	public static ResponseEntity<Map<String, Object>> createFailureResponseEntity(ViewModel viewModel) {
