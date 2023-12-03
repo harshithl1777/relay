@@ -32,10 +32,8 @@ public class EndSessionPresenter implements EndSessionOutputBoundary {
      * @return A ResponseEntity containing a map of key-value pairs representing the success response.
      */
     @Override
-    public ResponseEntity<Map<String, Object>> prepareSuccessResponse(EndSessionOutputData endSessionOutputData) {
-        EndSessionState endSessionState = (EndSessionState) endSessionViewModel.getState();
-        endSessionState.setStatusCode(HttpStatus.OK);
-        return ResponseFactory.createSuccessResponseEntity(endSessionViewModel);
+    public ResponseEntity<HttpStatus> prepareSuccessResponse(EndSessionOutputData endSessionOutputData) {
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 
 
@@ -46,10 +44,7 @@ public class EndSessionPresenter implements EndSessionOutputBoundary {
      * @return A ResponseEntity containing a map of key-value pairs representing the failure response.
      */
     @Override
-    public ResponseEntity<Map<String, Object>> prepareFailResponse(EndSessionOutputData endSessionOutputData) {
-        EndSessionState endSessionState = (EndSessionState) endSessionViewModel.getState();
-        endSessionState.setErrorMessage(endSessionOutputData.getErrorMessage());
-        endSessionState.setStatusCode(HttpStatus.BAD_REQUEST);
-        return ResponseFactory.createFailureResponseEntity(endSessionViewModel);
+    public ResponseEntity<HttpStatus> prepareFailResponse(EndSessionOutputData endSessionOutputData) {
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
 }
