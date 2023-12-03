@@ -1,6 +1,9 @@
 package relay.interface_adapter.login;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,7 @@ public class LoginResponseHandler {
     public ResponseEntity<?> login(@RequestBody Map<String, Object> requestBody) {
         String emailAddress = (String) requestBody.get("emailAddress");
 
-        if (emailAddress == null) {
+        if (!Stream.of(emailAddress).allMatch(Objects::nonNull)) {
             return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
 
