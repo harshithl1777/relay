@@ -7,49 +7,6 @@ import relay.interface_adapter.State;
 import java.util.ArrayList;
 import java.util.List;
 
-//public class ShowCourseState implements State {
-//    private List<String> courseNames;
-//
-//    // Default constructor or constructor with no arguments
-//    public ShowCourseState() {
-//        // Initialize the list or perform any other necessary setup
-//    }
-//
-//
-//    // Constructor that accepts course names
-//    public ShowCourseState(List<String> courseNames) {
-//        this.courseNames = courseNames;
-//    }
-//
-//
-//    // Getter and setter methods
-//    public void setCourseNames(List<String> courseNames) {
-//        this.courseNames = courseNames;
-//    }
-//
-//    public List<String> getCourseNames() {
-//        return courseNames;
-//    }
-//
-//    public String getErrorMessage() {
-//        return errorMessage;
-//    }
-//
-//    public HttpStatus getStatusCode() {
-//        return statusCode;
-//    }
-//
-//    @Override
-//    public void setErrorMessage(String errorMessage) {
-//
-//    }
-//
-//    @Override
-//    public void setStatusCode(HttpStatus statusCode) {
-//
-//    }
-//}
-
 public class ShowCourseState implements State {
 
     private String courseName;
