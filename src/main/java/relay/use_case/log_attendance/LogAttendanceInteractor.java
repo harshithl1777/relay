@@ -1,11 +1,9 @@
-package relay.use_case.LogAttendance;
+package relay.use_case.log_attendance;
 
 import org.springframework.http.ResponseEntity;
 import relay.entity.AttendanceRecord;
 import relay.entity.AttendanceRecordFactory;
 import relay.entity.Session;
-import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.signup.SignupOutputData;
 
 public class LogAttendanceInteractor implements LogAttendanceInputBoundary{
     final LogAttendanceSessionDataAccessInterface sessionDataAccessObject;
