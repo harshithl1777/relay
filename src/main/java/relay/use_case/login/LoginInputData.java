@@ -3,7 +3,7 @@ package relay.use_case.login;
 public class LoginInputData {
     private String instructorEmailAddress;
 
-    public LoginInputData(String socialToken, String instructorEmailAddress) {
+    public LoginInputData(String instructorEmailAddress) {
         this.instructorEmailAddress = instructorEmailAddress;
     }
 
