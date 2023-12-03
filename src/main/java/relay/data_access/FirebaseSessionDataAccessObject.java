@@ -23,7 +23,7 @@ import relay.entity.Session;
 import relay.entity.SessionFactory;
 import relay.entity.SessionFactoryInterface;
 import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.LogAttendance.LogAttendanceSessionDataAccessInterface;
+import relay.use_case.log_attendance.LogAttendanceSessionDataAccessInterface;
 
 public class FirebaseSessionDataAccessObject implements LogAttendanceSessionDataAccessInterface {
 
