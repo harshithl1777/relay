@@ -42,7 +42,6 @@ public class LoginPresenter implements LoginOutputBoundary {
 		loginState.setLastName(successLoginOutputData.getLastName());
 		loginState.setEmailAddress(successLoginOutputData.getEmailAddress());
 		loginState.setInstructorID(successLoginOutputData.getInstructorID());
-		System.out.println(successLoginOutputData.getInstructorID());
 		loginState.setStatusCode(HttpStatus.OK);
 		return ResponseFactory.createSuccessResponseEntity(loginViewModel);
 	}
