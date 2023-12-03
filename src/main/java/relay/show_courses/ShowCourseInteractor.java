@@ -1,10 +1,12 @@
 package relay.show_courses;
 
+import org.springframework.http.ResponseEntity;
 import relay.entity.Course;
 import relay.use_case.ExportCSVOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ShowCourseInteractor implements ShowCourseInputBoundary {
     final FirebaseCourseDataObjectInterface firebaseCourseDataObjectInterface;
@@ -18,7 +20,7 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
     }
 
     @Override
-    public void execute(ShowCourseInputData showCourseInputData) {
+    public ResponseEntity<Map<String, Object>> execute(ShowCourseInputData showCourseInputData) {
         try {
             List<Course> courses;
             courses = firebaseCourseDataObjectInterface.getCoursesByInstructor(showCourseInputData.getInstructorID());
@@ -29,11 +31,11 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
             }
 
             ShowCourseOutputData outputData = new ShowCourseOutputData(courseNames);
-            outputBoundary.prepareSuccessView(outputData);
+            return outputBoundary.prepareSuccessResponce(outputData);
 
         }  catch (Exception e) {
-            String errorMessage = "Error getting courses: " + e.getMessage();
-            outputBoundary.prepareFailView(errorMessage);
+            ShowCourseOutputData showCourseOutputData = new ShowCourseOutputData(e.getMessage());
+            return outputBoundary.prepareFailResponce(showCourseOutputData);
 
         }
 
