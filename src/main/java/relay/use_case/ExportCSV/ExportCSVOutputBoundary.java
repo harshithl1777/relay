@@ -1,8 +1,4 @@
-package relay.use_case;
-
-import relay.entity.AttendanceRecord;
-
-import java.util.ArrayList;
+package relay.use_case.ExportCSV;
 
 public interface ExportCSVOutputBoundary {
         void prepareSuccessView(ExportCSVOutputData outputData);

@@ -1,4 +1,4 @@
-package relay.use_case;
+package relay.use_case.ExportCSV;
 
 public class ExportCSVInputData {
 
