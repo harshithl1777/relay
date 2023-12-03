@@ -65,7 +65,7 @@ public class FirebaseSessionDataAccessObject {
 		}
 	}
 
-	public Session read(String sessionID) {
+	public Session read(String sessionID) throws ResourceNotFoundException {
 		if (sessionID == null)
 			throw new NullPointerException();
 		if (!exists(sessionID))
@@ -105,7 +105,7 @@ public class FirebaseSessionDataAccessObject {
 
 	}
 
-	public void delete(String sessionID) {
+	public void delete(String sessionID) throws ResourceNotFoundException {
 		if (sessionID == null)
 			throw new NullPointerException();
 		if (!exists(sessionID))
@@ -146,7 +146,7 @@ public class FirebaseSessionDataAccessObject {
 		return false;
 	}
 
-	public void deleteFile(String fileName) {
+	public void deleteFile(String fileName) throws ResourceNotFoundException {
 		if (!fileExists(fileName))
 			throw new ResourceNotFoundException("No such file exists.");
 		else
