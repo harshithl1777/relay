@@ -7,3 +7,4 @@ import java.util.Map;
 public interface EndSessionInputBoundary {
     ResponseEntity<Map<String, Object>> execute(EndSessionInputData endSessionInputData);
 }
+
