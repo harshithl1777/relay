@@ -52,7 +52,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     public ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData failureLoginOutputData) {
         LoginState loginState = (LoginState) loginViewModel.getState();
         loginState.setErrorMessage(failureLoginOutputData.getErrorMessage());
-        loginState.setStatusCode(HttpStatus.CONFLICT);
+        loginState.setStatusCode(HttpStatus.UNAUTHORIZED);
         return ResponseFactory.createFailureResponseEntity(loginViewModel);
     }
 }
