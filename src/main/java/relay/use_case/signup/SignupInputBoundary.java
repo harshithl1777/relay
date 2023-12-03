@@ -1,5 +1,9 @@
 package relay.use_case.signup;
 
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+
 public interface SignupInputBoundary {
-	void execute(SignupInputData signupInputData);
+	ResponseEntity<Map<String, Object>> execute(SignupInputData signupInputData);
 }

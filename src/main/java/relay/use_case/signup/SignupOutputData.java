@@ -1,16 +1,24 @@
 package relay.use_case.signup;
 
 public class SignupOutputData {
-	private final String instructorID;
-	private final String firstName;
-	private final String lastName;
-	private final String emailAddress;
+	private String instructorID;
+	private String firstName;
+	private String lastName;
+	private String emailAddress;
+	private boolean useCaseSuccess;
+	private String errorMessage;
 
 	public SignupOutputData(String instructorID, String firstName, String lastName, String emailAddress) {
 		this.instructorID = instructorID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
+		this.useCaseSuccess = true;
+	}
+
+	public SignupOutputData(String errorMessage) {
+		this.useCaseSuccess = false;
+		this.errorMessage = errorMessage;
 	}
 
 	public String getInstructorID() {
@@ -27,5 +35,13 @@ public class SignupOutputData {
 
 	public String getEmailAddress() {
 		return emailAddress;
+	}
+
+	public boolean getUseCaseSuccess() {
+		return useCaseSuccess;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }
