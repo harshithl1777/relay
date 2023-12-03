@@ -1,4 +1,4 @@
-package relay.data_access;
+package relay.use_case.login;
 
 import relay.entity.Instructor;
 import relay.exceptions.ResourceAlreadyExistsException;
