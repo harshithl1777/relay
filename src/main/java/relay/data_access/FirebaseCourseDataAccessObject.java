@@ -3,17 +3,19 @@ package relay.data_access;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-
+import relay.entity.AttendanceRecord;
+import relay.entity.AttendanceRecordFactory;
+import relay.entity.AttendanceRecordFactoryInterface;
 import relay.entity.Course;
-import relay.entity.Instructor;
+import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.create_course.CreateCourseCourseDataAccessInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
-public class FirebaseCourseDataAccessObject {
+public class FirebaseCourseDataAccessObject implements CreateCourseCourseDataAccessInterface {
     private final Firestore db;
 
     public FirebaseCourseDataAccessObject() {
@@ -26,55 +28,134 @@ public class FirebaseCourseDataAccessObject {
      * @param course The Course object containing course details to be added to Firestore.
      * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
      */
-    public void createCourse(Course course) throws InterruptedException, ExecutionException {
-        Map<String, Object> courseDocument = new HashMap<>();
-        courseDocument.put("courseName", course.getCourseName());
-        courseDocument.put("instructorID", course.getInstructor().getInstructorID());
+    public void save(Course course) {
+        Map<String, Object> courseDocument = course.convertToMap();
 
         ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
-        String courseID = newCourseDocument.get().getId();
-        course.setCourseID(courseID);
+        try {
+            String courseID = newCourseDocument.get().getId();
+            course.setCourseID(courseID);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     /**
-     * Retrieves a list of courses associated with a specific instructor from the Firestore database.
+     * Retrieves a list of courses associated with a specific instructor ID.
      *
-     * @param instructor The Instructor object for which courses are to be retrieved.
-     * @return An ArrayList of Course objects associated with the specified instructor.
-     * @throws RuntimeException If an InterruptedException or ExecutionException occurs during Firestore operations.
+     * @param instructorID The ID of the instructor whose courses are to be retrieved.
+     * @return An ArrayList of Course objects associated with the specified instructor ID.
+     * @throws NullPointerException if instructorID is null.
      */
-    public ArrayList<Course> getCoursesByInstructor(Instructor instructor) throws InterruptedException, ExecutionException {
+    public ArrayList<Course> getCoursesByInstructor(String instructorID) {
+        if (instructorID == null){
+            throw new NullPointerException();
+        }
+
         Query query = db.collection("courses")
-                .whereEqualTo("instructorID", instructor.getInstructorID());
+                .whereEqualTo("instructorID", instructorID);
 
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         ArrayList<Course> courses = new ArrayList<>();
-        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
 
-            Map<String, Object> courseData = document.getData();
+                Map<String, Object> courseData = document.getData();
 
-            String courseID = document.getId();
-            String courseName = (String) courseData.get("courseName");
+                String courseID = document.getId();
+                String courseName = (String) courseData.get("courseName");
 
-            Course course = new Course(courseID, courseName, instructor);
-            courses.add(course);
+                ArrayList<Map<String, Object>> attendanceMapsList = (ArrayList<Map<String, Object>>) courseData.get("attendance");
+                ArrayList<AttendanceRecord> attendance = new ArrayList<>();
+                AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+                attendanceMapsList.forEach(
+                        (recordMap) -> attendance.add(attendanceRecordFactory.createAttendanceRecordFromMap(recordMap)));
 
+                Course course = new Course(courseName, instructorID);
+                course.setCourseID(courseID);
+                course.setHistory(attendance);
+                courses.add(course);
+
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
         return courses;
     }
 
     /**
-     * Checks if a course with the given courseID exists in the Firestore database.
+     * Retrieves a Course object by its unique ID.
      *
-     * @param courseID The ID of the course to check for existence.
-     * @return true if the course exists, false otherwise.
-     * @throws RuntimeException If an ExecutionException or InterruptedException occurs during Firestore operations.
+     * @param courseID The ID of the course to retrieve.
+     * @return The Course object associated with the provided courseID, if found; otherwise, returns null.
+     * @throws NullPointerException If the provided courseID does not exist.
      */
-    public boolean exists(String courseID) throws InterruptedException, ExecutionException {
+    public Course getCourseByID(String courseID){
+        if (!exists(courseID)){
+            throw new NullPointerException();
+        }
+
+        DocumentReference courseRef = db.collection("courses").document(courseID);
+        ApiFuture<DocumentSnapshot> retrievedcourseDocument = courseRef.get();
+        try {
+            DocumentSnapshot document = retrievedcourseDocument.get();
+            Map<String, Object> courseData = document.getData();
+            ArrayList<Map<String, Object>> attendanceMapsList = (ArrayList<Map<String, Object>>) courseData.get("attendance");
+            ArrayList<AttendanceRecord> attendance = new ArrayList<>();
+            AttendanceRecordFactoryInterface attendanceRecordFactory = new AttendanceRecordFactory();
+            attendanceMapsList.forEach(
+                    (recordMap) -> attendance.add(attendanceRecordFactory.createAttendanceRecordFromMap(recordMap)));
+
+            String courseName = (String) courseData.get("courseName");
+            String instructorID = (String) courseData.get("instructorID");
+            Course course = new Course(courseName, instructorID);
+            course.setHistory(attendance);
+            return course;
+
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Checks if a course with the given course ID exists in the Firestore database.
+     *
+     * @param courseID the ID of the course to check for existence
+     * @return {@code true} if the course with the specified ID exists, {@code false} otherwise
+     */
+    public boolean exists(String courseID) {
         ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
-        DocumentSnapshot courseDocument = retrievedcourseDocument.get();
-        return courseDocument.exists();
+        try {
+            DocumentSnapshot courseDocument = retrievedcourseDocument.get();
+            return courseDocument.exists();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    /**
+     * Deletes a course from Firestore based on the provided course ID.
+     *
+     * @param courseID the ID of the course to be deleted
+     * @throws ResourceNotFoundException if the course with the specified ID does not exist or if an error occurs during deletion
+     */
+    public void delete(String courseID) throws ResourceNotFoundException {
+        try {
+            if (!exists(courseID)) {
+                throw new ResourceNotFoundException("Course with given ID does not exist");
+            }
+
+            ApiFuture<WriteResult> deleteResult = FirestoreSingleton.get().collection("courses").document(courseID).delete();
+            deleteResult.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }

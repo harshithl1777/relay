@@ -23,8 +23,9 @@ import relay.entity.Session;
 import relay.entity.SessionFactory;
 import relay.entity.SessionFactoryInterface;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.LogAttendance.LogAttendanceSessionDataAccessInterface;
 
-public class FirebaseSessionDataAccessObject {
+public class FirebaseSessionDataAccessObject implements LogAttendanceSessionDataAccessInterface {
 
 	private final Firestore db;
 	private final Bucket bucket;
@@ -57,7 +58,6 @@ public class FirebaseSessionDataAccessObject {
 						"sessionCode",
 						alphaNumericCode).get();
 				session.setAlphaNumericCode(alphaNumericCode);
-				System.out.println(session.getAlphaNumericCode());
 			}
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -81,6 +81,7 @@ public class FirebaseSessionDataAccessObject {
 				throw new NullPointerException();
 
 			SessionFactoryInterface sessionFactory = new SessionFactory();
+			sessionDocumentData.put("sessionID", sessionID);
 
 			return sessionFactory.createSessionFromMap(sessionDocumentData);
 		} catch (InterruptedException | ExecutionException e) {
