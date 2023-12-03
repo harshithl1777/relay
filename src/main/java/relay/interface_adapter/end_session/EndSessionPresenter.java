@@ -45,6 +45,6 @@ public class EndSessionPresenter implements EndSessionOutputBoundary {
      */
     @Override
     public ResponseEntity<HttpStatus> prepareFailResponse(EndSessionOutputData endSessionOutputData) {
-        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
     }
 }
