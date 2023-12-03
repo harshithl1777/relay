@@ -47,7 +47,7 @@ public class FirebaseInstructorDataAccessObject implements SignupInstructorDataA
             ApiFuture<QuerySnapshot> future = db.collection("instructors").whereEqualTo("emailAddress", instructor.getEmailAddress()).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-            if (documents.size() > 0)
+            if (!documents.isEmpty())
                 throw new ResourceAlreadyExistsException("Document with specified email already exists.");
 
             ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
