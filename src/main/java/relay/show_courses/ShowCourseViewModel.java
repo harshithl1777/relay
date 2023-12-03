@@ -8,13 +8,9 @@ public class ShowCourseViewModel extends ViewModel {
     private ShowCourseState state = new ShowCourseState();
 
     public ShowCourseViewModel() {
-        super("clear");
+        super("show course");
     }
 
-    public void setState (ShowCourseState state) {
-        this.state = state;
-
-    }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     @Override
     public void firePropertyChanged() {
@@ -27,5 +23,9 @@ public class ShowCourseViewModel extends ViewModel {
 
     public ShowCourseState getState() {
         return state;
+    }
+    public void setState (ShowCourseState state) {
+        this.state = state;
+
     }
 }
