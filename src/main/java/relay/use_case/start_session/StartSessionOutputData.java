@@ -10,7 +10,9 @@ public class StartSessionOutputData {
     private String instructorID;
     private Timestamp startedAt;
 
-    public StartSessionOutputData(boolean useCaseSuccess, String errorMessage, String courseID, String instructorID, Timestamp startedAt) {
+    private String code;
+
+    public StartSessionOutputData(String courseID, String instructorID, Timestamp startedAt) {
         this.useCaseSuccess = true;
         this.courseID = courseID;
         this.instructorID = instructorID;
@@ -40,5 +42,9 @@ public class StartSessionOutputData {
 
     public boolean getUseCaseSuccess() {
         return useCaseSuccess;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

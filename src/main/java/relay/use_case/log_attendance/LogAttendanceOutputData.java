@@ -1,4 +1,4 @@
-package relay.use_case.LogAttendance;
+package relay.use_case.log_attendance;
 
 public class LogAttendanceOutputData {
     private boolean useCaseSuccess;
