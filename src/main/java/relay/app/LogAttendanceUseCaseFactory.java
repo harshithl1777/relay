@@ -1,22 +1,24 @@
 package relay.app;
 
 import relay.entity.AttendanceRecordFactory;
-import relay.interface_adapter.LogAttendance.LogAttendanceController;
-import relay.interface_adapter.LogAttendance.LogAttendancePresenter;
-import relay.interface_adapter.LogAttendance.LogAttendanceViewModel;
-import relay.use_case.LogAttendance.LogAttendanceInputBoundary;
-import relay.use_case.LogAttendance.LogAttendanceInteractor;
-import relay.use_case.LogAttendance.LogAttendanceOutputBoundary;
-import relay.use_case.LogAttendance.LogAttendanceSessionDataAccessInterface;
+import relay.interface_adapter.log_attendance.LogAttendanceController;
+import relay.interface_adapter.log_attendance.LogAttendancePresenter;
+import relay.interface_adapter.log_attendance.LogAttendanceViewModel;
+import relay.use_case.log_attendance.LogAttendanceInputBoundary;
+import relay.use_case.log_attendance.LogAttendanceInteractor;
+import relay.use_case.log_attendance.LogAttendanceOutputBoundary;
+import relay.use_case.log_attendance.LogAttendanceSessionDataAccessInterface;
 
 public class LogAttendanceUseCaseFactory {
-    private LogAttendanceUseCaseFactory() {
-    }
+	private LogAttendanceUseCaseFactory() {
+	}
 
-    public static LogAttendanceController createLogAttendanceUseCase(LogAttendanceViewModel logAttendanceViewModel, LogAttendanceSessionDataAccessInterface logAttendanceSessionDataAccessInterface) {
-        LogAttendanceOutputBoundary logAttendancePresenter = new LogAttendancePresenter(logAttendanceViewModel);
-        AttendanceRecordFactory attendanceRecordFactory = new AttendanceRecordFactory();
-        LogAttendanceInputBoundary logAttendanceInteractor = new LogAttendanceInteractor(logAttendanceSessionDataAccessInterface, logAttendancePresenter, attendanceRecordFactory);
-        return new LogAttendanceController(logAttendanceInteractor);
-    }
+	public static LogAttendanceController createLogAttendanceUseCase(LogAttendanceViewModel logAttendanceViewModel,
+			LogAttendanceSessionDataAccessInterface logAttendanceSessionDataAccessInterface) {
+		LogAttendanceOutputBoundary logAttendancePresenter = new LogAttendancePresenter(logAttendanceViewModel);
+		AttendanceRecordFactory attendanceRecordFactory = new AttendanceRecordFactory();
+		LogAttendanceInputBoundary logAttendanceInteractor = new LogAttendanceInteractor(
+				logAttendanceSessionDataAccessInterface, logAttendancePresenter, attendanceRecordFactory);
+		return new LogAttendanceController(logAttendanceInteractor);
+	}
 }

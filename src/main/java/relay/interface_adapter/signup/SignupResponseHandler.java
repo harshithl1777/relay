@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @RestController
 public class SignupResponseHandler {
 
-	@PostMapping("/api/users")
+	@PostMapping("/api/instructors")
 	public ResponseEntity<?> signup(@RequestBody Map<String, Object> requestBody) {
 		String firstName = (String) requestBody.get("firstName");
 		String lastName = (String) requestBody.get("lastName");
