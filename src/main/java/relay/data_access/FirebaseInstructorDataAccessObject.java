@@ -115,7 +115,7 @@ public class FirebaseInstructorDataAccessObject implements SignupInstructorDataA
         if (emailAddress == null) {
             throw new NullPointerException();
         }
-        if (emailAddress == "") {
+        if (emailAddress.isEmpty()) {
             throw new ResourceNotFoundException("No such document exists.");
         }
 
