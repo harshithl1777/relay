@@ -12,6 +12,8 @@ public class Instructor {
 		this.emailAddress = emailAddress;
 	}
 
+	public Instructor() {}
+
 	public String getInstructorID() {
 		return instructorID;
 	}
