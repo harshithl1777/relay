@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relay.entity.Instructor;
+import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +38,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * {@link FirebaseInstructorDataAccessObject}.
 	 */
 	@Test
-	void testSaveAndReadInstructor() throws ResourceNotFoundException {
+	void testSaveAndReadInstructor() throws ResourceNotFoundException, ResourceAlreadyExistsException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -64,7 +65,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * Instructor::instructorID.
 	 */
 	@Test
-	void testSavingTwiceDoesNotModifyInstructorID() throws ResourceNotFoundException {
+	void testSavingTwiceDoesNotModifyInstructorID() throws ResourceNotFoundException, ResourceAlreadyExistsException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -83,7 +84,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * {@link FirebaseInstructorDataAccessObject}.
 	 */
 	@Test
-	void testDeleteInstructor() throws ResourceNotFoundException {
+	void testDeleteInstructor() throws ResourceNotFoundException, ResourceAlreadyExistsException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -102,7 +103,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 	 * correctly returns true.
 	 */
 	@Test
-	void testExistsReturnsTrue() throws ResourceNotFoundException {
+	void testExistsReturnsTrue() throws ResourceNotFoundException, ResourceAlreadyExistsException {
 		// Create a sample Instructor for testing
 		Instructor testInstructor = new Instructor("first", "last", "first.last@gmail.com");
 
@@ -165,4 +166,7 @@ public class FirebaseInstructorDataAccessObjectTest {
 		// Attempt to delete an Instructor with a non-existent ID
 		assertThrows(ResourceNotFoundException.class, () -> dataAccessObject.delete("nonexistentID"));
 	}
+
+
 }
+
