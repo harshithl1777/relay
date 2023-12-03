@@ -26,9 +26,9 @@ public class ShowCoursePresenter implements ShowCourseOutputBoundary {
         ShowCourseState showCourseState = (ShowCourseState) viewModel.getState();
         List<String> courseNames = outputData.getCourses();
         showCourseState.setCourses(courseNames);
+        showCourseState.setStatusCode(HttpStatus.CREATED);
         return ResponseFactory.createSuccessResponseEntity(viewModel);
     }
-
 
     @Override
     public ResponseEntity<Map<String, Object>> prepareFailResponce (ShowCourseOutputData failureShowCourseOutputData) {

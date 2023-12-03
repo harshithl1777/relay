@@ -1,4 +1,4 @@
-package relay.show_courses;
+package relay.use_case.show_courses;
 
 import relay.entity.AttendanceRecord;
 
