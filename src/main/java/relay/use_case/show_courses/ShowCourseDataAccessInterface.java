@@ -1,10 +1,10 @@
-package relay.show_courses;
+package relay.use_case.show_courses;
 
 import relay.entity.Course;
 
 import java.util.ArrayList;
 
-public interface FirebaseCourseDataObjectInterface {
+public interface ShowCourseDataAccessInterface {
 
     ArrayList<Course> getCoursesByInstructor(String InstructorID);
 }
