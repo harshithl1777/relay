@@ -64,7 +64,7 @@ public class FirebaseInstructorDataAccessObject {
 	 * @throws NullPointerException      if the converted instructor document
 	 *                                   variable is null
 	 */
-	public Instructor read(String instructorID) {
+	public Instructor read(String instructorID) throws ResourceNotFoundException {
 		if (instructorID == null)
 			throw new NullPointerException();
 		if (!exists(instructorID))
@@ -93,30 +93,6 @@ public class FirebaseInstructorDataAccessObject {
 	}
 
 	/**
-	 * Checks if an Instructor object with the provided instructorID exists in the
-	 * Firestore database.
-	 *
-	 * @param instructorID The unique identifier of the Instructor.
-	 * @return True if the Instructor exists, false otherwise.
-	 */
-	public boolean exists(String instructorID) {
-		if (instructorID == null || instructorID.isEmpty())
-			return false;
-
-		try {
-			ApiFuture<DocumentSnapshot> future = db.collection("instructors")
-					.document(instructorID)
-					.get();
-			DocumentSnapshot instructorDocument = future.get();
-			return instructorDocument.exists();
-
-		} catch (ExecutionException | InterruptedException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
 	 * Deletes an Instructor object from the Firestore database based on the
 	 * provided instructorID.
 	 *
@@ -140,5 +116,31 @@ public class FirebaseInstructorDataAccessObject {
 			e.printStackTrace();
 		}
 	}
+
+
+	/**
+	 * Checks if an Instructor object with the provided instructorID exists in the
+	 * Firestore database.
+	 *
+	 * @param instructorID The unique identifier of the Instructor.
+	 * @return True if the Instructor exists, false otherwise.
+	 */
+	public boolean exists(String instructorID) {
+		if (instructorID == null || instructorID.isEmpty())
+			return false;
+
+		try {
+			ApiFuture<DocumentSnapshot> future = db.collection("instructors")
+					.document(instructorID)
+					.get();
+			DocumentSnapshot instructorDocument = future.get();
+			return instructorDocument.exists();
+
+		} catch (ExecutionException | InterruptedException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 }
