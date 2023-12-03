@@ -1,67 +1,73 @@
-package relay.interface_adapter.signup;
+package relay.interface_adapter.start_session;
 
 import org.springframework.http.HttpStatus;
 
 import relay.interface_adapter.State;
 
-public class SignupState implements State {
+import java.sql.Timestamp;
+
+public class StartSessionState implements State {
     private String instructorID;
     private String sessionID;
-    private String lastName;
-    private String emailAddress;
+    private String courseID;
+    private Timestamp createdAt;
     private String errorMessage;
     private HttpStatus statusCode;
 
-    public SignupState(SignupState copyState) {
+    public StartSessionState(StartSessionState copyState, String sessionID, String courseID, Timestamp createdAt) {
         this.instructorID = copyState.instructorID;
-        this.firstName = copyState.firstName;
-        this.lastName = copyState.lastName;
-        this.emailAddress = copyState.emailAddress;
         this.errorMessage = copyState.errorMessage;
         this.statusCode = copyState.statusCode;
+        this.sessionID = copyState.sessionID;
+        this.courseID = copyState.courseID;
+        this.createdAt = copyState.createdAt;
     }
 
-    public SignupState() {
+    public StartSessionState() {
     }
 
     public String getInstructorID() {
         return instructorID;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCourseID() {
+        return courseID;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSessionID() {
+        return sessionID;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
+
     @Override
     public String getErrorMessage() {
         return errorMessage;
     }
+
     @Override
     public HttpStatus getStatusCode() {
         return statusCode;
     }
 
+
     public void setInstructorID(String instructorID) {
         this.instructorID = instructorID;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
     @Override
     public void setErrorMessage(String errorMessage) {
