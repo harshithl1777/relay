@@ -1,4 +1,4 @@
-package relay.interface_adapter.LogAttendance;
+package relay.interface_adapter.log_attendance;
 
 import org.springframework.http.HttpStatus;
 import relay.interface_adapter.State;
