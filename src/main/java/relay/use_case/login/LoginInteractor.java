@@ -2,9 +2,7 @@ package relay.use_case.login;
 
 import org.springframework.http.ResponseEntity;
 import relay.entity.Instructor;
-import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.signup.SignupOutputData;
 
 import java.util.Map;
 

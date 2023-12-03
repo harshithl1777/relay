@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import relay.interface_adapter.ResponseFactory;
 import relay.use_case.login.LoginOutputBoundary;
 import relay.use_case.login.LoginOutputData;
-import relay.use_case.signup.SignupOutputBoundary;
-import relay.use_case.signup.SignupOutputData;
 
 public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
