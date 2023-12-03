@@ -1,29 +1,25 @@
 package relay.show_courses;
 
+import relay.interface_adapter.State;
+import relay.interface_adapter.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ShowCourseViewModel extends ViewModel {
+public class ShowCourseViewModel implements ViewModel {
 
-    private ShowCourseState state = new ShowCourseState();
+    private State state = new ShowCourseState();
 
-    public ShowCourseViewModel() {
-        super("show course");
-    }
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    @Override
-    public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
-    }
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
-    }
-
-    public ShowCourseState getState() {
+    public State getState() {
         return state;
     }
+
+    @Override
+    public void setState(State state) {
+
+    }
+
     public void setState (ShowCourseState state) {
         this.state = state;
 
