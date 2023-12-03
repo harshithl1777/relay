@@ -146,7 +146,7 @@ public class FirebaseCourseDataAccessObject {
      * @param courseID the ID of the course to be deleted
      * @throws ResourceNotFoundException if the course with the specified ID does not exist or if an error occurs during deletion
      */
-    public void delete(String courseID) throws RuntimeException{
+    public void delete(String courseID) throws ResourceNotFoundException {
         try {
             if (!exists(courseID)) {
                 throw new ResourceNotFoundException("Course with given ID does not exist");
