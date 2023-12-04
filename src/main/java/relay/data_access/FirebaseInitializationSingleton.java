@@ -16,7 +16,7 @@ public class FirebaseInitializationSingleton {
 	private static volatile FirebaseInitializationSingleton singleton;
 
 	// Firebase secrets file location
-	private static String FIREBASE_CREDENTIALS_FILE = "src/main/resources/firebase.json";
+	private static String FIREBASE_CREDENTIALS_FILE = "./src/main/resources/firebase.json";
 
 	/**
 	 * Private constructor to initialize the Firebase configuration app.

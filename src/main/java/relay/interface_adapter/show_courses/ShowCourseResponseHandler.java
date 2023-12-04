@@ -2,6 +2,7 @@ package relay.interface_adapter.show_courses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 public class ShowCourseResponseHandler {
 
 	@GetMapping("/api/instructors/{id}/courses")
+	@CrossOrigin(origins = "https://localhost:3000")
 	public ResponseEntity<?> showCourses(@PathVariable String id) {
 		if (!Stream.of(id).allMatch(Objects::nonNull)) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);

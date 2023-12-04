@@ -6,18 +6,15 @@ import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import relay.app.SignupUseCaseFactory;
 import relay.app.StartSessionUseCaseFactory;
 import relay.data_access.FirebaseCourseDataAccessObject;
 import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.data_access.FirebaseSessionDataAccessObject;
-import relay.interface_adapter.signup.SignupController;
-import relay.use_case.signup.SignupInputData;
-import relay.use_case.signup.SignupInstructorDataAccessInterface;
 import relay.use_case.start_session.StartSessionSessionDataAccessInterface;
 import relay.use_case.start_session.StartSessionCourseDataAccessInterface;
 import relay.use_case.start_session.StartSessionInputData;
@@ -26,6 +23,7 @@ import relay.use_case.start_session.StartSessionInstructorDataAccessInterface;
 @RestController
 public class StartSessionResponseHandler {
 	@PostMapping("/api/sessions")
+	@CrossOrigin(origins = "https://localhost:3000")
 	ResponseEntity<?> startSession(@RequestBody Map<String, Object> requestBody) {
 		String courseID = (String) requestBody.get("courseID");
 		String instructorID = (String) requestBody.get("instructorID");

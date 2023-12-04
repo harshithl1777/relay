@@ -57,7 +57,7 @@ public class FirebaseInstructorDataAccessObject
 			if (!documents.isEmpty())
 				throw new ResourceAlreadyExistsException("Document with specified email already exists.");
 
-			ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor);
+			ApiFuture<DocumentReference> docRef = db.collection("instructors").add(instructor.convertToMap());
 			instructor.setInstructorID(docRef.get().getId());
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();

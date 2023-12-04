@@ -1,5 +1,8 @@
 package relay.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Instructor {
 	private String instructorID;
 	private String firstName;
@@ -16,7 +19,8 @@ public class Instructor {
 	 * Empty constructor required by certain data access interface
 	 * implementations. Do not remove, it will cause breaking changes.
 	 */
-	public Instructor() {}
+	public Instructor() {
+	}
 
 	public String getInstructorID() {
 		return instructorID;
@@ -48,6 +52,14 @@ public class Instructor {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public Map<String, Object> convertToMap() {
+		Map<String, Object> instructorMap = new HashMap<>();
+		instructorMap.put("firstName", firstName);
+		instructorMap.put("lastName", lastName);
+		instructorMap.put("emailAddress", emailAddress);
+		return instructorMap;
 	}
 
 }

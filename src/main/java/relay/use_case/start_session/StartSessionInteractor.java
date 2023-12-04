@@ -35,8 +35,11 @@ public class StartSessionInteractor implements StartSessionInputBoundary {
 
 			Session newSession = sessionFactory.createSession(courseID, instructorID);
 			sessionDataAccessObject.save(newSession);
+			newSession.generateQRCode();
+			sessionDataAccessObject.uploadImageToFirebaseStorage(newSession);
 
-			StartSessionOutputData startSessionSuccessOutputData = new StartSessionOutputData(newSession.getCourseID(),
+			StartSessionOutputData startSessionSuccessOutputData = new StartSessionOutputData(
+					newSession.getCourseID(),
 					newSession.getInstructorID(), newSession.getStartedAt(), newSession.getAlphaNumericCode(),
 					newSession.getSessionID(), newSession.getAttendance());
 			return sessionPresenter.prepareSuccessResponse(startSessionSuccessOutputData);
