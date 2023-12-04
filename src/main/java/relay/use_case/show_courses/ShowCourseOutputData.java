@@ -1,56 +1,42 @@
 package relay.use_case.show_courses;
 
-import relay.entity.AttendanceRecord;
-
 import java.util.List;
-
-
-import relay.interface_adapter.State;
-import relay.interface_adapter.ViewModel;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 
 import org.springframework.http.HttpStatus;
-import relay.entity.AttendanceRecord;
-import relay.interface_adapter.State;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import relay.entity.Course;
 
 public class ShowCourseOutputData {
 
-    private List<String> courses;
-    private String errorMessage;
-    private HttpStatus statusCode;
-    private boolean useCaseSuccess;
+	private List<Course> courses;
+	private String errorMessage;
+	private HttpStatus statusCode;
+	private boolean useCaseSuccess;
 
-    public ShowCourseOutputData(List<String> courses) {
-        this.courses = courses;
-        this.useCaseSuccess = true;
+	public ShowCourseOutputData(List<Course> courses) {
+		this.courses = courses;
+		this.useCaseSuccess = true;
+	}
 
+	public ShowCourseOutputData(String errorMessage) {
+		this.useCaseSuccess = false;
+		this.errorMessage = errorMessage;
+	}
 
-    }
+	public String getErrorMessage() {
+		return errorMessage;
+	}
 
-    public ShowCourseOutputData(String errorMessage) {
-        this.useCaseSuccess = false;
-        this.errorMessage = errorMessage;
-    }
+	public HttpStatus getStatusCode() {
+		return statusCode;
+	}
 
+	public List<Course> getCourses() {
+		return courses;
+	}
 
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public HttpStatus getStatusCode() {
-        return statusCode;
-    }
-
-   public List<String> getCourses() {
-        return courses;
-   }
+	public boolean getUseCaseSuccess() {
+		return useCaseSuccess;
+	}
 
 }

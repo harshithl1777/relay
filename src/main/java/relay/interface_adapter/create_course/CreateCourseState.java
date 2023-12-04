@@ -1,11 +1,9 @@
 package relay.interface_adapter.create_course;
 
 import org.springframework.http.HttpStatus;
-
 import relay.entity.AttendanceRecord;
 import relay.interface_adapter.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateCourseState implements State {
@@ -13,7 +11,7 @@ public class CreateCourseState implements State {
     private String courseName;
     private String courseID;
     private String errorMessage;
-    private ArrayList<AttendanceRecord> history;
+    private List<AttendanceRecord> history;
     private HttpStatus statusCode;
 
     public CreateCourseState(CreateCourseState copyState) {
@@ -71,7 +69,7 @@ public class CreateCourseState implements State {
     public void setStatusCode(HttpStatus statusCode) {
         this.statusCode = statusCode;
     }
-    public void setHistory(List<AttendanceRecord> history) {history = history;
+    public void setHistory(List<AttendanceRecord> history) {this.history = history;
     }
 
     public void appendHistory(List<AttendanceRecord> newRecords) {
