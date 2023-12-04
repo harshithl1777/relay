@@ -1,4 +1,4 @@
-package relay;
+package relay.unit;
 
 import relay.entity.Instructor;
 import relay.exceptions.ResourceAlreadyExistsException;

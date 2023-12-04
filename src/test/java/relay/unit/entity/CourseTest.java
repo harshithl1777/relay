@@ -1,4 +1,4 @@
-package relay.entity;
+package relay.unit.entity;
 
 import org.junit.jupiter.api.Test;
 import relay.entity.Course;

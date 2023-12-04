@@ -1,9 +1,12 @@
-package relay.data_access;
+package relay.unit.data_access;
 
 import com.google.cloud.storage.Bucket;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
+import relay.data_access.FirebaseInitializationSingleton;
+import relay.data_access.StorageSingleton;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FirebaseStorageTest {

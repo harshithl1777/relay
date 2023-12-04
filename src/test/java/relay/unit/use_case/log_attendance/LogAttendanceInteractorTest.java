@@ -1,4 +1,4 @@
-package relay.use_case.log_attendance;
+package relay.unit.use_case.log_attendance;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import relay.entity.AttendanceRecordFactory;
 import relay.entity.Session;
 import relay.entity.SessionFactory;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.log_attendance.*;
 
 import java.sql.Timestamp;
 

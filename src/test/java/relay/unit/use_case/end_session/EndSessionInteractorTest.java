@@ -1,16 +1,17 @@
-package relay.use_case.end_session;
+package relay.unit.use_case.end_session;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import relay.InMemoryCourseDataAccessObject;
-import relay.InMemorySessionDataAccessObject;
+import relay.unit.InMemoryCourseDataAccessObject;
+import relay.unit.InMemorySessionDataAccessObject;
 import relay.entity.AttendanceRecord;
 import relay.entity.Course;
 import relay.entity.Session;
 import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.end_session.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
