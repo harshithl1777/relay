@@ -5,6 +5,7 @@ import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
 import relay.use_case.login.LoginInstructorDataAccessInterface;
 import relay.use_case.show_courses.ShowCourseInstructorDataAccessInterface;
+import relay.use_case.signup.SignupInstructorDataAccessInterface;
 import relay.use_case.start_session.StartSessionInstructorDataAccessInterface;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
  * In-memory Instructor Data Access Object for testing purposes.
  * This class provides methods for reading and saving instructor data in memory.
  */
-public class InMemoryInstructorDataAccessObject implements LoginInstructorDataAccessInterface, StartSessionInstructorDataAccessInterface, ShowCourseInstructorDataAccessInterface {
+public class InMemoryInstructorDataAccessObject implements LoginInstructorDataAccessInterface, StartSessionInstructorDataAccessInterface, ShowCourseInstructorDataAccessInterface, SignupInstructorDataAccessInterface {
 
     // Storage for instructor data in memory
     private final Map<String, Instructor> instructors = new HashMap<>();
