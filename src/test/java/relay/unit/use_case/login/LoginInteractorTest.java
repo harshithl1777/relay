@@ -1,15 +1,17 @@
-package relay.use_case.login;
+package relay.unit.use_case.login;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import relay.InMemoryInstructorDataAccessObject;
+import relay.unit.InMemoryInstructorDataAccessObject;
 import relay.entity.Instructor;
 import relay.exceptions.ResourceAlreadyExistsException;
+import relay.use_case.login.*;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test class for the {@link LoginInteractor} class.
@@ -51,6 +53,8 @@ public class LoginInteractorTest {
                 assertEquals("Chugh", loginOutputData.getLastName());
                 assertEquals("Chugh", loginOutputData.getLastName());
                 assertEquals("100879585", loginOutputData.getInstructorID());
+                assert loginOutputData.getUseCaseSuccess();
+                assertNull(loginOutputData.getErrorMessage());
                 return null;
             }
 
@@ -68,7 +72,7 @@ public class LoginInteractorTest {
      * Test for failure when no such instructor exists.
      */
     @Test
-    void failureNoSuchInstructorExists() {
+    void failureNoSuchInstructorExistsTest() {
         LoginInputData loginInputData = new LoginInputData("john.cena@wwe.com");
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
@@ -79,6 +83,7 @@ public class LoginInteractorTest {
             @Override
             public ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData loginOutputData) {
                 assert !loginOutputData.getErrorMessage().isBlank();  // test if error message has been set
+                assert !loginOutputData.getUseCaseSuccess();
                 return null;
             }
         };
@@ -86,4 +91,33 @@ public class LoginInteractorTest {
         LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
         interactor.execute(loginInputData);
     }
+
+    /**
+     * Test for failure when a bad request is sent.
+     */
+    @Test
+    void failureWhenBadRequestTest() {
+        LoginInputData loginInputData = new LoginInputData("      ");
+        loginInputData.setInstructorEmailAddress("        ");
+        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareSuccessResponse(LoginOutputData loginOutputData) {
+                throw new RuntimeException("Use Case Success Not Expected");
+            }
+
+            @Override
+            public ResponseEntity<Map<String, Object>> prepareFailResponse(LoginOutputData loginOutputData) {
+                assert !loginOutputData.getErrorMessage().isBlank();  // test if error message has been set
+                loginOutputData.setLastName("Doe");
+                loginOutputData.setFirstName("John");
+                assert loginOutputData.getFirstName().equals("John");
+                assert loginOutputData.getLastName().equals("Doe");
+                return null;
+            }
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(instructorRepository, successPresenter);
+        interactor.execute(loginInputData);
+    }
+
 }

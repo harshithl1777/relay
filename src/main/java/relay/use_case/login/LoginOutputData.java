@@ -10,14 +10,14 @@ public class LoginOutputData {
     private String emailAddress;
     private String errorMessage;
 
-    private String useCaseSuccess;
+    private boolean useCaseSuccess;
 
 
-    public String getUseCaseSuccess() {
+    public boolean getUseCaseSuccess() {
         return useCaseSuccess;
     }
 
-    public void setUseCaseSuccess(String useCaseSuccess) {
+    public void setUseCaseSuccess(boolean useCaseSuccess) {
         this.useCaseSuccess = useCaseSuccess;
     }
 

@@ -22,7 +22,7 @@ public class ShowCoursePresenter implements ShowCourseOutputBoundary {
 
 	// Method from the ShowCourseOutputBoundary interface
 	@Override
-	public ResponseEntity<Map<String, Object>> prepareSuccessResponce(ShowCourseOutputData outputData) {
+	public ResponseEntity<Map<String, Object>> prepareSuccessResponse(ShowCourseOutputData outputData) {
 		// Extract relevant data from the output and update the ViewModel
 		ShowCourseState showCourseState = (ShowCourseState) viewModel.getState();
 		List<Course> courses = outputData.getCourses();
@@ -32,7 +32,7 @@ public class ShowCoursePresenter implements ShowCourseOutputBoundary {
 	}
 
 	@Override
-	public ResponseEntity<Map<String, Object>> prepareFailResponce(ShowCourseOutputData failureShowCourseOutputData) {
+	public ResponseEntity<Map<String, Object>> prepareFailResponse(ShowCourseOutputData failureShowCourseOutputData) {
 		ShowCourseState showCourseState = (ShowCourseState) viewModel.getState();
 		showCourseState.setErrorMessage(failureShowCourseOutputData.getErrorMessage());
 		showCourseState.setStatusCode(HttpStatus.NOT_FOUND);
