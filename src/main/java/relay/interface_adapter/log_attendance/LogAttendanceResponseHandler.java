@@ -1,6 +1,7 @@
 package relay.interface_adapter.log_attendance;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 public class LogAttendanceResponseHandler {
 
 	@PostMapping("/api/sessions/{id}/attendance")
+	@CrossOrigin(origins = "https://localhost:3000")
 	public ResponseEntity<?> logAttendance(@PathVariable String id, @RequestBody Map<String, Object> requestBody) {
 		String sessionID = id;
 		String studentFirstName = (String) requestBody.get("studentFirstName");

@@ -37,13 +37,20 @@ public class FirebaseCourseDataAccessObject implements CreateCourseCourseDataAcc
 	 */
 	public void save(Course course) {
 		Map<String, Object> courseDocument = course.convertToMap();
+		String courseID = course.getCourseID();
+		if (courseDocument == null)
+			throw new NullPointerException();
 
-		ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
 		try {
-			String courseID = newCourseDocument.get().getId();
-			course.setCourseID(courseID);
+			if (exists(courseID) && courseID != null) {
+				db.collection("courses").document(courseID).set(courseDocument);
+			} else {
+				ApiFuture<DocumentReference> newCourseDocument = db.collection("courses").add(courseDocument);
+				String newCourseID = newCourseDocument.get().getId();
+				course.setCourseID(newCourseID);
+			}
 		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 
 	}
@@ -123,6 +130,7 @@ public class FirebaseCourseDataAccessObject implements CreateCourseCourseDataAcc
 			String courseName = (String) courseData.get("courseName");
 			String instructorID = (String) courseData.get("instructorID");
 			Course course = new Course(courseName, instructorID);
+			course.setCourseID(courseID);
 			course.setHistory(attendance);
 			return course;
 
@@ -140,6 +148,8 @@ public class FirebaseCourseDataAccessObject implements CreateCourseCourseDataAcc
 	 *         {@code false} otherwise
 	 */
 	public boolean exists(String courseID) {
+		if (courseID == null)
+			return false;
 		ApiFuture<DocumentSnapshot> retrievedcourseDocument = db.collection("courses").document(courseID).get();
 		try {
 			DocumentSnapshot courseDocument = retrievedcourseDocument.get();
