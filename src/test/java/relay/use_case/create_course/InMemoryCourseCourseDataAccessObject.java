@@ -6,7 +6,7 @@ import relay.exceptions.ResourceNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCourseDataAccessObject implements CreateCourseDataAccessInterface{
+public class InMemoryCourseCourseDataAccessObject implements CreateCourseCourseDataAccessInterface {
     private final Map<String, Course> courses = new HashMap<>();
 
     public Course getCourseByID(String courseID) throws ResourceNotFoundException {

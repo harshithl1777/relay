@@ -12,10 +12,10 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateCourseInteractorTest{
-    CreateCourseDataAccessInterface courseRepository;
+    CreateCourseCourseDataAccessInterface courseRepository;
     @BeforeEach
     void setupInstructorRepository() {
-        this.courseRepository = new InMemoryCourseDataAccessObject();
+        this.courseRepository = new InMemoryCourseCourseDataAccessObject();
     }
     @Test
     void successTest() throws ResourceAlreadyExistsException {
@@ -24,7 +24,7 @@ public class CreateCourseInteractorTest{
         Course course = new Course("MAT137", "cr7siuu");
         course.setHistory(new ArrayList<>());
 
-        ((InMemoryCourseDataAccessObject) courseRepository).save(course);
+        ((InMemoryCourseCourseDataAccessObject) courseRepository).save(course);
 
         CreateCourseOutputBoundary successPresenter = new CreateCourseOutputBoundary() {
             @Override

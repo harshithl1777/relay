@@ -9,7 +9,7 @@ import relay.exceptions.ResourceNotFoundException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FirebaseCourseDataAccessObjectTest {
-	FirebaseCourseDataAccessObject courseDataAccessObject;
+	FirebaseCourseCourseDataAccessObject courseDataAccessObject;
 
 	@BeforeAll
 	public static void initializeFirebase() {
@@ -18,7 +18,7 @@ public class FirebaseCourseDataAccessObjectTest {
 
 	@BeforeEach
 	void initializeDataAccessObject() {
-		this.courseDataAccessObject = new FirebaseCourseDataAccessObject();
+		this.courseDataAccessObject = new FirebaseCourseCourseDataAccessObject();
 	}
 
 	/**

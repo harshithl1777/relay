@@ -8,18 +8,18 @@ import relay.entity.AttendanceRecordFactory;
 import relay.entity.AttendanceRecordFactoryInterface;
 import relay.entity.Course;
 import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.show_courses.ShowCourseDataAccessInterface;
-import relay.use_case.create_course.CreateCourseDataAccessInterface;
+import relay.use_case.create_course.CreateCourseCourseDataAccessInterface;
+import relay.use_case.show_courses.ShowCourseCourseDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
-public class FirebaseCourseDataAccessObject implements CreateCourseDataAccessInterface, ShowCourseDataAccessInterface {
+public class FirebaseCourseCourseDataAccessObject implements CreateCourseCourseDataAccessInterface, ShowCourseCourseDataAccessInterface {
     private final Firestore db;
 
-    public FirebaseCourseDataAccessObject() {
+    public FirebaseCourseCourseDataAccessObject() {
         this.db = FirestoreSingleton.get();
     }
 
