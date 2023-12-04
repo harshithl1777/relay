@@ -212,7 +212,10 @@ const StudentsPage = () => {
                     width='100%'
                 >
                     <Text color='navy.600' fontSize='lg' margin='auto' marginLeft='40px'>
-                        Built by <span style={{ fontWeight: 'var(--chakra-fontWeights-black' }}>Harshith Latchupatula.</span>
+                        Built by{' '}
+                        <span style={{ fontWeight: 'var(--chakra-fontWeights-black' }}>
+                            Harshith, Ram, Vikram, Muhammad & Vihaan.
+                        </span>
                     </Text>
                     <Box display='flex' flexDirection='row' alignItems='center' gap='20px' margin='auto' marginRight='30px'>
                         <Icon

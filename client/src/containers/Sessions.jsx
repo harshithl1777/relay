@@ -56,10 +56,8 @@ const Sessions = (props) => {
             );
             const unsubscribe = onSnapshot(doc(db, 'sessions', selectedActiveSession[0].id), (doc) => {
                 const data = doc.data();
-                console.log(data);
                 updateActiveSessions(sessions.activeSessions, { ...data, id: doc.id });
             });
-            console.log(typeof unsubscribe);
             setUnsubscribe(() => () => unsubscribe());
             setRealtimeSubscribed(true);
         }

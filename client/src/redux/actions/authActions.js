@@ -72,7 +72,6 @@ export const authWithSocials = (service) => async (dispatch) => {
             dispatch({ type: AUTH_WITH_SOCIALS, success: true, payload });
         }
     } catch (error) {
-        console.log(error);
         if (error.code === 'auth/account-exists-with-different-credential') {
             toast({
                 title: 'Email already in use',

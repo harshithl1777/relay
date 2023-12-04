@@ -11,7 +11,6 @@ axios.interceptors.request.use(async (config) => {
         const auth = getAuth(app);
         const currentUser = auth.currentUser;
         const socialToken = await currentUser.getIdToken();
-        console.log(socialToken);
         config.headers = { Authorization: `Bearer ${socialToken}` };
     }
     return config;
@@ -39,7 +38,6 @@ class APICore {
                 const urlSuffix = suffix === '' ? '' : `/${suffix}`;
                 try {
                     const response = await axios.post(`${BASE_URL}/${options.url + urlSuffix}`, body, { headers });
-                    console.log('SENT');
                     return handleResponse(response);
                 } catch (error) {
                     console.log(error);

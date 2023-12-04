@@ -47,13 +47,11 @@ export const addSessionAttendanceRecord = async (
     studentID,
     sessionID,
 ) => {
-    console.log('HERE');
     const response = await sessionsAPI.post(
         { studentFirstName, studentLastName, studentEmailAddress, studentID },
         {},
         `${sessionID}/attendance`,
     );
-    console.log(response);
 };
 
 window.addEventListener('beforeunload', () => {});

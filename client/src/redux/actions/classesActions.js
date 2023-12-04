@@ -18,7 +18,6 @@ export const loadClassList = (instructorID) => async (dispatch) => {
 };
 
 export const selectClass = (selectedClass) => (dispatch) => {
-    console.log('SELECTED', selectedClass);
     dispatch({ type: SELECT_CLASS, success: true, payload: { selectedClass } });
 };
 

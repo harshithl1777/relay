@@ -13,7 +13,6 @@ const History = (props) => {
 
     const segregateHistoryByDay = () => {
         let currentSegregator = dayjs(classTotalHistory[0].createdAt).format('DD-MM-YYYY');
-        console.log(currentSegregator);
         const segregatedHistory = [[classTotalHistory[0].createdAt]];
         classTotalHistory.forEach((record) => {
             const formattedDate = dayjs(record.createdAt).format('DD-MM-YYYY');

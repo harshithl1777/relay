@@ -46,6 +46,5 @@ export const endSession = (sessionID, instructorID) => async (dispatch) => {
         activeSessions,
         activeClasses,
     };
-    console.log('COMPLETED END', payload);
     dispatch({ type: END_SESSION, success: true, payload });
 };
