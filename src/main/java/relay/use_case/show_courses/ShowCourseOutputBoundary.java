@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.Map;
 
 public interface ShowCourseOutputBoundary {
-    ResponseEntity<Map<String, Object>> prepareSuccessResponce(ShowCourseOutputData outputData);
+    ResponseEntity<Map<String, Object>> prepareSuccessResponse(ShowCourseOutputData outputData);
 
-    ResponseEntity<Map<String, Object>> prepareFailResponce(ShowCourseOutputData failureShowCourseOutputData);
+    ResponseEntity<Map<String, Object>> prepareFailResponse(ShowCourseOutputData failureShowCourseOutputData);
 
 
 
