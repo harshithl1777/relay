@@ -25,7 +25,7 @@ public class Session {
 	private Image qrCodeImage;
 
 	private static final String QR_CODE_API_PATH = "https://api.qrserver.com/v1/create-qr-code/?data=%s&size=%dx%d";
-	private static final String QR_CODE_REDIRECT_PATH = "https://relay.vercel.app/students?code=";
+	private static final String QR_CODE_REDIRECT_PATH = "https:localhost:3000/students?code=";
 	private static final int QR_SIZE_X = 100;
 	private static final int QR_SIZE_Y = 100;
 
