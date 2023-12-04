@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for the {@link StartSessionInteractor} class.
+ * Note that only failure is tested as success is infeasible to implement using mock databases.
+ * Success will be tested through integration tests.
  */
 public class StartSessionInteractorTest {
 
