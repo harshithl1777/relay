@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import relay.app.SignupUseCaseFactory;
 import relay.app.StartSessionUseCaseFactory;
+import relay.data_access.FirebaseCourseDataAccessObject;
 import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.data_access.FirebaseSessionDataAccessObject;
 import relay.interface_adapter.signup.SignupController;
 import relay.use_case.signup.SignupInputData;
 import relay.use_case.signup.SignupInstructorDataAccessInterface;
-import relay.use_case.start_session.StartSessionDataAccessInterface;
+import relay.use_case.start_session.StartSessionSessionDataAccessInterface;
+import relay.use_case.start_session.StartSessionCourseDataAccessInterface;
 import relay.use_case.start_session.StartSessionInputData;
+import relay.use_case.start_session.StartSessionInstructorDataAccessInterface;
 
 @RestController
 public class StartSessionResponseHandler {
@@ -32,10 +35,12 @@ public class StartSessionResponseHandler {
 		}
 
 		StartSessionViewModel startSessionViewModel = new StartSessionViewModel();
-		StartSessionDataAccessInterface startSessionDataAccessObject = new FirebaseSessionDataAccessObject();
+		StartSessionSessionDataAccessInterface sessionDataAccessObject = new FirebaseSessionDataAccessObject();
+		StartSessionCourseDataAccessInterface courseDataAccessObject = new FirebaseCourseDataAccessObject();
+		StartSessionInstructorDataAccessInterface instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
 		StartSessionController startSessionController = StartSessionUseCaseFactory.createStartSessionUseCase(
 				startSessionViewModel,
-				startSessionDataAccessObject);
+				sessionDataAccessObject, courseDataAccessObject, instructorDataAccessObject);
 		StartSessionInputData requestInputData = new StartSessionInputData(courseID, instructorID);
 		return startSessionController.execute(requestInputData);
 	}

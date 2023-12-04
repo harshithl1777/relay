@@ -11,7 +11,9 @@ import com.google.cloud.firestore.WriteResult;
 import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
 import relay.use_case.login.LoginInstructorDataAccessInterface;
+import relay.use_case.show_courses.ShowCourseInstructorDataAccessInterface;
 import relay.use_case.signup.SignupInstructorDataAccessInterface;
+import relay.use_case.start_session.StartSessionInstructorDataAccessInterface;
 import relay.entity.Instructor;
 
 import java.util.List;
@@ -24,7 +26,8 @@ import java.util.concurrent.ExecutionException;
  * to perform CRUD operations on Instructor entities.
  */
 public class FirebaseInstructorDataAccessObject
-		implements SignupInstructorDataAccessInterface, LoginInstructorDataAccessInterface {
+		implements SignupInstructorDataAccessInterface, LoginInstructorDataAccessInterface,
+		ShowCourseInstructorDataAccessInterface, StartSessionInstructorDataAccessInterface {
 
 	Firestore db;
 
