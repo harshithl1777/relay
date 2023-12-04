@@ -38,6 +38,7 @@ public class LoginInteractor implements LoginInputBoundary {
                     loggedInInstructor.getLastName(),
                     loggedInInstructor.getEmailAddress()
             );
+            loginSuccessOutputData.setUseCaseSuccess(true);
             return loginPresenter.prepareSuccessResponse(loginSuccessOutputData);
         } catch (ResourceNotFoundException e) {
             LoginOutputData loginFailureOutputData = new LoginOutputData(e.getMessage());
