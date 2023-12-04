@@ -3,6 +3,7 @@ package relay.use_case.create_course;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import relay.InMemoryCourseDataAccessObject;
 import relay.entity.Course;
 import relay.exceptions.ResourceAlreadyExistsException;
 
@@ -15,16 +16,16 @@ public class CreateCourseInteractorTest{
     CreateCourseCourseDataAccessInterface courseRepository;
     @BeforeEach
     void setupInstructorRepository() {
-        this.courseRepository = new InMemoryCourseCourseDataAccessObject();
+        this.courseRepository = new InMemoryCourseDataAccessObject();
     }
     @Test
-    void successTest() throws ResourceAlreadyExistsException {
+    void successTest() {
         CreateCourseInputData createCourseInputData = new CreateCourseInputData("MAT137", "cr7siuuu");
 
         Course course = new Course("MAT137", "cr7siuu");
         course.setHistory(new ArrayList<>());
 
-        ((InMemoryCourseCourseDataAccessObject) courseRepository).save(course);
+        ((InMemoryCourseDataAccessObject) courseRepository).save(course);
 
         CreateCourseOutputBoundary successPresenter = new CreateCourseOutputBoundary() {
             @Override
