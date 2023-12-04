@@ -3,9 +3,13 @@ package relay.use_case.start_session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import relay.InMemoryCourseDataAccessObject;
+import relay.InMemoryInstructorDataAccessObject;
+import relay.InMemorySessionDataAccessObject;
+import relay.entity.Course;
+import relay.entity.Instructor;
 import relay.entity.SessionFactory;
-import relay.interface_adapter.start_session.StartSessionPresenter;
-import relay.use_case.login.*;
+import relay.exceptions.ResourceAlreadyExistsException;
 
 import java.util.Map;
 
@@ -20,7 +24,9 @@ public class StartSessionInteractorTest {
     /**
      * Interface for accessing instructor login data during testing.
      */
-    StartSessionDataAccessInterface sessionRepository;
+    StartSessionSessionDataAccessInterface sessionRepository;
+    StartSessionCourseDataAccessInterface courseRepository;
+    StartSessionInstructorDataAccessInterface instructorRepository;
 
     /**
      * Set up the instructor repository before each test.
@@ -28,13 +34,21 @@ public class StartSessionInteractorTest {
     @BeforeEach
     void setupSessionRepository() {
         this.sessionRepository = new InMemorySessionDataAccessObject();
+        this.courseRepository = new InMemoryCourseDataAccessObject();
+        this.instructorRepository = new InMemoryInstructorDataAccessObject();
     }
 
     /**
      * Test for successful start session scenario, when the response data passed in is correct.
      */
     @Test
-    void successTest() {
+    void successTest() throws ResourceAlreadyExistsException {
+        Course course = new Course("MAT237", "Asif Zaman");
+        course.setCourseID("MAT237");
+        ((InMemoryCourseDataAccessObject) courseRepository).save(course);
+        Instructor instructor = new Instructor("Asif", "Zaman", "asif@zaman@gmail.com");
+        instructor.setInstructorID("Asif Zaman");
+        ((InMemoryInstructorDataAccessObject) instructorRepository).save(instructor);
         StartSessionInputData loginInputData = new StartSessionInputData("MAT237", "Asif Zaman");
 
         StartSessionOutputBoundary successPresenter = new StartSessionOutputBoundary() {
@@ -57,7 +71,7 @@ public class StartSessionInteractorTest {
             }
         };
 
-        StartSessionInteractor interactor = new StartSessionInteractor(sessionRepository, successPresenter, new SessionFactory());
+        StartSessionInteractor interactor = new StartSessionInteractor(sessionRepository, courseRepository, instructorRepository, successPresenter, new SessionFactory());
         interactor.execute(loginInputData);
     }
 
@@ -79,7 +93,7 @@ public class StartSessionInteractorTest {
             }
         };
 
-        StartSessionInteractor interactor1 = new StartSessionInteractor(sessionRepository, dummyPresenter, new SessionFactory());
+        StartSessionInteractor interactor1 = new StartSessionInteractor(sessionRepository, courseRepository, instructorRepository, dummyPresenter, new SessionFactory());
         interactor1.execute(startSessionInputData);
 
         StartSessionOutputBoundary failurePresenter = new StartSessionOutputBoundary() {
@@ -95,7 +109,7 @@ public class StartSessionInteractorTest {
             }
         };
 
-        StartSessionInteractor interactor2 = new StartSessionInteractor(sessionRepository, failurePresenter, new SessionFactory());
+        StartSessionInteractor interactor2 = new StartSessionInteractor(sessionRepository, courseRepository, instructorRepository, failurePresenter, new SessionFactory());
         interactor2.execute(startSessionInputData);
     }
 }

@@ -3,6 +3,7 @@ package relay.use_case.login;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import relay.InMemoryInstructorDataAccessObject;
 import relay.entity.Instructor;
 import relay.exceptions.ResourceAlreadyExistsException;
 

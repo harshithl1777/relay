@@ -1,7 +1,8 @@
-package relay.use_case.start_session;
+package relay;
 
 import relay.entity.Session;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.start_session.StartSessionSessionDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  * In-memory Instructor Data Access Object for testing purposes.
  * This class provides methods for reading and saving instructor data in memory.
  */
-public class InMemorySessionDataAccessObject implements StartSessionDataAccessInterface {
+public class InMemorySessionDataAccessObject implements StartSessionSessionDataAccessInterface {
 
     // Storage for instructor data in memory
     private final Map<String, Session> sessions = new HashMap<>();
@@ -35,10 +36,9 @@ public class InMemorySessionDataAccessObject implements StartSessionDataAccessIn
      * Saves a session to the in-memory data storage.
      *
      * @param session The session to be saved.
-     * @throws NullPointerException if the session's sessionID is null
      */
     @Override
-    public void save(Session session) throws Exception {
+    public void save(Session session) {
         session.setSessionID(String.valueOf(nextID));
         session.setAlphaNumericCode("frcnr");
         sessions.put(String.valueOf(nextID++), session);
