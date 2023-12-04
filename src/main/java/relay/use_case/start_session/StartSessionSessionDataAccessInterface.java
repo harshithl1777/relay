@@ -4,4 +4,6 @@ import relay.entity.Session;
 
 public interface StartSessionSessionDataAccessInterface {
 	void save(Session session);
+
+	void uploadImageToFirebaseStorage(Session session);
 }

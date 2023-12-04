@@ -1,0 +1,20 @@
+{
+    "name": "relay",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "test": "mvn test",
+        "server": "mvn spring-boot:run",
+        "client": "cd client && npm start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/harshithl1777/relay.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/harshithl1777/relay/issues"
+    },
+    "homepage": "https://github.com/harshithl1777/relay#readme"
+}
