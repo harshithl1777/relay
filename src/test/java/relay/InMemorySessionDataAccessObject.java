@@ -2,6 +2,7 @@ package relay;
 
 import relay.entity.Session;
 import relay.exceptions.ResourceNotFoundException;
+import relay.use_case.end_session.EndSessionSessionDataAccessInterface;
 import relay.use_case.start_session.StartSessionSessionDataAccessInterface;
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
  * In-memory Instructor Data Access Object for testing purposes.
  * This class provides methods for reading and saving instructor data in memory.
  */
-public class InMemorySessionDataAccessObject implements StartSessionSessionDataAccessInterface {
+public class InMemorySessionDataAccessObject implements StartSessionSessionDataAccessInterface, EndSessionSessionDataAccessInterface {
 
     // Storage for instructor data in memory
     private final Map<String, Session> sessions = new HashMap<>();
@@ -39,8 +40,20 @@ public class InMemorySessionDataAccessObject implements StartSessionSessionDataA
      */
     @Override
     public void save(Session session) {
-        session.setSessionID(String.valueOf(nextID));
-        session.setAlphaNumericCode("frcnr");
-        sessions.put(String.valueOf(nextID++), session);
+        if (session.getSessionID() != null && !sessions.containsKey(session.getSessionID())) {
+            sessions.put(session.getSessionID(), session);
+        } else {
+            session.setSessionID(String.valueOf(nextID));
+            session.setAlphaNumericCode("frcnr");
+            sessions.put(String.valueOf(nextID++), session);
+        }
+    }
+
+    @Override
+    public void delete(String sessionID) throws ResourceNotFoundException {
+        if (!sessions.containsKey(sessionID)) {
+            throw new ResourceNotFoundException("Session does not exists");
+        }
+        sessions.remove(sessionID);
     }
 }

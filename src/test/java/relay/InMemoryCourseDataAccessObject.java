@@ -3,12 +3,13 @@ package relay;
 import relay.entity.Course;
 import relay.exceptions.ResourceNotFoundException;
 import relay.use_case.create_course.CreateCourseCourseDataAccessInterface;
+import relay.use_case.end_session.EndSessionCourseDataAccessInterface;
 import relay.use_case.start_session.StartSessionCourseDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCourseDataAccessObject implements CreateCourseCourseDataAccessInterface, StartSessionCourseDataAccessInterface {
+public class InMemoryCourseDataAccessObject implements CreateCourseCourseDataAccessInterface, StartSessionCourseDataAccessInterface, EndSessionCourseDataAccessInterface {
     private final Map<String, Course> courses = new HashMap<>();
 
     public Course getCourseByID(String courseID) throws ResourceNotFoundException {
