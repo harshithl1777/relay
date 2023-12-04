@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import relay.app.CreateCourseUseCaseFactory;
 import relay.data_access.FirebaseCourseDataAccessObject;
-import relay.use_case.create_course.CreateCourseCourseDataAccessInterface;
+import relay.use_case.create_course.CreateCourseDataAccessInterface;
 import relay.use_case.create_course.CreateCourseInputData;
 
 import java.util.Map;
@@ -29,7 +29,7 @@ public class CreateCourseResponseHandler {
 
         CreateCourseViewModel createCourseViewModel = new CreateCourseViewModel();
 
-        CreateCourseCourseDataAccessInterface courseDataAccessObject = new FirebaseCourseDataAccessObject();
+        CreateCourseDataAccessInterface courseDataAccessObject = new FirebaseCourseDataAccessObject();
 
         CreateCourseController createCourseController = CreateCourseUseCaseFactory.createCreateCourseUseCase(createCourseViewModel,
                 courseDataAccessObject);

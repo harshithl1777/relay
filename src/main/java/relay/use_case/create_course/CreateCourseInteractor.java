@@ -6,11 +6,11 @@ import relay.entity.Course;
 import java.util.Map;
 
 public class CreateCourseInteractor implements CreateCourseInputBoundary {
-	final CreateCourseCourseDataAccessInterface instructorDataAccessObject;
+	final CreateCourseDataAccessInterface instructorDataAccessObject;
 	final CreateCourseOutputBoundary createCoursePresenter;
 
-	public CreateCourseInteractor(CreateCourseCourseDataAccessInterface instructorDataAccessObject,
-			CreateCourseOutputBoundary createCoursePresenter) {
+	public CreateCourseInteractor(CreateCourseDataAccessInterface instructorDataAccessObject,
+                                  CreateCourseOutputBoundary createCoursePresenter) {
 		this.instructorDataAccessObject = instructorDataAccessObject;
 		this.createCoursePresenter = createCoursePresenter;
 	}
