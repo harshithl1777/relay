@@ -7,13 +7,9 @@ import relay.entity.AttendanceRecord;
 import relay.entity.AttendanceRecordFactory;
 import relay.entity.Session;
 import relay.entity.SessionFactory;
-import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.log_attendance.LogAttendanceInteractor;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +32,7 @@ public class LogAttendanceInteractorTest {
         session.setSessionID("1012");
         sessionRepository.save(session);
 
-        LogAttendanceInputData logAttendanceInputData = new LogAttendanceInputData("1012", "John", "Doe", "100879585", "john@gmail.com", timestamp);
+        LogAttendanceInputData logAttendanceInputData = new LogAttendanceInputData("1012", "John", "Doe", "100879585", "john@gmail.com");
         String sessionID = logAttendanceInputData.getSessionID();
 
         Session session1 = sessionRepository.read(sessionID);
@@ -47,13 +43,13 @@ public class LogAttendanceInteractorTest {
 
         LogAttendanceOutputBoundary successPresenter = new LogAttendanceOutputBoundary() {
             @Override
-            public ResponseEntity PrepareSuccessResponse(LogAttendanceOutputData logAttendanceOutputData) {
+            public ResponseEntity prepareSuccessResponse(LogAttendanceOutputData logAttendanceOutputData) {
                 assertTrue(logAttendanceOutputData.getUseCaseSuccess());
                 return null;
             }
 
             @Override
-            public ResponseEntity PrepareFailResponse(LogAttendanceOutputData logAttendanceOutputData) {
+            public ResponseEntity prepareFailResponse(LogAttendanceOutputData logAttendanceOutputData) {
                 throw new RuntimeException("Use Case Failure Not Expected");
             }
         };
@@ -69,19 +65,19 @@ public class LogAttendanceInteractorTest {
         session.setSessionID("1012");
         sessionRepository.save(session);
 
-        LogAttendanceInputData logAttendanceInputData = new LogAttendanceInputData("1012", "John", "Doe", "100879585", "john@gmail.com", timestamp);
+        LogAttendanceInputData logAttendanceInputData = new LogAttendanceInputData("1012", "John", "Doe", "100879585", "john@gmail.com");
         String sessionID = logAttendanceInputData.getSessionID();
 
         AttendanceRecordFactory attendanceRecordFactory = new AttendanceRecordFactory();
         AttendanceRecord attendanceRecord = attendanceRecordFactory.createAttendanceRecord(logAttendanceInputData.getStudentFirstName(), logAttendanceInputData.getStudentLastName(), logAttendanceInputData.getStudentID(), logAttendanceInputData.getStudentEmail());
         LogAttendanceOutputBoundary failurePresenter = new LogAttendanceOutputBoundary() {
             @Override
-            public ResponseEntity PrepareSuccessResponse(LogAttendanceOutputData logAttendanceOutputData) {
+            public ResponseEntity prepareSuccessResponse(LogAttendanceOutputData logAttendanceOutputData) {
                 throw new RuntimeException("Use Case Success Not Expected");
             }
 
             @Override
-            public ResponseEntity PrepareFailResponse(LogAttendanceOutputData logAttendanceOutputData) {
+            public ResponseEntity prepareFailResponse(LogAttendanceOutputData logAttendanceOutputData) {
                 assertFalse(logAttendanceOutputData.getUseCaseSuccess());
                 return null;
             }
