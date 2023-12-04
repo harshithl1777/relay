@@ -35,6 +35,7 @@ public class EndSessionInteractor implements EndSessionInputBoundary {
 			courseDataAccessObject.save(course);
 
 			sessionDataAccessObject.delete(sessionID);
+			sessionDataAccessObject.deleteFile(sessionID);
 
 			EndSessionOutputData endSessionSuccessOutputData = new EndSessionOutputData();
 

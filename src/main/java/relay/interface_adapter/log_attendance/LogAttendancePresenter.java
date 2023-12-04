@@ -25,7 +25,7 @@ public class LogAttendancePresenter implements LogAttendanceOutputBoundary {
 	public ResponseEntity<?> prepareFailResponse(LogAttendanceOutputData outputData) {
 		LogAttendanceState state = (LogAttendanceState) logAttendanceViewModel.getState();
 		state.setErrorMessage(outputData.getErrorMessage());
-		state.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+		state.setStatusCode(HttpStatus.NOT_FOUND);
 		return ResponseFactory.createFailureResponseEntity(logAttendanceViewModel);
 	}
 

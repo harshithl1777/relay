@@ -8,5 +8,7 @@ public interface EndSessionSessionDataAccessInterface {
 
 	void delete(String sessionID) throws ResourceNotFoundException;
 
+	void deleteFile(String sessionID) throws ResourceNotFoundException;
+
 	Session read(String sessionID) throws ResourceNotFoundException;
 }

@@ -151,7 +151,8 @@ public class FirebaseSessionDataAccessObject
 		return false;
 	}
 
-	public void deleteFile(String fileName) throws ResourceNotFoundException {
+	public void deleteFile(String sessionID) throws ResourceNotFoundException {
+		String fileName = sessionID + ".png";
 		if (!fileExists(fileName))
 			throw new ResourceNotFoundException("No such file exists.");
 		else

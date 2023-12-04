@@ -2,6 +2,7 @@ package relay.interface_adapter.login;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ public class LoginResponseHandler {
 	 * @return A ResponseEntity representing the result of the login operation.
 	 */
 	@GetMapping("/api/instructors")
+	@CrossOrigin(origins = "https://localhost:3000")
 	public ResponseEntity<?> login(@RequestParam String emailAddress) {
 		if (!Stream.of(emailAddress).allMatch(Objects::nonNull)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

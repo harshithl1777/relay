@@ -56,4 +56,15 @@ public class InMemorySessionDataAccessObject implements StartSessionSessionDataA
         }
         sessions.remove(sessionID);
     }
+
+    @Override
+    public void deleteFile(String sessionID) throws ResourceNotFoundException {
+        return;
+    }
+
+    @Override
+    public void uploadImageToFirebaseStorage(Session session) {
+        throw new UnsupportedOperationException("Unimplemented method 'uploadImageToFirebaseStorage'");
+    }
+
 }
