@@ -9,38 +9,39 @@ import relay.entity.Session;
 import java.util.List;
 
 public class EndSessionInteractor implements EndSessionInputBoundary {
-    final EndSessionSessionDataAccessInterface sessionDataAccessObject;
+	final EndSessionSessionDataAccessInterface sessionDataAccessObject;
 
-    final EndSessionCourseDataAccessInterface courseDataAccessObject;
+	final EndSessionCourseDataAccessInterface courseDataAccessObject;
 
-    final EndSessionOutputBoundary sessionPresenter;
+	final EndSessionOutputBoundary sessionPresenter;
 
-    public EndSessionInteractor(EndSessionSessionDataAccessInterface sessionDataAccessObject,EndSessionCourseDataAccessInterface courseDataAccessObject,
-                                EndSessionOutputBoundary sessionPresenter) {
-        this.sessionDataAccessObject = sessionDataAccessObject;
-        this.courseDataAccessObject = courseDataAccessObject;
-        this.sessionPresenter = sessionPresenter;
-    }
+	public EndSessionInteractor(EndSessionSessionDataAccessInterface sessionDataAccessObject,
+			EndSessionCourseDataAccessInterface courseDataAccessObject,
+			EndSessionOutputBoundary sessionPresenter) {
+		this.sessionDataAccessObject = sessionDataAccessObject;
+		this.courseDataAccessObject = courseDataAccessObject;
+		this.sessionPresenter = sessionPresenter;
+	}
 
-    @Override
-    public ResponseEntity<HttpStatus> execute(EndSessionInputData inputData) {
-        try {
-            String sessionID = inputData.getSessionID();
-            Session session = sessionDataAccessObject.read(sessionID);
-            List<AttendanceRecord> attendance = session.getAttendance();
+	@Override
+	public ResponseEntity<HttpStatus> execute(EndSessionInputData inputData) {
+		try {
+			String sessionID = inputData.getSessionID();
+			Session session = sessionDataAccessObject.read(sessionID);
+			List<AttendanceRecord> attendance = session.getAttendance();
 
-            Course course = courseDataAccessObject.read(session.getCourseID());
-            course.appendHistory(attendance);
-            courseDataAccessObject.save(course);
+			Course course = courseDataAccessObject.getCourseByID(session.getCourseID());
+			course.appendHistory(attendance);
+			courseDataAccessObject.save(course);
 
-            sessionDataAccessObject.delete(sessionID);
+			sessionDataAccessObject.delete(sessionID);
 
-            EndSessionOutputData endSessionSuccessOutputData = new EndSessionOutputData();
+			EndSessionOutputData endSessionSuccessOutputData = new EndSessionOutputData();
 
-            return sessionPresenter.prepareSuccessResponse(endSessionSuccessOutputData);
-        } catch (Exception e) {
-            EndSessionOutputData endSessionFailureOutputData = new EndSessionOutputData(e.getMessage());
-            return sessionPresenter.prepareFailResponse(endSessionFailureOutputData);
-        }
-    }
+			return sessionPresenter.prepareSuccessResponse(endSessionSuccessOutputData);
+		} catch (Exception e) {
+			EndSessionOutputData endSessionFailureOutputData = new EndSessionOutputData(e.getMessage());
+			return sessionPresenter.prepareFailResponse(endSessionFailureOutputData);
+		}
+	}
 }

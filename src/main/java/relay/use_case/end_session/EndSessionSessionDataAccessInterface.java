@@ -4,7 +4,9 @@ import relay.entity.Session;
 import relay.exceptions.ResourceNotFoundException;
 
 public interface EndSessionSessionDataAccessInterface {
-    void save(Session session) throws ResourceNotFoundException;
-    void delete(String sessionID) throws ResourceNotFoundException;
-    Session read (String sessionID) throws ResourceNotFoundException;
+	void save(Session session) throws ResourceNotFoundException;
+
+	void delete(String sessionID) throws ResourceNotFoundException;
+
+	Session read(String sessionID) throws ResourceNotFoundException;
 }

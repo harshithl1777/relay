@@ -63,7 +63,7 @@ public class StartSessionPresenter implements StartSessionOutputBoundary {
 			StartSessionOutputData failureStartSessionOutputData) {
 		StartSessionState startSessionState = (StartSessionState) startSessionViewModel.getState();
 		startSessionState.setErrorMessage(failureStartSessionOutputData.getErrorMessage());
-		startSessionState.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+		startSessionState.setStatusCode(HttpStatus.NOT_FOUND);
 		return ResponseFactory.createFailureResponseEntity(startSessionViewModel);
 	}
 }

@@ -2,41 +2,40 @@ package relay.use_case.show_courses;
 
 import org.springframework.http.ResponseEntity;
 import relay.entity.Course;
-
-import java.util.ArrayList;
+import relay.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Map;
 
 public class ShowCourseInteractor implements ShowCourseInputBoundary {
-    final ShowCourseDataAccessInterface showCourseDataAccessInterface;
-    final ShowCourseOutputBoundary outputBoundary;
+	final ShowCourseCourseDataAccessInterface showCourseCourseDataAccessObject;
+	final ShowCourseInstructorDataAccessInterface showCourseInstructorDataAccessObject;
+	final ShowCourseOutputBoundary outputBoundary;
 
+	public ShowCourseInteractor(ShowCourseCourseDataAccessInterface showCourseCourseDataAccessObject,
+			ShowCourseInstructorDataAccessInterface showCourseInstructorDataAccessObject,
+			ShowCourseOutputBoundary outputBoundary) {
+		this.showCourseCourseDataAccessObject = showCourseCourseDataAccessObject;
+		this.showCourseInstructorDataAccessObject = showCourseInstructorDataAccessObject;
+		this.outputBoundary = outputBoundary;
+	}
 
+	@Override
+	public ResponseEntity<Map<String, Object>> execute(ShowCourseInputData showCourseInputData) {
+		try {
+			String instructorID = showCourseInputData.getInstructorID();
+			if (!showCourseInstructorDataAccessObject.exists(instructorID)) {
+				throw new ResourceNotFoundException("No such instructor document exists");
+			}
+			List<Course> courses = showCourseCourseDataAccessObject.getCoursesByInstructor(instructorID);
 
-    public ShowCourseInteractor(ShowCourseDataAccessInterface showCourseDataAccessInterface, ShowCourseOutputBoundary outputBoundary) {
-        this.showCourseDataAccessInterface = showCourseDataAccessInterface;
-        this.outputBoundary = outputBoundary;
-    }
+			ShowCourseOutputData outputData = new ShowCourseOutputData(courses);
+			return outputBoundary.prepareSuccessResponce(outputData);
 
-    @Override
-    public ResponseEntity<Map<String, Object>> execute(ShowCourseInputData showCourseInputData) {
-        try {
-            List<Course> courses;
-            courses = showCourseDataAccessInterface.getCoursesByInstructor(showCourseInputData.getInstructorID());
-            List<String> courseNames = new ArrayList<>();
-            for (Course course: courses) {
-                String courseName = course.getCourseName();
-                courseNames.add(courseName);
-            }
+		} catch (ResourceNotFoundException e) {
+			ShowCourseOutputData showCourseOutputData = new ShowCourseOutputData(e.getMessage());
+			return outputBoundary.prepareFailResponce(showCourseOutputData);
 
-            ShowCourseOutputData outputData = new ShowCourseOutputData(courseNames);
-            return outputBoundary.prepareSuccessResponce(outputData);
+		}
 
-        }  catch (Exception e) {
-            ShowCourseOutputData showCourseOutputData = new ShowCourseOutputData(e.getMessage());
-            return outputBoundary.prepareFailResponce(showCourseOutputData);
-
-        }
-
-    }
+	}
 }

@@ -1,46 +1,38 @@
 package relay.use_case.log_attendance;
 
-
-import java.sql.Timestamp;
-
-
 public class LogAttendanceInputData {
-    final private String sessionID;
-    final private String studentFirstName;
-    final private String studentLastName;
-    final private String studentID;
-    final private String studentEmail;
-    final private Timestamp createdAt;
+	final private String sessionID;
+	final private String studentFirstName;
+	final private String studentLastName;
+	final private String studentID;
+	final private String studentEmail;
 
-    public LogAttendanceInputData(String sessionID, String studentFirstName, String studentLastName, String studentID, String studentEmail, Timestamp createdAt) {
-        this.sessionID = sessionID;
-        this.studentFirstName = studentFirstName;
-        this.studentLastName = studentLastName;
-        this.studentID = studentID;
-        this.studentEmail = studentEmail;
-        this.createdAt = createdAt;
-    }
-    public String getSessionID() {
-        return sessionID;
-    }
+	public LogAttendanceInputData(String sessionID, String studentFirstName, String studentLastName, String studentID,
+			String studentEmail) {
+		this.sessionID = sessionID;
+		this.studentFirstName = studentFirstName;
+		this.studentLastName = studentLastName;
+		this.studentID = studentID;
+		this.studentEmail = studentEmail;
+	}
 
-    public String getStudentFirstName() {
-        return studentFirstName;
-    }
+	public String getSessionID() {
+		return sessionID;
+	}
 
-    public String getStudentLastName() {
-        return studentLastName;
-    }
+	public String getStudentFirstName() {
+		return studentFirstName;
+	}
 
-    public String getStudentID() {
-        return studentID;
-    }
+	public String getStudentLastName() {
+		return studentLastName;
+	}
 
-    public String getStudentEmail() {
-        return studentEmail;
-    }
+	public String getStudentID() {
+		return studentID;
+	}
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
+	public String getStudentEmail() {
+		return studentEmail;
+	}
 }

@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import relay.data_access.FirebaseCourseDataAccessObject;
-import relay.use_case.show_courses.ShowCourseDataAccessInterface;
+import relay.data_access.FirebaseInstructorDataAccessObject;
+import relay.use_case.show_courses.ShowCourseCourseDataAccessInterface;
 import relay.app.ShowCourseFactory;
 import relay.use_case.show_courses.ShowCourseInputData;
+import relay.use_case.show_courses.ShowCourseInstructorDataAccessInterface;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -24,10 +26,11 @@ public class ShowCourseResponseHandler {
 
 		ShowCourseViewModel showCourseViewModel = new ShowCourseViewModel();
 
-		ShowCourseDataAccessInterface courseDataAccessObject = new FirebaseCourseDataAccessObject();
+		ShowCourseCourseDataAccessInterface courseDataAccessObject = new FirebaseCourseDataAccessObject();
+		ShowCourseInstructorDataAccessInterface instructorDataAccessObject = new FirebaseInstructorDataAccessObject();
 
 		ShowCourseController showCourseController = ShowCourseFactory.createShowCourseUseCase(showCourseViewModel,
-				courseDataAccessObject);
+				courseDataAccessObject, instructorDataAccessObject);
 		ShowCourseInputData requestInputData = new ShowCourseInputData(id);
 		return showCourseController.execute(requestInputData);
 	}

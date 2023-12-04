@@ -5,16 +5,14 @@ import org.springframework.http.ResponseEntity;
 import relay.use_case.end_session.EndSessionInputBoundary;
 import relay.use_case.end_session.EndSessionInputData;
 
-import java.util.Map;
-
 public class EndSessionController {
-    final EndSessionInputBoundary endSessionUseCaseInteractor;
+	final EndSessionInputBoundary endSessionUseCaseInteractor;
 
-    public EndSessionController(EndSessionInputBoundary endSessionUseCaseInteractor){
-        this.endSessionUseCaseInteractor = endSessionUseCaseInteractor;
-    }
+	public EndSessionController(EndSessionInputBoundary endSessionUseCaseInteractor) {
+		this.endSessionUseCaseInteractor = endSessionUseCaseInteractor;
+	}
 
-    public ResponseEntity<HttpStatus> execute(EndSessionInputData endSessionInputData) {
-        return endSessionUseCaseInteractor.execute(endSessionInputData);
-    }
+	public ResponseEntity<HttpStatus> execute(EndSessionInputData endSessionInputData) {
+		return endSessionUseCaseInteractor.execute(endSessionInputData);
+	}
 }
