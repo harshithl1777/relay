@@ -82,6 +82,7 @@ export const authWithSocials = (service) => async (dispatch) => {
                 position: 'top-right',
             });
         } else {
+            console.error(error);
             toast({
                 title: 'Something went wrong',
                 description: 'Unable to complete login / signup process.',

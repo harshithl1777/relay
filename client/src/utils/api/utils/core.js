@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAuth, getIdToken } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { handleResponse, handleError } from 'utils/api/utils/response';
 import app from 'config/firebase';
 
