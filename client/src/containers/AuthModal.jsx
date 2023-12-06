@@ -30,15 +30,6 @@ const AuthModal = (props) => {
                     Google
                 </Button>
                 <Button
-                    onClick={() => onAuthModalSocialsSubmit('FACEBOOK')}
-                    leftIcon={<IoLogoFacebook color='white' size={22} />}
-                    size='md'
-                    backgroundColor='blue.500'
-                    _hover={{ backgroundColor: 'blue.600' }}
-                >
-                    Facebook
-                </Button>
-                <Button
                     onClick={() => onAuthModalSocialsSubmit('GITHUB')}
                     leftIcon={<IoLogoGithub color='white' size={22} />}
                     size='md'
