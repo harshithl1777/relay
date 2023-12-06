@@ -29,11 +29,11 @@ public class ShowCourseInteractor implements ShowCourseInputBoundary {
 			List<Course> courses = showCourseCourseDataAccessObject.getCoursesByInstructor(instructorID);
 
 			ShowCourseOutputData outputData = new ShowCourseOutputData(courses);
-			return outputBoundary.prepareSuccessResponse(outputData);
+			return outputBoundary.prepareSuccessResponce(outputData);
 
 		} catch (ResourceNotFoundException e) {
 			ShowCourseOutputData showCourseOutputData = new ShowCourseOutputData(e.getMessage());
-			return outputBoundary.prepareFailResponse(showCourseOutputData);
+			return outputBoundary.prepareFailResponce(showCourseOutputData);
 
 		}
 

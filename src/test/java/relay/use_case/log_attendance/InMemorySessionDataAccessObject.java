@@ -1,9 +1,8 @@
-package relay.unit.use_case.log_attendance;
+package relay.use_case.log_attendance;
 
 import relay.entity.AttendanceRecord;
 import relay.entity.Session;
 import relay.exceptions.ResourceNotFoundException;
-import relay.use_case.log_attendance.LogAttendanceSessionDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;

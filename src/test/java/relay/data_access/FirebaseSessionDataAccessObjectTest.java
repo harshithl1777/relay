@@ -1,4 +1,4 @@
-package relay.unit.data_access;
+package relay.data_access;
 
 public class FirebaseSessionDataAccessObjectTest {
 }

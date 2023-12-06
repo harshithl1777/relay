@@ -1,11 +1,11 @@
-package relay.unit.use_case.create_course;
+package relay.use_case.create_course;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import relay.unit.InMemoryCourseDataAccessObject;
+import relay.InMemoryCourseDataAccessObject;
 import relay.entity.Course;
-import relay.use_case.create_course.*;
+import relay.exceptions.ResourceAlreadyExistsException;
 
 import java.util.ArrayList;
 import java.util.Map;

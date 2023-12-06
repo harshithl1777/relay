@@ -2,13 +2,11 @@
  * Unit tests for the {@link FirebaseInstructorDataAccessObject} class.
  * These tests cover the basic functionality of saving, reading, deleting, and checking the existence of instructors.
  */
-package relay.unit.data_access;
+package relay.data_access;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import relay.data_access.FirebaseInitializationSingleton;
-import relay.data_access.FirebaseInstructorDataAccessObject;
 import relay.entity.Instructor;
 import relay.exceptions.ResourceAlreadyExistsException;
 import relay.exceptions.ResourceNotFoundException;

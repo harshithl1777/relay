@@ -1,12 +1,9 @@
-package relay.unit.data_access;
+package relay.data_access;
 
 import com.google.cloud.firestore.Firestore;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import relay.data_access.FirebaseInitializationSingleton;
-import relay.data_access.FirestoreSingleton;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FirestoreDatabaseTest {
