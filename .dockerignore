@@ -5,6 +5,7 @@
 
 **/build
 **/node_modules
+**/ssl
 **/.env
 
 **/target
