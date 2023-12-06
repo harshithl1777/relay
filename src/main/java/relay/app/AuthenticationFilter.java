@@ -1,6 +1,8 @@
 package relay.app;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -30,15 +32,24 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 		String requestURL = request.getRequestURL().toString();
-		if (environment.getProperty("relay.environment").equals("PRODUCTION") && !requestURL.contains("health")) {
+		String[] protectedMethods = { "GET", "POST", "PUT", "DELETE", "PATCH", "HEAD" };
+		String requestMethod = request.getMethod();
+
+		if (environment.getProperty("relay.environment").equals("PRODUCTION") && !requestURL.contains("health")
+				&& Arrays.stream(protectedMethods).anyMatch(v -> v.contains(requestMethod))) {
 			try {
-				String[] authorizationHeader = request.getHeader("Authorization").split("Bearer");
-				if (authorizationHeader.length < 2)
+				String authorizationHeader = request.getHeader("Authorization");
+				if (authorizationHeader == null) {
 					response.sendError(400);
-				String socialToken = authorizationHeader[1];
-				System.out.println(socialToken);
-				FirebaseAuth.getInstance().verifyIdToken(socialToken);
+				} else if (authorizationHeader.split(" ").length < 2) {
+					response.sendError(400);
+				} else {
+					String socialToken = authorizationHeader.split(" ")[1];
+					FirebaseAuth.getInstance().verifyIdToken(socialToken);
+					chain.doFilter(servletRequest, servletResponse);
+				}
 			} catch (FirebaseAuthException e) {
+				e.printStackTrace();
 				response.sendError(401, "Invalid social token.");
 			}
 		} else {
