@@ -8,6 +8,7 @@ COPY ./client .
 RUN npm run build
 
 FROM maven:3.9.5-amazoncorretto-21 AS build
+ENV FIREBASE_DECRYPTION_KEY=${FIREBASE_DECRYPTION_KEY}
 
 WORKDIR /
 COPY ./pom.xml ./
