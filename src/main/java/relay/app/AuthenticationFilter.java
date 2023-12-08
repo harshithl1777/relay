@@ -33,10 +33,12 @@ public class AuthenticationFilter implements Filter {
 
 		String requestURL = request.getRequestURL().toString();
 		String[] protectedMethods = { "GET", "POST", "PUT", "DELETE", "PATCH", "HEAD" };
+		String[] protectedPaths = { "sessions", "instructors", "courses" };
 		String requestMethod = request.getMethod();
 
 		if (environment.getProperty("relay.environment").equals("PRODUCTION") && !requestURL.contains("health")
-				&& Arrays.stream(protectedMethods).anyMatch(v -> v.contains(requestMethod))) {
+				&& Arrays.stream(protectedMethods).anyMatch(v -> v.contains(requestMethod)
+						&& Arrays.stream(protectedPaths).anyMatch(p -> requestURL.contains(p)))) {
 			try {
 				String authorizationHeader = request.getHeader("Authorization");
 				if (authorizationHeader == null) {

@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 public class SignupResponseHandler {
 
 	@PostMapping("/api/instructors")
-	@CrossOrigin(origins = "https://localhost:3000")
 	public ResponseEntity<?> signup(@RequestBody Map<String, Object> requestBody) {
 		String firstName = (String) requestBody.get("firstName");
 		String lastName = (String) requestBody.get("lastName");

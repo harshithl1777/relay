@@ -27,7 +27,7 @@ public class FirebaseInitializationSingleton {
 			FileInputStream FirebaseCredentials = new FileInputStream(FIREBASE_CREDENTIALS_FILE);
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(FirebaseCredentials))
-					.setStorageBucket("relay-dev0.appspot.com")
+					.setStorageBucket("relay-prod0.appspot.com")
 					.build();
 
 			FirebaseApp.initializeApp(options);

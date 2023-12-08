@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 public class LogAttendanceResponseHandler {
 
 	@PostMapping("/api/sessions/{id}/attendance")
-	@CrossOrigin(origins = "https://localhost:3000")
 	public ResponseEntity<?> logAttendance(@PathVariable String id, @RequestBody Map<String, Object> requestBody) {
 		String sessionID = id;
 		String studentFirstName = (String) requestBody.get("studentFirstName");

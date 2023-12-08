@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { handleResponse, handleError } from 'utils/api/utils/response';
 import app from 'config/firebase';
 
-const BASE_URL = process.env.REACT_APP_BASE_API_URL || 'http://localhost:8080/api';
+const BASE_URL = process.env.REACT_APP_BASE_API_URL || 'https://relay-amsy.onrender.com/api';
 
 axios.interceptors.request.use(async (config) => {
     const url = config.url;

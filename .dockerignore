@@ -6,8 +6,6 @@
 **/build
 **/node_modules
 **/ssl
-**/.env
 
 **/target
-**/application.properties
 **/firebase.json

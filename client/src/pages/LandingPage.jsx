@@ -40,15 +40,6 @@ const LandingPage = () => {
                         _hover={{ cursor: 'pointer' }}
                         href='https://github.com/harshithl1777/relay'
                     >
-                        About
-                    </Link>
-                    <Link
-                        fontWeight='medium'
-                        color='white'
-                        fontSize='lg'
-                        _hover={{ cursor: 'pointer' }}
-                        href='https://github.com/harshithl1777/relay'
-                    >
                         Github
                     </Link>
                     <Link
@@ -62,15 +53,6 @@ const LandingPage = () => {
                     </Link>
                 </div>
                 <div className={styles.navigationRightContent}>
-                    <Button
-                        size='lg'
-                        variant='secondary'
-                        onClick={() => {
-                            window.location.href = '/students';
-                        }}
-                    >
-                        For students
-                    </Button>
                     <Button
                         onClick={() => {
                             window.location.href = '/auth';
@@ -114,10 +96,10 @@ const LandingPage = () => {
                         size='lg'
                         variant='secondary'
                         onClick={() => {
-                            window.location.href = '/students';
+                            window.location.href = 'https://github.com/harshithl1777/relay';
                         }}
                     >
-                        Enter a code
+                        See Github
                     </Button>
                 </Box>
             </div>
@@ -128,32 +110,6 @@ const LandingPage = () => {
                         Harshith, Ram, Vikram, Muhammad & Vihaan.
                     </span>
                 </Text>
-                <Box display='flex' flexDirection='row' alignItems='center' gap='20px' margin='auto' marginRight='30px'>
-                    <Icon
-                        as={IoLogoDribbble}
-                        _hover={{ filter: 'brightness(80%)', cursor: 'pointer' }}
-                        color='white'
-                        width='24px'
-                        height='24px'
-                        onClick={() => window.open('https://dribbble.com/harshithl1777')}
-                    />
-                    <Icon
-                        as={IoLogoLinkedin}
-                        color='white'
-                        _hover={{ filter: 'brightness(90%)', cursor: 'pointer' }}
-                        width='24px'
-                        height='24px'
-                        onClick={() => window.open('https://linkedin.com/in/harshithlatchupatula')}
-                    />
-                    <Icon
-                        as={IoLogoGithub}
-                        _hover={{ filter: 'brightness(90%)', cursor: 'pointer' }}
-                        color='white'
-                        width='24px'
-                        height='24px'
-                        onClick={() => window.open('https://github.com/harshithl1777')}
-                    />
-                </Box>
             </div>
             {renderAuthModal()}
         </div>

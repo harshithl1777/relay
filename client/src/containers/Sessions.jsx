@@ -140,11 +140,7 @@ const Sessions = (props) => {
                             Attendance session started..
                         </Heading>
                         <Text width='400px' textAlign='center' marginTop='5px' fontWeight='normal' color='gray.500'>
-                            Give the above code to your students and ask them to navigate to{' '}
-                            <Link fontWeight='bold' color='cyan.500' href='/students'>
-                                relay.netlify.app/students
-                            </Link>
-                            .
+                            Click on the above button to view the QR code for this session.
                         </Text>
                     </Box>
                 );
