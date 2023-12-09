@@ -9,6 +9,7 @@ COPY ./decrypt-fe.sh .
 RUN npm install
 
 COPY ./client .
+RUN ./decrypt-fe.sh
 
 RUN npm run build
 
@@ -20,7 +21,7 @@ COPY ./pom.xml .
 COPY ./decrypt-be.sh .
 COPY ./src ./src
 COPY --from=build-node /client/build ./src/main/resources/static
-RUN ./decrypt.sh
+RUN ./decrypt-be.sh
 RUN mvn install -DskipTests
 
 FROM amazoncorretto:21-alpine3.16-jdk
