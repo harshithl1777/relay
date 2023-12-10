@@ -4,4 +4,4 @@
 # --batch to prevent interactive command
 # --yes to assume "yes" for questions
 gpg --quiet --batch --yes --decrypt --passphrase="$PROJECT_NAME" \
---output ./client/.env ./src/main/resources/.env.gpg
+--output ./client/.env ./client/.env.gpg
