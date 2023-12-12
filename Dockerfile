@@ -1,6 +1,5 @@
-ARG PROJECT_NAME=RELAY_BLITZ_207
-
 FROM node:latest AS build-node
+ARG PROJECT_NAME=RELAY_BLITZ_207
 ENV PROJECT_NAME=${PROJECT_NAME}
 
 WORKDIR /client
@@ -14,6 +13,7 @@ RUN ./decrypt-fe.sh
 RUN npm run build
 
 FROM maven:3.9.5-amazoncorretto-21 AS build
+ARG PROJECT_NAME=RELAY_BLITZ_207
 ENV PROJECT_NAME=${PROJECT_NAME}
 
 WORKDIR /
