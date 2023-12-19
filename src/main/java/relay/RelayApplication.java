@@ -31,7 +31,7 @@ public class RelayApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				String[] allowedOrigins = { "http://localhost:8080", "https://relay-amsy.onrender.com" };
+				String[] allowedOrigins = { "http://localhost:8080", "https://tryrelay.2.us-1.fl0.io" };
 				registry.addMapping("/**").allowedOrigins(allowedOrigins);
 			}
 		};
