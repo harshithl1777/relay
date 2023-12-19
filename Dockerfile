@@ -22,7 +22,7 @@ COPY ./decrypt-be.sh .
 COPY ./src ./src
 COPY --from=build-node /client/build ./src/main/resources/static
 RUN ./decrypt-be.sh
-RUN mvn install -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+RUN mvn install -DskipTests
 
 FROM amazoncorretto:21-alpine3.16-jdk
 WORKDIR /
