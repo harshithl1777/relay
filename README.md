@@ -22,5 +22,5 @@ With Relay, taking attendance would look like this:
 
 | | |
 |:-------------------------:|:-------------------------:|
-|<img width="1511" alt="Sign Up Page" src="https://user-images.githubusercontent.com/44104695/195221351-3d5530ad-0c81-4e6f-9568-8ba946e7d3f6.png"> Sign Up Page | <img width="1512" alt="Active Session Page" src="https://user-images.githubusercontent.com/44104695/195221538-ec6c59fa-02e6-4949-bcdd-3f2d2d6287d1.png"> Active Attendance Sessions|
+|<img width="1512" alt="Screenshot 2023-12-18 at 11 00 08 PM" src="https://github.com/harshithl1777/relay/assets/44104695/c23cee3c-7425-42ab-9f6a-7ce076d7463d"> Sign Up Page | <img width="1512" alt="Active Session Page" src="https://user-images.githubusercontent.com/44104695/195221538-ec6c59fa-02e6-4949-bcdd-3f2d2d6287d1.png"> Active Attendance Sessions|
 |<img width="1511" alt="Attendance History Page" src="https://user-images.githubusercontent.com/44104695/195221791-dddfafc7-ba1c-41ac-b40a-254846125553.png"> Attendance History|<img width="1512" alt="Students Page" src="https://user-images.githubusercontent.com/44104695/195221973-50f792bc-3b02-481c-9aad-14bb48f4cad1.png"> Students Page |
