@@ -1,4 +1,5 @@
 FROM node:latest AS build-node
+USER root
 ARG PROJECT_NAME=RELAY_BLITZ_207
 ENV PROJECT_NAME=${PROJECT_NAME}
 
@@ -24,7 +25,14 @@ COPY --from=build-node /client/build ./src/main/resources/static
 RUN ./decrypt-be.sh
 RUN mvn install -DskipTests
 
-FROM amazoncorretto:21-alpine3.16-jdk
+FROM debian:latest
+RUN apt-get update -y
+RUN apt-get install wget -y
+RUN apt install -y gnupg
+RUN wget -O - https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
+echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
+RUN apt-get update -y
+RUN apt-get install -y java-21-amazon-corretto-jdk
 WORKDIR /
 COPY --from=build /target/*.jar app.jar
 COPY --from=build /src ./src
