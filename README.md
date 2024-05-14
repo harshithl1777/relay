@@ -4,7 +4,7 @@
 
 ### Description
 
-Taking attendance is one of the most time consuming and complicated things in school. For starters, teachers have read through the whole list of students in the class which takes up a lot of time, especially for 1-hour classes. Also, on days when substitute teachers are present, it's not uncommon to have the a few students cringe when their name gets butchered. That's where Blitz comes in.
+Taking attendance is one of the most time consuming and complicated things in school. For starters, teachers have read through the whole list of students in the class which takes up a lot of time, especially for 1-hour classes. Also, on days when substitute teachers are present, it's not uncommon to have the a few students cringe when their name gets butchered. That's where Relay comes in.
 
 ### How it works
 
@@ -16,7 +16,7 @@ With Relay, taking attendance would look like this:
 5. All the attendance records will then be saved to a history tab after the attendance session ends for the teacher's reference.
 
 ### Tech Stack
-- `React`, `Redux`, `Firebase`, `Chakra UI`
+- `React`, `Java`, `Spring Boot`, `Docker`, `Firebase`
 
 ### Gallery
 
